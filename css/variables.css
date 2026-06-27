@@ -92,3 +92,18 @@
     --shadow-gold: 0 4px 20px rgba(139, 92, 246, 0.15);
     --shadow-glow: 0 0 30px rgba(139, 92, 246, 0.1);
 }
+
+/* Monochrome Ash Theme */
+[data-theme="ash"] {
+    --theme-name: 'ash';
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #121212;
+    --bg-cards: #1a1a1a;
+    --bg-hover: #222222;
+    --border-color: #333333;
+    --accent-primary: #757575;
+    --accent-secondary: #616161;
+    --gradient-gold: linear-gradient(135deg, #757575 0%, #9e9e9e 50%, #757575 100%);
+    --shadow-gold: 0 4px 20px rgba(117, 117, 117, 0.15);
+    --shadow-glow: 0 0 30px rgba(117, 117, 117, 0.1);
+}

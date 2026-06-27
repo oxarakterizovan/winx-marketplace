@@ -1,0 +1,259 @@
+/* WINX — Premium Hub Styles */
+
+/* Animated Background */
+.hub-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: var(--bg-primary);
+    overflow: hidden;
+}
+
+/* Ash/Ember Particles Animation */
+.particles-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Fog Animation */
+.hub-fog {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(139, 92, 246, 0.03) 0%, transparent 70%);
+    animation: fogMove 30s ease-in-out infinite;
+    opacity: 0.5;
+}
+
+@keyframes fogMove {
+    0%, 100% { transform: translateX(-25%) translateY(0); }
+    50% { transform: translateX(-25%) translateY(-20px); }
+}
+
+.hub-fog.secondary {
+    background: radial-gradient(ellipse at center, rgba(200, 167, 106, 0.02) 0%, transparent 70%);
+    animation: fogMove 40s ease-in-out infinite reverse;
+    top: auto;
+    bottom: 0;
+}
+
+/* Hub Main Container */
+.hub-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    position: relative;
+}
+
+/* Logo Section */
+.hub-logo-section {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+    animation: fadeInDown 1s ease forwards;
+}
+
+.hub-logo {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto var(--spacing-xl);
+    position: relative;
+}
+
+.hub-logo svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 30px rgba(200, 167, 106, 0.3));
+    animation: logoGlow 4s ease-in-out infinite;
+}
+
+@keyframes logoGlow {
+    0%, 100% { filter: drop-shadow(0 0 30px rgba(200, 167, 106, 0.3)); }
+    50% { filter: drop-shadow(0 0 50px rgba(200, 167, 106, 0.5)); }
+}
+
+.hub-slogan {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 300;
+    animation: fadeIn 1.5s ease forwards 0.5s;
+    opacity: 0;
+}
+
+/* Focus Tiles Container */
+.hub-tiles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xl);
+    max-width: 900px;
+    width: 100%;
+    animation: fadeInUp 1s ease forwards 0.8s;
+    opacity: 0;
+}
+
+/* Glassmorphism Tile */
+.hub-tile {
+    position: relative;
+    min-height: 280px;
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-2xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+    overflow: hidden;
+}
+
+.hub-tile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 100%);
+    pointer-events: none;
+}
+
+.hub-tile-icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-lg);
+    transition: transform var(--transition-base);
+}
+
+.hub-tile-title {
+    font-family: var(--font-heading);
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-sm);
+    transition: color var(--transition-base);
+}
+
+.hub-tile-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    max-width: 250px;
+    line-height: 1.6;
+}
+
+/* Products Tile Hover */
+.hub-tile[data-type="products"]:hover {
+    border-color: rgba(139, 92, 246, 0.4);
+    box-shadow: 
+        0 0 60px rgba(139, 92, 246, 0.15),
+        inset 0 0 60px rgba(139, 92, 246, 0.05);
+    transform: translateY(-5px);
+}
+
+.hub-tile[data-type="products"]:hover .hub-tile-icon {
+    transform: scale(1.1);
+}
+
+.hub-tile[data-type="products"]:hover .hub-tile-title {
+    color: var(--accent-secondary);
+}
+
+/* Marketplace Tile Hover */
+.hub-tile[data-type="marketplace"]:hover {
+    border-color: rgba(192, 57, 43, 0.4);
+    box-shadow: 
+        0 0 60px rgba(192, 57, 43, 0.15),
+        inset 0 0 60px rgba(192, 57, 43, 0.05);
+    transform: translateY(-5px);
+}
+
+.hub-tile[data-type="marketplace"]:hover .hub-tile-icon {
+    transform: scale(1.1);
+}
+
+.hub-tile[data-type="marketplace"]:hover .hub-tile-title {
+    color: #C0392B;
+}
+
+/* Background Glow Effect on Hover */
+.hub-bg-glow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--transition-base), background var(--transition-base);
+    z-index: -1;
+}
+
+.hub-bg-glow.products {
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+    opacity: 1;
+}
+
+.hub-bg-glow.marketplace {
+    background: radial-gradient(circle, rgba(192, 57, 43, 0.15) 0%, transparent 70%);
+    opacity: 1;
+}
+
+/* Quick Links (Optional, minimal) */
+.hub-quick-links {
+    margin-top: var(--spacing-3xl);
+    display: flex;
+    gap: var(--spacing-lg);
+    animation: fadeIn 1.5s ease forwards 1.2s;
+    opacity: 0;
+}
+
+.hub-quick-link {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: color var(--transition-base);
+}
+
+.hub-quick-link:hover {
+    color: var(--accent-primary);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hub-tiles {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .hub-tile {
+        min-height: 200px;
+    }
+    
+    .hub-logo {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .hub-slogan {
+        font-size: 1rem;
+    }
+}

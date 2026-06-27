@@ -202,6 +202,40 @@ class Database {
         return user ? this.sanitizeUser(user) : null;
     }
 
+    updateUserProfile(userId, updates) {
+        const users = this.get('users');
+        const user = users.find(u => u.id === userId);
+        
+        if (!user) {
+            return { success: false, error: 'Пользователь не найден' };
+        }
+        
+        // Проверка кулдауна для никнейма
+        if (updates.nickname && updates.lastNicknameChange) {
+            const lastChange = user.lastNicknameChange ? new Date(user.lastNicknameChange) : null;
+            if (lastChange) {
+                const daysPassed = Math.floor((new Date() - lastChange) / (1000 * 60 * 60 * 24));
+                if (daysPassed < 180) {
+                    return { success: false, error: `Подождите ${180 - daysPassed} дн.` };
+                }
+            }
+        }
+        
+        // Обновляем разрешённые поля
+        const allowedFields = ['nickname', 'lastNicknameChange', 'status', 'avatar', 'nicknameColor', 'twoFactorEnabled', 'twoFactorSecret', 'backupCodes', 'sessions'];
+        const sanitizedUpdates = {};
+        for (const key of allowedFields) {
+            if (updates.hasOwnProperty(key)) {
+                sanitizedUpdates[key] = updates[key];
+            }
+        }
+        
+        const updatedUser = { ...user, ...sanitizedUpdates };
+        this.set('users', users);
+        
+        return { success: true, user: this.sanitizeUser(updatedUser) };
+    }
+
     createSession(userId) {
         const sessionId = this.generateId();
         const sessions = this.get('sessions');
@@ -211,7 +245,7 @@ class Database {
             createdAt: new Date().toISOString(),
             expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString() // 30 дней
         };
-        
+
         this.set('sessions', sessions);
         sessionStorage.setItem('winx_session', sessionId);
         
@@ -401,7 +435,7 @@ class Database {
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString()
         };
-
+        
         const topics = this.get('forumTopics');
         topics.push(newTopic);
         this.set('forumTopics', topics);
@@ -581,7 +615,11 @@ class Database {
                 lastOnline: new Date().toISOString(),
                 emailVerified: true,
                 twoFactorEnabled: false,
-                usernameChangeDate: null
+                usernameChangeDate: null,
+                lastNicknameChange: null,
+                nickname: null,
+                nicknameColor: '#F4F4F4',
+                status: 'Administrator of WINX Platform'
             },
             {
                 id: 'UID-CREATOR01',
@@ -605,7 +643,11 @@ class Database {
                 lastOnline: new Date().toISOString(),
                 emailVerified: true,
                 twoFactorEnabled: false,
-                usernameChangeDate: null
+                usernameChangeDate: null,
+                lastNicknameChange: null,
+                nickname: null,
+                nicknameColor: '#F4F4F4',
+                status: 'Premium content creator'
             }
         ];
     }

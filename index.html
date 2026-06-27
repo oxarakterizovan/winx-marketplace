@@ -3,50 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WINX — Премиум готическая платформа для Minecraft</title>
-    <meta name="description" content="WINX — премиум платформа для Minecraft утилит, модификаций и сообщества. Winx Loader, маркетплейс, форум и поддержка.">
-    <meta name="keywords" content="Minecraft, Winx Loader, утилиты, модификации, маркетплейс, готический дизайн">
-    <meta name="author" content="WINX Team">
+    <title>WINX — Premium Gothic Platform</title>
+    <meta name="description" content="WINX — премиум платформа для Minecraft утилит и сообщества">
     <meta name="theme-color" content="#040404">
     
-    <!-- Open Graph / Social Media -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://winx.platform/">
-    <meta property="og:title" content="WINX — Premium Gothic Marketplace & Community">
-    <meta property="og:description" content="Премиум платформа для Minecraft утилит с готическим дизайном. Winx Loader, маркетплейс, форум.">
-    <meta property="og:image" content="img/og-banner.jpg">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="WINX — Premium Gothic Platform">
-    <meta name="twitter:description" content="Премиум платформа для Minecraft утилит с готическим дизайном.">
-    <meta name="twitter:image" content="img/og-banner.jpg">
+    <meta property="og:title" content="WINX — Premium Gothic Platform">
+    <meta property="og:description" content="Minecraft утилиты и сообщество">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
-    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
     
     <!-- Styles -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/search-modal.css">
+    <link rel="stylesheet" href="css/hub.css">
 </head>
 <body class="loading">
     <!-- Loading Screen -->
     <div class="loading-screen">
         <div class="loading-logo">
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="45" class="logo-path" style="stroke-dasharray: 283; stroke-dashoffset: 283;"/>
-                <path d="M30 35 L50 25 L70 35 L70 65 L50 75 L30 65 Z" class="logo-path" style="stroke-dasharray: 200; stroke-dashoffset: 200;"/>
+            <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" class="logo-path"/>
                 <text x="50" y="58" text-anchor="middle" fill="#C8A76A" font-size="24" font-family="Cinzel, serif" font-weight="700">W</text>
             </svg>
         </div>
         <div class="loading-bar-container">
             <div class="loading-bar"></div>
         </div>
-        <div class="loading-text">Загрузка WINX</div>
-        <div class="particles-container" id="particles"></div>
+        <div class="loading-text">WINX</div>
     </div>
 
     <!-- Search Modal -->
@@ -54,30 +42,93 @@
         <div class="search-modal">
             <div class="search-modal-input-wrapper">
                 <span class="search-modal-icon">🔍</span>
-                <input type="text" class="search-modal-input" placeholder="Поиск продуктов, товаров, тем форума..." id="searchModalInput">
+                <input type="text" class="search-modal-input" placeholder="Поиск..." id="searchModalInput">
                 <button class="search-modal-close" onclick="closeSearchModal()">Esc</button>
             </div>
             <div class="search-modal-hint">
-                <span class="text-secondary" style="font-size: 0.8rem;">Быстрый поиск:</span>
-                <kbd>Ctrl</kbd> + <kbd>K</kbd>
+                <span class="text-secondary" style="font-size: 0.8rem;">Ctrl</span> + <span class="text-secondary" style="font-size: 0.8rem;">K</span>
             </div>
-            <div class="search-modal-quick-links">
-                <span class="search-modal-quick-link" onclick="window.location.href='marketplace.html'">🛒 Маркетплейс</span>
-                <span class="search-modal-quick-link" onclick="window.location.href='products.html'">⚡ Продукты</span>
-                <span class="search-modal-quick-link" onclick="window.location.href='forum.html'">💬 Форум</span>
-                <span class="search-modal-quick-link" onclick="window.location.href='documentation.html'">📚 Документация</span>
-            </div>
-            <div class="search-modal-results" id="searchModalResults">
-                <div class="search-modal-empty">
-                    <div class="search-modal-empty-icon">🔍</div>
-                    <p>Начните вводить для поиска</p>
-                </div>
-            </div>
+            <div class="search-modal-results" id="searchModalResults"></div>
         </div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="navbar">
+    <!-- Animated Background -->
+    <div class="hub-background">
+        <canvas id="particlesCanvas" class="particles-canvas"></canvas>
+        <div class="hub-fog"></div>
+        <div class="hub-fog secondary"></div>
+        <div class="hub-bg-glow" id="bgGlow"></div>
+    </div>
+
+    <!-- Minimal Navigation -->
+    <nav class="navbar" style="background: transparent; border: none; position: absolute;">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">WINX</a>
+            <div class="navbar-actions">
+                <button class="navbar-icon-btn search-btn" title="Поиск">🔍</button>
+                <button class="navbar-icon-btn" id="themeBtn" title="Тема">🎨</button>
+                <button class="navbar-icon-btn notifications-btn" title="Уведомления">🔔<span class="badge" style="display: none;"></span></button>
+                <div class="navbar-auth">
+                    <a href="login.html" class="btn btn-secondary btn-sm">Войти</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hub Main Content -->
+    <main class="hub-container">
+        <!-- Logo Section -->
+        <div class="hub-logo-section">
+            <div class="hub-logo">
+                <svg viewBox="0 0 100 100">
+                    <defs>
+                        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#C8A76A"/>
+                            <stop offset="50%" style="stop-color:#D4B87A"/>
+                            <stop offset="100%" style="stop-color:#C8A76A"/>
+                        </linearGradient>
+                    </defs>
+                    <circle cx="50" cy="50" r="45" stroke="url(#goldGrad)" stroke-width="2" fill="none"/>
+                    <circle cx="50" cy="50" r="35" stroke="url(#goldGrad)" stroke-width="1.5" fill="none"/>
+                    <text x="50" y="62" text-anchor="middle" fill="url(#goldGrad)" font-size="40" font-family="Cinzel, serif" font-weight="700">W</text>
+                </svg>
+            </div>
+            <h1 class="hub-slogan">Minecraft Premium Platform</h1>
+        </div>
+
+        <!-- Focus Tiles -->
+        <div class="hub-tiles">
+            <a href="products.html" class="hub-tile" data-type="products" onmouseenter="setBgGlow('products')" onmouseleave="removeBgGlow()">
+                <div class="hub-tile-icon">⚡</div>
+                <h2 class="hub-tile-title">Products</h2>
+                <p class="hub-tile-description">Winx Loader & Tools</p>
+            </a>
+            
+            <a href="marketplace.html" class="hub-tile" data-type="marketplace" onmouseenter="setBgGlow('marketplace')" onmouseleave="removeBgGlow()">
+                <div class="hub-tile-icon">🛒</div>
+                <h2 class="hub-tile-title">Marketplace</h2>
+                <p class="hub-tile-description">Community Content</p>
+            </a>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="hub-quick-links">
+            <a href="forum.html" class="hub-quick-link">Форум</a>
+            <a href="documentation.html" class="hub-quick-link">Документация</a>
+            <a href="support.html" class="hub-quick-link">Поддержка</a>
+        </div>
+    </main>
+
+    <!-- Theme Dropdown -->
+    <div class="dropdown" style="position: fixed; top: 80px; right: 20px; z-index: 1000;">
+        <div class="dropdown-menu" style="min-width: 180px;">
+            <div class="dropdown-header"><h4>Тема</h4></div>
+            <div class="dropdown-item" onclick="setTheme('gothic')"><div class="dropdown-item-icon" style="background: #C8A76A;">🏰</div><div class="dropdown-item-content"><div class="dropdown-item-title">Obsidian Violet</div></div></div>
+            <div class="dropdown-item" onclick="setTheme('vampire')"><div class="dropdown-item-icon" style="background: #C0392B;">🩸</div><div class="dropdown-item-content"><div class="dropdown-item-title">Vampire Red</div></div></div>
+            <div class="dropdown-item" onclick="setTheme('witch')"><div class="dropdown-item-icon" style="background: #10B981;">🧪</div><div class="dropdown-item-content"><div class="dropdown-item-title">Witch Hex</div></div></div>
+            <div class="dropdown-item" onclick="setTheme('ash')"><div class="dropdown-item-icon" style="background: #4a4a4a;">🌫️</div><div class="dropdown-item-content"><div class="dropdown-item-title">Monochrome Ash</div></div></div>
+        </div>
+    </div>
         <div class="navbar-container">
             <a href="index.html" class="navbar-brand">
                 <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
@@ -360,92 +411,85 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer" style="background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: var(--spacing-3xl) 0; margin-top: var(--spacing-3xl);">
-        <div class="container">
-            <!-- Gothic Divider -->
-            <div class="divider divider-gothic mb-xl"></div>
-            
-            <div class="grid grid-cols-4" style="gap: var(--spacing-xl);">
-                <div>
-                    <h4 class="mb-md text-gold">WINX</h4>
-                    <p class="text-secondary mb-md" style="font-size: 0.9rem;">
-                        Премиум готическая платформа и сообщество для любителей Minecraft.
-                    </p>
-                    <div class="flex gap-sm">
-                        <a href="#" class="navbar-icon-btn" title="Discord">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
-                        </a>
-                        <a href="#" class="navbar-icon-btn" title="GitHub">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                        </a>
-                        <a href="#" class="navbar-icon-btn" title="Twitter">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h4 class="mb-md">Навигация</h4>
-                    <ul style="line-height: 2;">
-                        <li><a href="marketplace.html" class="text-secondary">Маркетплейс</a></li>
-                        <li><a href="products.html" class="text-secondary">Продукты</a></li>
-                        <li><a href="forum.html" class="text-secondary">Форум</a></li>
-                        <li><a href="documentation.html" class="text-secondary">Документация</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="mb-md">Поддержка</h4>
-                    <ul style="line-height: 2;">
-                        <li><a href="support.html" class="text-secondary">Помощь</a></li>
-                        <li><a href="#" class="text-secondary">Контакты</a></li>
-                        <li><a href="#" class="text-secondary">Сообщить об ошибке</a></li>
-                        <li><a href="#" class="text-secondary">Запрос функции</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4 class="mb-md">Информация</h4>
-                    <ul style="line-height: 2;">
-                        <li><a href="#" class="text-secondary">Политика конфиденциальности</a></li>
-                        <li><a href="#" class="text-secondary">Условия использования</a></li>
-                        <li><a href="#" class="text-secondary">Cookie</a></li>
-                        <li><a href="#" class="text-secondary">DMCA</a></li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="text-center mt-xl" style="padding-top: var(--spacing-xl); border-top: 1px solid var(--border-color);">
-                <p class="text-secondary" style="font-size: 0.875rem;">
-                    &copy; 2024 WINX Platform. Все права защищены. Не связано с Mojang Studios.
-                </p>
-            </div>
-        </div>
-    </footer>
-
     <!-- Scripts -->
     <script src="js/db/database.js"></script>
     <script src="js/main.js"></script>
     <script>
-        // Create particles
-        function createParticles(containerId, count = 20) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            
-            for (let i = 0; i < count; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 4 + 's';
-                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
-                container.appendChild(particle);
-            }
+        // Background Glow Effect
+        function setBgGlow(type) {
+            const glow = document.getElementById('bgGlow');
+            glow.className = 'hub-bg-glow ' + type;
         }
         
-        createParticles('particles', 30);
-        createParticles('hero-particles', 20);
+        function removeBgGlow() {
+            const glow = document.getElementById('bgGlow');
+            glow.className = 'hub-bg-glow';
+        }
+        
+        // Particle Animation with Canvas
+        const canvas = document.getElementById('particlesCanvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const particles = [];
+            const particleCount = 80;
+            
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.3;
+                    this.vy = (Math.random() - 0.5) * 0.3 - 0.2;
+                    this.alpha = Math.random() * 0.5 + 0.1;
+                    this.size = Math.random() * 2 + 1;
+                }
+                
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    
+                    if (this.y < -10 || this.y > canvas.height + 10 || 
+                        this.x < -10 || this.x > canvas.width + 10) {
+                        this.reset();
+                    }
+                }
+                
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(200, 167, 106, ${this.alpha})`;
+                    ctx.fill();
+                }
+            }
+            
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+            
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        }
     </script>
 </body>
 </html>

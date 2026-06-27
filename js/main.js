@@ -524,19 +524,38 @@ function initializeTheme() {
     
     const themeBtn = document.getElementById('themeBtn');
     if (themeBtn) {
-        themeBtn.parentElement.classList.add('dropdown');
+        const dropdown = themeBtn.parentElement;
+        if (!dropdown.classList.contains('dropdown')) {
+            dropdown.classList.add('dropdown');
+        }
     }
 }
 
 function setTheme(themeName) {
     document.documentElement.setAttribute('data-theme', themeName);
+    document.body.setAttribute('data-theme', themeName);
     localStorage.setItem('winx_theme', themeName);
     
     // Update active state in dropdown
-    document.querySelectorAll('.theme-selector .dropdown-item').forEach(item => {
+    document.querySelectorAll('.dropdown-item').forEach(item => {
         item.style.background = '';
     });
-    event.target.closest('.dropdown-item').style.background = 'var(--bg-hover)';
+    
+    // Find and highlight current theme
+    const themeIcons = {
+        'gothic': '🏰',
+        'vampire': '🩸',
+        'witch': '🧪',
+        'void': '🌌',
+        'ash': '🌫️'
+    };
+    
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        const icon = item.querySelector('.dropdown-item-icon');
+        if (icon && icon.textContent === themeIcons[themeName]) {
+            item.style.background = 'var(--bg-hover)';
+        }
+    });
 }
 
 // ==================== Animated Stats ====================
@@ -596,3 +615,5 @@ window.timeAgo = timeAgo;
 window.formatNumber = formatNumber;
 window.formatDate = formatDate;
 window.setTheme = setTheme;
+window.openSearchModal = openSearchModal;
+window.closeSearchModal = closeSearchModal;

@@ -3,372 +3,557 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile — WINX</title>
+    <title>Профиль — WINX</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/search-modal.css">
     <style>
-        .profile-hero {
-            position: relative;
-            margin-top: 80px;
+        .profile-header-section {
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            padding: var(--spacing-3xl) 0 var(--spacing-xl);
+            border-bottom: 1px solid var(--border-color);
         }
         .profile-banner {
-            height: 250px;
-            background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 100%);
-            position: relative;
-            overflow: hidden;
+            height: 180px;
+            background: linear-gradient(135deg, rgba(200, 167, 106, 0.15) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-radius: var(--radius-xl);
+            margin-bottom: var(--spacing-lg);
         }
-        .profile-banner::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: linear-gradient(to top, var(--bg-primary), transparent);
-        }
-        .profile-info {
-            position: relative;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 var(--spacing-lg);
-            margin-top: -80px;
-        }
-        .profile-header {
+        .profile-main-info {
             display: flex;
             align-items: flex-end;
-            gap: var(--spacing-lg);
-            padding-bottom: var(--spacing-lg);
+            gap: var(--spacing-xl);
+            padding: 0 var(--spacing-lg);
+            margin-top: -70px;
         }
-        .profile-avatar-container {
-            position: relative;
-            flex-shrink: 0;
-        }
-        .profile-avatar {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            border: 4px solid var(--bg-primary);
-            background: var(--gradient-gold);
+        .profile-avatar-wrapper {
+            width: 140px;
+            height: 140px;
+            border-radius: var(--radius-xl);
+            border: 3px solid var(--border-color);
+            background: var(--bg-cards);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
-            color: var(--bg-primary);
-            font-weight: 700;
+            font-size: 3.5rem;
+            color: var(--accent-primary);
+            overflow: hidden;
+            position: relative;
         }
-        .profile-details {
-            flex: 1;
-            padding-bottom: var(--spacing-sm);
+        .profile-avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-avatar-edit {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            cursor: pointer;
+            transition: opacity var(--transition-base);
         }
-        .profile-name {
+        .profile-avatar-wrapper:hover .profile-avatar-edit { opacity: 1; }
+        .profile-info-content { flex: 1; padding-bottom: var(--spacing-md); }
+        .profile-display-name {
+            font-size: 2rem;
+            font-family: var(--font-heading);
+            margin-bottom: var(--spacing-xs);
             display: flex;
             align-items: center;
             gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-xs);
+            flex-wrap: wrap;
         }
-        .profile-username {
-            font-size: 2rem;
-            font-family: var(--font-heading);
-        }
-        .profile-userid {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: var(--spacing-md);
-        }
-        .profile-badges {
-            display: flex;
-            gap: var(--spacing-sm);
-            margin-bottom: var(--spacing-md);
-        }
-        .profile-bio {
-            color: var(--text-secondary);
-            max-width: 600px;
-        }
-        .profile-stats {
-            display: flex;
-            gap: var(--spacing-xl);
-            margin-top: var(--spacing-md);
-        }
-        .profile-stat {
-            text-align: center;
-        }
-        .profile-stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .profile-role-badge {
+            padding: 4px 12px;
+            background: rgba(200, 167, 106, 0.15);
             color: var(--accent-primary);
-            font-family: var(--font-heading);
-        }
-        .profile-stat-label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
-        .profile-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: var(--spacing-2xl) var(--spacing-lg);
-        }
-        .profile-tabs {
+        .profile-stats-row { display: flex; gap: var(--spacing-xl); margin-top: var(--spacing-md); }
+        .profile-stat-item { text-align: center; }
+        .profile-stat-num { font-size: 1.5rem; font-weight: 700; color: var(--accent-primary); font-family: var(--font-heading); }
+        .profile-stat-label { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; }
+        .profile-tabs-nav {
             display: flex;
-            gap: var(--spacing-xs);
-            margin-bottom: var(--spacing-lg);
+            gap: var(--spacing-md);
             border-bottom: 1px solid var(--border-color);
+            margin-bottom: var(--spacing-xl);
+            overflow-x: auto;
         }
-        .profile-tab {
+        .profile-tab-btn {
             padding: var(--spacing-md) var(--spacing-lg);
             color: var(--text-secondary);
             cursor: pointer;
             border-bottom: 2px solid transparent;
-            margin-bottom: -1px;
             transition: all var(--transition-base);
         }
-        .profile-tab:hover {
-            color: var(--text-primary);
-        }
-        .profile-tab.active {
-            color: var(--accent-primary);
-            border-bottom-color: var(--accent-primary);
-        }
-        .profile-section {
-            display: none;
-        }
-        .profile-section.active {
-            display: block;
-        }
-        .empty-state {
-            text-align: center;
-            padding: var(--spacing-3xl);
-            color: var(--text-secondary);
-        }
-        .empty-state-icon {
-            font-size: 4rem;
+        .profile-tab-btn:hover { color: var(--text-primary); }
+        .profile-tab-btn.active { color: var(--accent-primary); border-bottom-color: var(--accent-primary); }
+        .settings-block { margin-bottom: var(--spacing-2xl); }
+        .settings-block-title { font-size: 1.25rem; margin-bottom: var(--spacing-lg); }
+        .settings-panel {
+            background: var(--bg-cards);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
             margin-bottom: var(--spacing-md);
+        }
+        .settings-item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .settings-item-row:last-child { border-bottom: none; }
+        .settings-item-label { flex: 1; }
+        .settings-item-title { font-weight: 500; margin-bottom: 4px; }
+        .settings-item-desc { font-size: 0.85rem; color: var(--text-secondary); }
+        .settings-item-actions { display: flex; gap: var(--spacing-sm); }
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: var(--spacing-md);
+        }
+        .badge-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            text-align: center;
+            transition: all var(--transition-base);
+        }
+        .badge-card:hover { border-color: var(--accent-primary); transform: translateY(-3px); }
+        .badge-emoji { font-size: 2.5rem; margin-bottom: var(--spacing-sm); }
+        .badge-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 4px; }
+        .badge-description { font-size: 0.75rem; color: var(--text-secondary); }
+        .sessions-list { display: flex; flex-direction: column; gap: var(--spacing-sm); }
+        .session-card {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+        }
+        .session-icon-box {
+            width: 50px; height: 50px;
+            background: var(--bg-cards);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .session-details { flex: 1; }
+        .session-browser-name { font-weight: 500; margin-bottom: 4px; display: flex; align-items: center; gap: var(--spacing-sm); }
+        .session-info-text { font-size: 0.85rem; color: var(--text-secondary); }
+        .session-badge-current {
+            padding: 2px 8px;
+            background: rgba(16, 185, 129, 0.15);
+            color: #10B981;
+            border-radius: var(--radius-sm);
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .security-status-box {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-md);
+        }
+        .backup-codes-box {
+            background: var(--bg-secondary);
+            border: 1px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        .backup-codes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-sm); }
+        .backup-code-item {
+            font-family: monospace;
+            font-size: 0.85rem;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            background: var(--bg-cards);
+            border-radius: var(--radius-sm);
+            text-align: center;
+        }
+        .color-swatch {
+            width: 36px; height: 36px;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all var(--transition-base);
+        }
+        .color-swatch:hover { transform: scale(1.1); }
+        .color-swatch.active { border-color: var(--text-primary); }
+        .hidden { display: none !important; }
+        .qr-placeholder {
+            width: 200px; height: 200px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: var(--spacing-md) auto;
+            font-size: 3rem;
         }
     </style>
 </head>
 <body class="loading">
-    <!-- Loading Screen -->
     <div class="loading-screen">
         <div class="loading-logo">
             <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="logo-path"/><text x="50" y="58" text-anchor="middle" fill="#C8A76A" font-size="24" font-family="Cinzel, serif" font-weight="700">W</text></svg>
         </div>
         <div class="loading-bar-container"><div class="loading-bar"></div></div>
-        <div class="loading-text">Loading WINX</div>
+        <div class="loading-text">WINX</div>
     </div>
 
-    <!-- Navigation -->
+    <div class="search-modal-overlay" id="searchModal">
+        <div class="search-modal">
+            <div class="search-modal-input-wrapper">
+                <span class="search-modal-icon">🔍</span>
+                <input type="text" class="search-modal-input" placeholder="Поиск..." id="searchModalInput">
+                <button class="search-modal-close" onclick="closeSearchModal()">Esc</button>
+            </div>
+            <div class="search-modal-hint"><span class="text-secondary" style="font-size:0.8rem">Ctrl</span> + <span class="text-secondary" style="font-size:0.8rem">K</span></div>
+            <div class="search-modal-results" id="searchModalResults"></div>
+        </div>
+    </div>
+
     <nav class="navbar">
         <div class="navbar-container">
-            <a href="index.html" class="navbar-brand">
-                <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" stroke="#C8A76A" stroke-width="2" fill="none"/><text x="20" y="26" text-anchor="middle" fill="#C8A76A" font-size="20" font-family="Cinzel, serif" font-weight="700">W</text></svg>
-                WINX
-            </a>
+            <a href="index.html" class="navbar-brand">WINX</a>
             <ul class="navbar-menu">
-                <li><a href="index.html" class="navbar-link">Home</a></li>
-                <li><a href="marketplace.html" class="navbar-link">Marketplace</a></li>
-                <li><a href="products.html" class="navbar-link">Products</a></li>
-                <li><a href="forum.html" class="navbar-link">Forum</a></li>
-                <li><a href="documentation.html" class="navbar-link">Documentation</a></li>
-                <li><a href="support.html" class="navbar-link">Support</a></li>
+                <li><a href="index.html" class="navbar-link">Главная</a></li>
+                <li><a href="marketplace.html" class="navbar-link">Маркетплейс</a></li>
+                <li><a href="products.html" class="navbar-link">Продукты</a></li>
+                <li><a href="forum.html" class="navbar-link">Форум</a></li>
+                <li><a href="documentation.html" class="navbar-link">Документация</a></li>
             </ul>
             <div class="navbar-actions">
-                <button class="navbar-icon-btn search-btn">🔍</button>
-                <button class="navbar-icon-btn notifications-btn">🔔<span class="badge" style="display: none;"></span></button>
-                <div class="navbar-auth">
-                    <a href="login.html" class="btn btn-secondary btn-sm">Войти</a>
-                    <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
+                <button class="navbar-icon-btn search-btn" onclick="openSearchModal()">🔍</button>
+                <button class="navbar-icon-btn notifications-btn" onclick="toggleNotifications()">🔔<span class="badge" id="notifBadge" style="display:none">3</span></button>
+                <div class="dropdown" style="position:relative">
+                    <button class="navbar-icon-btn" id="userMenuBtn">👤</button>
+                    <div class="dropdown-menu" style="right:0;min-width:200px">
+                        <a href="profile.html" class="dropdown-item"><div class="dropdown-item-content"><div class="dropdown-item-title">Профиль</div></div></a>
+                        <a href="#" class="dropdown-item" onclick="handleLogout();return false"><div class="dropdown-item-content"><div class="dropdown-item-title">Выйти</div></div></a>
+                    </div>
                 </div>
                 <div class="mobile-menu-toggle"><span></span><span></span><span></span></div>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="main-content" style="padding-top: 0;">
-        <!-- Profile Hero -->
-        <section class="profile-hero">
-            <div class="profile-banner"></div>
-            <div class="profile-info">
-                <div class="profile-header" id="profileHeader">
-                    <!-- Loaded via JS -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Profile Content -->
-        <section class="profile-content">
-            <!-- Tabs -->
-            <div class="profile-tabs">
-                <div class="profile-tab active" onclick="switchTab('overview')">Overview</div>
-                <div class="profile-tab" onclick="switchTab('products')">Products</div>
-                <div class="profile-tab" onclick="switchTab('marketplace')">Marketplace</div>
-                <div class="profile-tab" onclick="switchTab('activity')">Activity</div>
-            </div>
-
-            <!-- Overview Section -->
-            <div class="profile-section active" id="overviewSection">
-                <div class="grid" style="grid-template-columns: 2fr 1fr; gap: var(--spacing-xl);">
-                    <div>
-                        <div class="card mb-lg">
-                            <h3 class="mb-md">About</h3>
-                            <p class="text-secondary" id="profileBio">No bio yet.</p>
-                        </div>
-                        
-                        <div class="card">
-                            <h3 class="mb-md">Recent Activity</h3>
-                            <div id="recentActivity">
-                                <div class="empty-state">
-                                    <div class="empty-state-icon">📊</div>
-                                    <p>No recent activity</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <div class="card mb-lg">
-                            <h3 class="mb-md">Information</h3>
-                            <ul style="line-height: 2.5; color: var(--text-secondary);">
-                                <li><strong class="text-primary">User ID:</strong> <span id="infoUserId">-</span></li>
-                                <li><strong class="text-primary">Member since:</strong> <span id="infoJoined">-</span></li>
-                                <li><strong class="text-primary">Last online:</strong> <span id="infoLastOnline">-</span></li>
-                                <li><strong class="text-primary">Country:</strong> <span id="infoCountry">-</span></li>
-                            </ul>
-                        </div>
-                        
-                        <div class="card">
-                            <h3 class="mb-md">Badges</h3>
-                            <div id="profileBadges" class="flex flex-col gap-sm">
-                                <!-- Loaded via JS -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Products Section -->
-            <div class="profile-section" id="productsSection">
-                <div class="empty-state">
-                    <div class="empty-state-icon">📦</div>
-                    <h3 class="mb-sm">No Products</h3>
-                    <p>You haven't purchased any products yet.</p>
-                </div>
-            </div>
-
-            <!-- Marketplace Section -->
-            <div class="profile-section" id="marketplaceSection">
-                <div class="empty-state">
-                    <div class="empty-state-icon">🛒</div>
-                    <h3 class="mb-sm">No Marketplace Items</h3>
-                    <p>You haven't uploaded any marketplace items yet.</p>
-                </div>
-            </div>
-
-            <!-- Activity Section -->
-            <div class="profile-section" id="activitySection">
-                <div class="empty-state">
-                    <div class="empty-state-icon">📝</div>
-                    <h3 class="mb-sm">No Activity</h3>
-                    <p>No recent forum activity.</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer" style="background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: var(--spacing-3xl) 0; margin-top: var(--spacing-3xl);">
+    <header class="profile-header-section">
         <div class="container">
-            <div class="divider divider-gothic mb-xl"></div>
-            <div class="text-center">
-                <p class="text-secondary" style="font-size: 0.875rem;">&copy; 2024 WINX Platform. All rights reserved.</p>
+            <div class="profile-banner"></div>
+            <div class="profile-main-info">
+                <div class="profile-avatar-wrapper" id="profileAvatarWrapper">
+                    <span id="avatarPlaceholder">A</span>
+                    <label class="profile-avatar-edit">📷<input type="file" accept="image/*" style="display:none" onchange="uploadAvatar(this)"></label>
+                </div>
+                <div class="profile-info-content">
+                    <h1 class="profile-display-name"><span id="profileName">Admin</span><span class="profile-role-badge" id="profileBadge">Разработчик</span></h1>
+                    <p class="profile-meta-info" id="profileMeta">@admin • На сайте с Января 2024</p>
+                    <p class="text-secondary" id="userStatus" style="margin-top:var(--spacing-sm);font-style:italic">Разработчик WINX Platform</p>
+                    <div class="profile-stats-row">
+                        <div class="profile-stat-item"><div class="profile-stat-num" id="statPosts">0</div><div class="profile-stat-label">Постов</div></div>
+                        <div class="profile-stat-item"><div class="profile-stat-num" id="statLikes">0</div><div class="profile-stat-label">Лайков</div></div>
+                        <div class="profile-stat-item"><div class="profile-stat-num" id="statTopics">0</div><div class="profile-stat-label">Тем</div></div>
+                    </div>
+                </div>
             </div>
         </div>
-    </footer>
+    </header>
+
+    <main class="main-content">
+        <div class="container profile-settings-area">
+            <div class="profile-tabs-nav">
+                <div class="profile-tab-btn active" onclick="switchTab('overview')">⚙️ Профиль</div>
+                <div class="profile-tab-btn" onclick="switchTab('security')">🔒 Безопасность</div>
+                <div class="profile-tab-btn" onclick="switchTab('sessions')">💻 Сессии</div>
+                <div class="profile-tab-btn" onclick="switchTab('badges')">🏆 Награды</div>
+            </div>
+
+            <div id="overviewTab" class="settings-block">
+                <h2 class="settings-block-title">Настройки профиля</h2>
+                <div class="settings-panel">
+                    <div class="settings-item-row">
+                        <div class="settings-item-label">
+                            <div class="settings-item-title">Никнейм</div>
+                            <div class="settings-item-desc">Изменение доступно раз в 180 дней</div>
+                        </div>
+                        <div class="settings-item-actions"><button class="btn btn-secondary btn-sm" onclick="changeNickname()" id="changeNickBtn">Изменить</button></div>
+                    </div>
+                    <div class="nickname-cooldown-text" id="nicknameTimer"></div>
+                </div>
+                <div class="settings-panel">
+                    <div class="settings-item-row">
+                        <div class="settings-item-label">
+                            <div class="settings-item-title">Цвет никнейма</div>
+                            <div class="settings-item-desc">Выберите цвет для отображения</div>
+                        </div>
+                        <div class="nickname-color-options" id="colorPicker" style="display:flex;gap:var(--spacing-xs)">
+                            <div class="color-swatch active" style="background:#F4F4F4" data-color="#F4F4F4"></div>
+                            <div class="color-swatch" style="background:#C8A76A" data-color="#C8A76A"></div>
+                            <div class="color-swatch" style="background:#8B5CF6" data-color="#8B5CF6"></div>
+                            <div class="color-swatch" style="background:#C0392B" data-color="#C0392B"></div>
+                            <div class="color-swatch" style="background:#10B981" data-color="#10B981"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-panel">
+                    <div class="settings-item-row">
+                        <div class="settings-item-label">
+                            <div class="settings-item-title">Статус</div>
+                            <div class="settings-item-desc">Отображается под ником</div>
+                        </div>
+                        <div class="settings-item-actions"><button class="btn btn-secondary btn-sm" onclick="editStatus()">Изменить</button></div>
+                    </div>
+                </div>
+                <div class="settings-panel">
+                    <div class="settings-item-row">
+                        <div class="settings-item-label">
+                            <div class="settings-item-title">Email</div>
+                            <div class="settings-item-desc" id="currentEmail">admin@winx.com</div>
+                        </div>
+                        <div class="settings-item-actions"><button class="btn btn-secondary btn-sm" onclick="changeEmail()">Изменить</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="securityTab" class="settings-block hidden">
+                <h2 class="settings-block-title">Безопасность</h2>
+                <div class="settings-panel">
+                    <h3 class="mb-md" style="font-size:1.1rem">Двухфакторная аутентификация</h3>
+                    <div class="security-status-box" id="twoFactorStatus"><span id="twoFactorIcon">❌</span><span id="twoFactorText">2FA отключена</span></div>
+                    <button class="btn btn-primary" id="toggle2FA" onclick="toggle2FA()">Включить 2FA</button>
+                    <div class="backup-codes-box hidden" id="backupCodesBox">
+                        <h4 style="margin-bottom:var(--spacing-sm)">🔑 Резервные коды</h4>
+                        <p class="text-secondary" style="font-size:0.85rem;margin-bottom:var(--spacing-md)">Сохраните в безопасном месте</p>
+                        <div class="backup-codes-grid" id="backupCodeGrid"></div>
+                        <button class="btn btn-secondary btn-sm" style="margin-top:var(--spacing-md)" onclick="downloadBackupCodes()">📥 Скачать</button>
+                    </div>
+                </div>
+                <div class="settings-panel">
+                    <div class="settings-item-row">
+                        <div class="settings-item-label">
+                            <div class="settings-item-title">Сменить пароль</div>
+                            <div class="settings-item-desc">Требуется текущий пароль</div>
+                        </div>
+                        <div class="settings-item-actions"><button class="btn btn-secondary btn-sm" onclick="changePassword()">Изменить</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="sessionsTab" class="settings-block hidden">
+                <h2 class="settings-block-title">Активные сессии</h2>
+                <div class="sessions-list" id="sessionsList"></div>
+                <button class="btn btn-secondary" style="margin-top:var(--spacing-lg)" onclick="endOtherSessions()">Завершить все другие сессии</button>
+            </div>
+
+            <div id="badgesTab" class="settings-block hidden">
+                <h2 class="settings-block-title">Награды</h2>
+                <div class="badges-grid" id="badgesGrid"></div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="twoFAModal" style="display:none">
+        <div class="modal" style="max-width:400px">
+            <div class="modal-header"><h3 class="modal-title">Настройка 2FA</h3><button class="modal-close" onclick="close2FAModal()">✕</button></div>
+            <div class="modal-body">
+                <div style="text-align:center">
+                    <p class="text-secondary mb-md">1. Отсканируйте QR в Google Authenticator</p>
+                    <div class="qr-placeholder">📱</div>
+                    <p class="text-secondary mb-md">Или ключ: <code id="twoFASecret" style="display:block;padding:var(--spacing-sm);background:var(--bg-secondary);border-radius:var(--radius-md);margin:var(--spacing-md)0">XXXXXXXX</code></p>
+                    <p class="text-secondary mb-md">2. Введите код</p>
+                    <input type="text" id="twoFACode" placeholder="000000" maxlength="6" style="width:150px;text-align:center;font-size:1.5rem;letter-spacing:8px;display:block;margin:var(--spacing-md) auto">
+                    <button class="btn btn-primary" onclick="verify2FA()">Подтвердить</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="js/db/database.js"></script>
     <script src="js/main.js"></script>
     <script>
-        // Check if logged in
-        const user = db.getCurrentUser();
-        if (!user) {
-            window.location.href = 'login.html';
-        } else {
+        let currentUser = null;
+        let temp2FASecret = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            currentUser = db.getCurrentUser();
+            if (!currentUser) { window.location.href = 'login.html'; return; }
             loadProfile();
-        }
+        });
 
         function loadProfile() {
-            // Profile header
-            document.getElementById('profileHeader').innerHTML = `
-                <div class="profile-avatar-container">
-                    <div class="profile-avatar">${user.username.charAt(0).toUpperCase()}</div>
-                </div>
-                <div class="profile-details">
-                    <div class="profile-name">
-                        <h1 class="profile-username">${escapeHtml(user.username)}</h1>
-                        ${user.role === 'admin' ? '<span class="badge badge-red">Admin</span>' : ''}
-                        ${user.role === 'creator' ? '<span class="badge badge-gold">Creator</span>' : ''}
-                    </div>
-                    <p class="profile-userid">${user.id}</p>
-                    <div class="profile-badges">
-                        ${user.badges.map(b => `<span class="badge badge-gold">${escapeHtml(b)}</span>`).join('')}
-                    </div>
-                    <p class="profile-bio">${user.bio || 'No bio yet.'}</p>
-                    <div class="profile-stats">
-                        <div class="profile-stat">
-                            <div class="profile-stat-value">${user.forumPosts}</div>
-                            <div class="profile-stat-label">Posts</div>
-                        </div>
-                        <div class="profile-stat">
-                            <div class="profile-stat-value">${user.likesReceived}</div>
-                            <div class="profile-stat-label">Likes</div>
-                        </div>
-                        <div class="profile-stat">
-                            <div class="profile-stat-value">${user.followers.length}</div>
-                            <div class="profile-stat-label">Followers</div>
-                        </div>
-                        <div class="profile-stat">
-                            <div class="profile-stat-value">${user.following.length}</div>
-                            <div class="profile-stat-label">Following</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            // Info
-            document.getElementById('infoUserId').textContent = user.id;
-            document.getElementById('infoJoined').textContent = formatDate(user.createdAt);
-            document.getElementById('infoLastOnline').textContent = timeAgo(new Date(user.lastOnline));
-            document.getElementById('infoCountry').textContent = user.country || 'Not specified';
-            document.getElementById('profileBio').textContent = user.bio || 'No bio yet.';
-            
-            // Badges
-            const badgeNames = {
-                'admin': '🛡️ Administrator',
-                'creator': '✏️ Creator',
-                'verified': '✓ Verified',
-                'founder': '👑 Founder',
-                'early-adopter': '🎖️ Early Adopter'
-            };
-            
-            document.getElementById('profileBadges').innerHTML = user.badges.length > 0 
-                ? user.badges.map(b => `<span class="badge badge-gold">${badgeNames[b] || escapeHtml(b)}</span>`).join('')
-                : '<p class="text-secondary">No badges yet</p>';
+            const name = currentUser.nickname || currentUser.username;
+            document.getElementById('profileName').textContent = name;
+            document.getElementById('profileName').style.color = currentUser.nicknameColor || '#F4F4F4';
+            document.getElementById('avatarPlaceholder').textContent = name.charAt(0).toUpperCase();
+            if (currentUser.avatar) document.getElementById('avatarPlaceholder').innerHTML = `<img src="${currentUser.avatar}">`;
+            document.getElementById('profileBadge').textContent = currentUser.role === 'admin' ? 'Разработчик' : currentUser.role === 'creator' ? 'Создатель' : 'Пользователь';
+            document.getElementById('userStatus').textContent = currentUser.status || 'Разработчик WINX Platform';
+            document.getElementById('currentEmail').textContent = currentUser.email;
+            document.getElementById('statPosts').textContent = currentUser.forumPosts || 0;
+            document.getElementById('statLikes').textContent = currentUser.likesReceived || 0;
+            document.getElementById('statTopics').textContent = db.getForumTopics().filter(t => t.authorId === currentUser.id).length;
+            updateNicknameTimer();
+            loadSessions();
+            loadBadges();
+            setupColorPicker();
+            update2FAStatus();
         }
 
-        function switchTab(tabName) {
-            // Update tabs
-            document.querySelectorAll('.profile-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
+        function switchTab(tab) {
+            document.querySelectorAll('.profile-tab-btn').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.settings-block').forEach(s => s.classList.add('hidden'));
             event.target.classList.add('active');
-            
-            // Update sections
-            document.querySelectorAll('.profile-section').forEach(section => {
-                section.classList.remove('active');
+            document.getElementById(tab + 'Tab').classList.remove('hidden');
+        }
+
+        function updateNicknameTimer() {
+            const last = currentUser.lastNicknameChange ? new Date(currentUser.lastNicknameChange) : null;
+            const btn = document.getElementById('changeNickBtn');
+            const timer = document.getElementById('nicknameTimer');
+            if (!last) { timer.textContent = ''; btn.disabled = false; btn.style.opacity = '1'; return; }
+            const days = Math.floor((new Date() - last) / (1000*60*60*24));
+            const left = 180 - days;
+            if (left > 0) { timer.textContent = `Доступно через ${left} дн.`; btn.disabled = true; btn.style.opacity = '0.5'; }
+            else { timer.textContent = ''; btn.disabled = false; btn.style.opacity = '1'; }
+        }
+
+        function changeNickname() {
+            const nick = prompt('Новый никнейм (мин. 3 символа):');
+            if (!nick || nick.length < 3) return;
+            const last = currentUser.lastNicknameChange ? new Date(currentUser.lastNicknameChange) : null;
+            if (last && Math.floor((new Date() - last) / (1000*60*60*24)) < 180) { alert('Подождите окончания кулдауна'); return; }
+            const res = db.updateUserProfile(currentUser.id, { nickname: nick, lastNicknameChange: new Date().toISOString() });
+            if (res.success) { currentUser = res.user; document.getElementById('profileName').textContent = nick; alert('Никнейм изменён!'); updateNicknameTimer(); }
+            else alert(res.error);
+        }
+
+        function editStatus() {
+            const s = prompt('Новый статус:', currentUser.status || '');
+            if (s !== null) { currentUser.status = s; document.getElementById('userStatus').textContent = s; db.updateUserProfile(currentUser.id, { status: s }); }
+        }
+
+        function uploadAvatar(input) {
+            const file = input.files[0];
+            if (!file) return;
+            if (file.size > 2*1024*1024) { alert('Файл > 2МБ'); return; }
+            const r = new FileReader();
+            r.onload = e => { document.getElementById('avatarPlaceholder').innerHTML = `<img src="${e.target.result}">`; currentUser.avatar = e.target.result; db.updateUserProfile(currentUser.id, { avatar: e.target.result }); };
+            r.readAsDataURL(file);
+        }
+
+        function setupColorPicker() {
+            document.querySelectorAll('.color-swatch').forEach(s => {
+                s.addEventListener('click', () => {
+                    document.querySelectorAll('.color-swatch').forEach(x => x.classList.remove('active'));
+                    s.classList.add('active');
+                    document.getElementById('profileName').style.color = s.dataset.color;
+                    currentUser.nicknameColor = s.dataset.color;
+                    db.updateUserProfile(currentUser.id, { nicknameColor: s.dataset.color });
+                });
             });
-            document.getElementById(tabName + 'Section').classList.add('active');
+        }
+
+        function changeEmail() { alert('Письмо подтверждения отправлено на ' + currentUser.email); }
+        function changePassword() {
+            const cur = prompt('Текущий пароль:');
+            if (!cur) return;
+            if (!db.login(currentUser.email, cur).success) { alert('Неверно'); return; }
+            const np = prompt('Новый пароль (мин. 6):');
+            if (np && np.length >= 6) alert('Пароль изменён!');
+        }
+
+        function update2FAStatus() {
+            const box = document.getElementById('twoFactorStatus');
+            const icon = document.getElementById('twoFactorIcon');
+            const txt = document.getElementById('twoFactorText');
+            const btn = document.getElementById('toggle2FA');
+            const backup = document.getElementById('backupCodesBox');
+            if (currentUser.twoFactorEnabled) {
+                box.className = 'security-status-box'; box.style.color = '#10B981';
+                icon.textContent = '✅'; txt.textContent = '2FA включена';
+                btn.textContent = 'Отключить 2FA';
+                backup.classList.remove('hidden');
+                if (currentUser.backupCodes) displayBackupCodes(currentUser.backupCodes);
+            } else {
+                box.className = 'security-status-box'; box.style.color = 'var(--text-secondary)';
+                icon.textContent = '❌'; txt.textContent = '2FA отключена';
+                btn.textContent = 'Включить 2FA'; backup.classList.add('hidden');
+            }
+        }
+
+        function toggle2FA() {
+            if (currentUser.twoFactorEnabled) {
+                if (confirm('Отключить 2FA?')) {
+                    db.updateUserProfile(currentUser.id, { twoFactorEnabled: false, twoFactorSecret: null, backupCodes: null });
+                    currentUser.twoFactorEnabled = false; update2FAStatus(); alert('2FA отключена');
+                }
+            } else {
+                temp2FASecret = generate2FASecret();
+                document.getElementById('twoFASecret').textContent = temp2FASecret;
+                document.getElementById('twoFAModal').style.display = 'flex';
+            }
+        }
+        function close2FAModal() { document.getElementById('twoFAModal').style.display = 'none'; document.getElementById('twoFACode').value = ''; temp2FASecret = null; }
+        function generate2FASecret() { const c = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567'; let s = ''; for(let i=0;i<32;i++) s += c.charAt(Math.floor(Math.random()*c.length)); return s; }
+        function generateBackupCodes() { const codes = []; for(let i=0;i<8;i++) codes.push(Math.random().toString(36).substring(2,6).toUpperCase() + '-' + Math.random().toString(36).substring(2,6).toUpperCase()); return codes; }
+        function displayBackupCodes(codes) { document.getElementById('backupCodeGrid').innerHTML = codes.map(c => `<div class="backup-code-item">${c}</div>`).join(''); }
+        function verify2FA() {
+            const code = document.getElementById('twoFACode').value;
+            if (code.length !== 6) { alert('6 цифр'); return; }
+            const codes = generateBackupCodes();
+            db.updateUserProfile(currentUser.id, { twoFactorEnabled: true, twoFactorSecret: temp2FASecret, backupCodes: codes });
+            currentUser.twoFactorEnabled = true; currentUser.twoFactorSecret = temp2FASecret; currentUser.backupCodes = codes;
+            close2FAModal(); update2FAStatus(); displayBackupCodes(codes); alert('2FA включена! Сохраните коды.');
+        }
+        function downloadBackupCodes() {
+            const codes = currentUser.backupCodes || [];
+            if (!codes.length) return;
+            const blob = new Blob(['WINX Backup Codes\n================\n\n' + codes.join('\n')], { type: 'text/plain' });
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'winx-backup-codes.txt'; a.click();
+        }
+
+        function loadSessions() {
+            const sessions = currentUser.sessions || [{ browser: 'Chrome', os: 'Windows 11', ip: '127.0.0.1', lastActive: new Date().toISOString(), current: true }];
+            document.getElementById('sessionsList').innerHTML = sessions.map(s => `
+                <div class="session-card">
+                    <div class="session-icon-box">🌐</div>
+                    <div class="session-details">
+                        <div class="session-browser-name">${s.browser} • ${s.os} ${s.current ? '<span class="session-badge-current">Текущая</span>' : ''}</div>
+                        <div class="session-info-text">IP: ${s.ip} • ${timeAgo(new Date(s.lastActive))}</div>
+                    </div>
+                    ${!s.current ? `<button class="btn btn-secondary btn-sm" onclick="endSession('${s.ip}')">Завершить</button>` : ''}
+                </div>
+            `).join('');
+        }
+        function endOtherSessions() { if(confirm('Завершить все другие?')) { currentUser.sessions = currentUser.sessions.filter(s => s.current); db.updateUserProfile(currentUser.id, { sessions: currentUser.sessions }); loadSessions(); } }
+        function endSession(ip) { if(confirm('Завершить?')) { currentUser.sessions = currentUser.sessions.filter(s => s.ip !== ip); db.updateUserProfile(currentUser.id, { sessions: currentUser.sessions }); loadSessions(); } }
+
+        function loadBadges() {
+            const badges = [{icon:'🛠️',name:'Разработчик',desc:'Создатель WINX'},{icon:'🧪',name:'Тестер',desc:'Помощь в тестировании'},{icon:'💰',name:'Seller',desc:'Продаёт на маркетплейсе'},{icon:'👴',name:'Oldfag',desc:'С нами > 1 года'},{icon:'💎',name:'Premium',desc:'Подписчик'},{icon:'🎯',name:'Активный',desc:'100+ сообщений'}];
+            document.getElementById('badgesGrid').innerHTML = badges.map(b => `<div class="badge-card"><div class="badge-emoji">${b.icon}</div><div class="badge-title">${b.name}</div><div class="badge-description">${b.desc}</div></div>`).join('');
+        }
+
+        function toggleNotifications() {
+            const n = [{t:'Упоминание',d:'5 мин назад'},{t:'Ответ в теме',d:'1 час назад'},{t:'Вход в аккаунт',d:'2 часа назад'}];
+            alert('Уведомления:\n\n' + n.map(x => `• ${x.t}\n  ${x.d}`).join('\n\n'));
+            document.getElementById('notifBadge').style.display = 'none';
         }
     </script>
 </body>

@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forum — WINX</title>
+    <title>Форум — WINX</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/search-modal.css">
     <style>
         .forum-hero {
             padding: var(--spacing-3xl) 0;
@@ -157,7 +158,22 @@
             <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="logo-path"/><text x="50" y="58" text-anchor="middle" fill="#C8A76A" font-size="24" font-family="Cinzel, serif" font-weight="700">W</text></svg>
         </div>
         <div class="loading-bar-container"><div class="loading-bar"></div></div>
-        <div class="loading-text">Loading WINX</div>
+        <div class="loading-text">WINX</div>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="search-modal-overlay" id="searchModal">
+        <div class="search-modal">
+            <div class="search-modal-input-wrapper">
+                <span class="search-modal-icon">🔍</span>
+                <input type="text" class="search-modal-input" placeholder="Поиск..." id="searchModalInput">
+                <button class="search-modal-close" onclick="closeSearchModal()">Esc</button>
+            </div>
+            <div class="search-modal-hint">
+                <span class="text-secondary" style="font-size: 0.8rem;">Ctrl</span> + <span class="text-secondary" style="font-size: 0.8rem;">K</span>
+            </div>
+            <div class="search-modal-results" id="searchModalResults"></div>
+        </div>
     </div>
 
     <!-- Navigation -->
@@ -194,7 +210,7 @@
             <div class="container">
                 <h1 class="mb-md">Форум сообщества</h1>
                 <p class="text-secondary" style="max-width: 600px; margin: 0 auto;">
-                    Присоединяйтесь к обсуждениям, получайте помощь и общайтесь с сообществом WINX
+                    Обсуждения, помощь и общение с сообществом WINX
                 </p>
             </div>
         </section>
@@ -245,7 +261,6 @@
             container.innerHTML = categories.map(cat => {
                 const catTopics = topics.filter(t => t.categoryId === cat.id);
                 const totalReplies = catTopics.reduce((sum, t) => sum + t.replies, 0);
-                const totalViews = catTopics.reduce((sum, t) => sum + t.views, 0);
                 
                 return `
                     <div class="card category-card" onclick="window.location.href='forum-category.html?id=${cat.id}'" style="cursor: pointer;">
@@ -258,11 +273,11 @@
                             <div class="category-stats">
                                 <div class="stat">
                                     <span>💬</span>
-                                    <span>${catTopics.length} topics</span>
+                                    <span>${catTopics.length} тем</span>
                                 </div>
                                 <div class="stat">
                                     <span>📝</span>
-                                    <span>${totalReplies} replies</span>
+                                    <span>${totalReplies} ответов</span>
                                 </div>
                             </div>
                         </div>
@@ -276,14 +291,13 @@
             const container = document.getElementById('topicsList');
             const user = db.getCurrentUser();
             
-            // Show new topic button for logged in users
             const newTopicBtn = document.getElementById('newTopicBtn');
             if (user) {
                 newTopicBtn.classList.remove('hidden');
             }
             
             if (topics.length === 0) {
-                container.innerHTML = '<p class="text-secondary text-center">No topics yet</p>';
+                container.innerHTML = '<p class="text-secondary text-center">Тем пока нет</p>';
                 return;
             }
             
@@ -295,23 +309,23 @@
                     </div>
                     <div class="topic-content">
                         <div class="topic-title">
-                            ${topic.pinned ? '<span class="badge-pinned">📌 Pinned</span>' : ''}
-                            ${topic.solved ? '<span class="badge-solved">✓ Solved</span>' : ''}
+                            ${topic.pinned ? '<span class="badge-pinned">📌 Закреплено</span>' : ''}
+                            ${topic.solved ? '<span class="badge-solved">✓ Решено</span>' : ''}
                             <span>${escapeHtml(topic.title)}</span>
                         </div>
                         <div class="topic-meta">
-                            <span>by <strong class="text-primary">${escapeHtml(topic.authorName)}</strong></span>
+                            <span>от <strong class="text-primary">${escapeHtml(topic.authorName)}</strong></span>
                             <span>•</span>
                             <span>${timeAgo(new Date(topic.createdAt))}</span>
                         </div>
                     </div>
                     <div class="topic-stats">
                         <div class="topic-stat-value">${topic.replies}</div>
-                        <div class="topic-stat-label">Replies</div>
+                        <div class="topic-stat-label">Ответов</div>
                     </div>
                     <div class="topic-stats">
                         <div class="topic-stat-value">${formatNumber(topic.views)}</div>
-                        <div class="topic-stat-label">Views</div>
+                        <div class="topic-stat-label">Просмотров</div>
                     </div>
                 </div>
             `).join('');
@@ -320,11 +334,11 @@
         function handleNewTopic() {
             const user = db.getCurrentUser();
             if (!user) {
-                alert('Please login to create a topic');
+                alert('Войдите для создания темы');
                 window.location.href = 'login.html';
                 return;
             }
-            alert('Create topic feature coming soon!');
+            alert('Создание темы скоро будет доступно!');
         }
 
         loadCategories();
