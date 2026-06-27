@@ -1,0 +1,233 @@
+/* ==================== WINX HOTFIX — Чёрный текст ====================
+   Глобальный фикс для всех ссылок и их состояний
+======================================================================== */
+
+/* Все ссылки — белые */
+a, a:visited, a:active, a:hover {
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+/* Кнопка регистрации — тёмный текст */
+.auth-buttons a.register-btn, 
+.auth-buttons a.register-btn:hover,
+.btn-primary {
+    color: #000000 !important;
+}
+
+/* Заголовки — золотые */
+h1, h2, h3, h4, h5, h6 {
+    color: #f3af42 !important;
+}
+
+/* Текст — серый/белый */
+p, span, li, div, label {
+    color: #e0e0e0 !important;
+}
+
+/* Поля ввода */
+input, textarea, select {
+    color: #ffffff !important;
+    background-color: #141414 !important;
+    border: 1px solid #2a2a2a !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #666666 !important;
+}
+
+/* Навигация */
+.navbar-link,
+.navbar-brand {
+    color: #ffffff !important;
+}
+
+.navbar-link:hover,
+.navbar-link.active {
+    color: #C8A76A !important;
+}
+
+/* Карточки */
+.card,
+.category-card,
+.product-card {
+    color: #e0e0e0 !important;
+}
+
+.card h3,
+.card h4 {
+    color: #f3af42 !important;
+}
+
+/* Текст в карточках */
+.card p,
+.card .text-secondary {
+    color: #8C8C8C !important;
+}
+
+/* Кнопки */
+.btn,
+.btn-secondary {
+    color: #ffffff !important;
+}
+
+/* Dropdowns */
+.dropdown-item,
+.dropdown-item-title {
+    color: #ffffff !important;
+}
+
+.dropdown-item-subtitle {
+    color: #8C8C8C !important;
+}
+
+/* Footer */
+.footer,
+.footer p,
+.footer a {
+    color: #8C8C8C !important;
+}
+
+/* Form elements */
+.form-input,
+.form-textarea,
+.form-select {
+    color: #ffffff !important;
+    background-color: #141414 !important;
+}
+
+.form-label {
+    color: #8C8C8C !important;
+}
+
+/* Modal */
+.modal-title {
+    color: #ffffff !important;
+}
+
+.modal-body,
+.modal-body p {
+    color: #e0e0e0 !important;
+}
+
+/* Table */
+.table th,
+.table td {
+    color: #ffffff !important;
+}
+
+/* Badge */
+.badge {
+    color: #ffffff !important;
+}
+
+/* Stat values */
+.stat-value {
+    color: #f3af42 !important;
+}
+
+.stat-label {
+    color: #8C8C8C !important;
+}
+
+/* Hub tiles */
+.hub-tile-title {
+    color: #ffffff !important;
+}
+
+.hub-tile-description {
+    color: #8C8C8C !important;
+}
+
+.hub-slogan {
+    color: #8C8C8C !important;
+}
+
+/* Quick links */
+.hub-quick-link {
+    color: #8C8C8C !important;
+}
+
+.hub-quick-link:hover {
+    color: #C8A76A !important;
+}
+
+/* Profile */
+.profile-display-name {
+    color: #ffffff !important;
+}
+
+.profile-meta-info,
+.profile-stat-label {
+    color: #8C8C8C !important;
+}
+
+.profile-stat-num {
+    color: #f3af42 !important;
+}
+
+/* Settings */
+.settings-item-title {
+    color: #ffffff !important;
+}
+
+.settings-item-desc {
+    color: #8C8C8C !important;
+}
+
+/* Search modal */
+.search-modal-input {
+    color: #ffffff !important;
+}
+
+.search-modal-input::placeholder {
+    color: #666666 !important;
+}
+
+.search-modal-item-title {
+    color: #ffffff !important;
+}
+
+.search-modal-item-subtitle {
+    color: #8C8C8C !important;
+}
+
+/* Forum */
+.topic-title {
+    color: #ffffff !important;
+}
+
+.topic-meta {
+    color: #8C8C8C !important;
+}
+
+.category-stats,
+.stat {
+    color: #8C8C8C !important;
+}
+
+/* Notifications */
+.notifications-dropdown {
+    color: #ffffff !important;
+}
+
+/* Loading screen */
+.loading-text {
+    color: #ffffff !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar-thumb {
+    background: #2a2a2a !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #C8A76A !important;
+}
+
+/* Selection */
+::selection {
+    background: #C8A76A !important;
+    color: #000000 !important;
+}

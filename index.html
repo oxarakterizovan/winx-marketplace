@@ -6,38 +6,23 @@
     <title>WINX — Premium Gothic Platform</title>
     <meta name="description" content="WINX — премиум платформа для Minecraft утилит и сообщества">
     <meta name="theme-color" content="#040404">
-    
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
     <meta property="og:title" content="WINX — Premium Gothic Platform">
     <meta property="og:description" content="Minecraft утилиты и сообщество">
-    
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
-    
-    <!-- Styles -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/search-modal.css">
     <link rel="stylesheet" href="css/hub.css">
+    <link rel="stylesheet" href="css/hotfix.css">
 </head>
 <body class="loading">
-    <!-- Loading Screen -->
     <div class="loading-screen">
-        <div class="loading-logo">
-            <svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="45" class="logo-path"/>
-                <text x="50" y="58" text-anchor="middle" fill="#C8A76A" font-size="24" font-family="Cinzel, serif" font-weight="700">W</text>
-            </svg>
-        </div>
-        <div class="loading-bar-container">
-            <div class="loading-bar"></div>
-        </div>
+        <div class="loading-logo"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="logo-path"/><text x="50" y="58" text-anchor="middle" fill="#C8A76A" font-size="24" font-family="Cinzel, serif" font-weight="700">W</text></svg></div>
+        <div class="loading-bar-container"><div class="loading-bar"></div></div>
         <div class="loading-text">WINX</div>
     </div>
 
-    <!-- Search Modal -->
     <div class="search-modal-overlay" id="searchModal">
         <div class="search-modal">
             <div class="search-modal-input-wrapper">
@@ -45,14 +30,11 @@
                 <input type="text" class="search-modal-input" placeholder="Поиск..." id="searchModalInput">
                 <button class="search-modal-close" onclick="closeSearchModal()">Esc</button>
             </div>
-            <div class="search-modal-hint">
-                <span class="text-secondary" style="font-size: 0.8rem;">Ctrl</span> + <span class="text-secondary" style="font-size: 0.8rem;">K</span>
-            </div>
+            <div class="search-modal-hint"><span class="text-secondary" style="font-size:0.8rem">Ctrl</span> + <span class="text-secondary" style="font-size:0.8rem">K</span></div>
             <div class="search-modal-results" id="searchModalResults"></div>
         </div>
     </div>
 
-    <!-- Animated Background -->
     <div class="hub-background">
         <canvas id="particlesCanvas" class="particles-canvas"></canvas>
         <div class="hub-fog"></div>
@@ -60,34 +42,42 @@
         <div class="hub-bg-glow" id="bgGlow"></div>
     </div>
 
-    <!-- Minimal Navigation -->
-    <nav class="navbar" style="background: transparent; border: none; position: absolute;">
+    <nav class="navbar">
         <div class="navbar-container">
             <a href="index.html" class="navbar-brand">WINX</a>
             <div class="navbar-actions">
-                <button class="navbar-icon-btn search-btn" title="Поиск">🔍</button>
-                <button class="navbar-icon-btn" id="themeBtn" title="Тема">🎨</button>
-                <button class="navbar-icon-btn notifications-btn" title="Уведомления">🔔<span class="badge" style="display: none;"></span></button>
-                <div class="navbar-auth">
+                <button class="navbar-icon-btn search-btn" onclick="openSearchModal()" title="Поиск">🔍</button>
+                <button class="navbar-icon-btn" id="themeBtn" onclick="toggleThemeDropdown()" title="Тема">🎨</button>
+                <button class="navbar-icon-btn notifications-btn" onclick="toggleNotifications()" title="Уведомления">🔔<span class="badge" id="notifBadge" style="display:none">3</span></button>
+                <div class="navbar-auth" id="navAuth">
                     <a href="login.html" class="btn btn-secondary btn-sm">Войти</a>
+                    <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Hub Main Content -->
+    <div class="theme-dropdown" id="themeDropdown" style="display:none;position:fixed;top:80px;right:20px;z-index:1000">
+        <div class="dropdown-menu" style="min-width:200px">
+            <div class="dropdown-header"><h4>Тема</h4></div>
+            <div class="dropdown-item" onclick="setTheme('gothic')"><div class="dropdown-item-icon" style="background:#C8A76A">🏰</div><div class="dropdown-item-content"><div class="dropdown-item-title">Obsidian Violet</div></div></div>
+            <div class="dropdown-item" onclick="setTheme('vampire')"><div class="dropdown-item-icon" style="background:#C0392B">🩸</div><div class="dropdown-item-content"><div class="dropdown-item-title">Vampire Red</div></div></div>
+            <div class="dropdown-item" onclick="setTheme('witch')"><div class="dropdown-item-icon" style="background:#10B981">🧪</div><div class="dropdown-item-content"><div class="dropdown-item-title">Witch Hex</div></div></div>
+            <div class="dropdown-item" onclick="setTheme('void')"><div class="dropdown-item-icon" style="background:#8B5CF6">🌌</div><div class="dropdown-item-content"><div class="dropdown-item-title">Purple Void</div></div></div>
+            <div class="dropdown-item" onclick="setTheme('ash')"><div class="dropdown-item-icon" style="background:#4a4a4a">🌫️</div><div class="dropdown-item-content"><div class="dropdown-item-title">Monochrome Ash</div></div></div>
+        </div>
+    </div>
+
+    <div class="notifications-dropdown" id="notifDropdown" style="display:none;position:fixed;top:80px;right:80px;z-index:1000;min-width:320px;max-height:400px;overflow-y:auto;background:var(--bg-cards);border:1px solid var(--border-color);border-radius:var(--radius-lg);box-shadow:var(--shadow-soft)">
+        <div class="dropdown-header" style="padding:var(--spacing-md);border-bottom:1px solid var(--border-color)"><h4 style="margin:0">Уведомления</h4></div>
+        <div id="notifList"></div>
+    </div>
+
     <main class="hub-container">
-        <!-- Logo Section -->
         <div class="hub-logo-section">
             <div class="hub-logo">
                 <svg viewBox="0 0 100 100">
-                    <defs>
-                        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#C8A76A"/>
-                            <stop offset="50%" style="stop-color:#D4B87A"/>
-                            <stop offset="100%" style="stop-color:#C8A76A"/>
-                        </linearGradient>
-                    </defs>
+                    <defs><linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#C8A76A"/><stop offset="50%" style="stop-color:#D4B87A"/><stop offset="100%" style="stop-color:#C8A76A"/></linearGradient></defs>
                     <circle cx="50" cy="50" r="45" stroke="url(#goldGrad)" stroke-width="2" fill="none"/>
                     <circle cx="50" cy="50" r="35" stroke="url(#goldGrad)" stroke-width="1.5" fill="none"/>
                     <text x="50" y="62" text-anchor="middle" fill="url(#goldGrad)" font-size="40" font-family="Cinzel, serif" font-weight="700">W</text>
@@ -95,401 +85,66 @@
             </div>
             <h1 class="hub-slogan">Minecraft Premium Platform</h1>
         </div>
-
-        <!-- Focus Tiles -->
         <div class="hub-tiles">
             <a href="products.html" class="hub-tile" data-type="products" onmouseenter="setBgGlow('products')" onmouseleave="removeBgGlow()">
-                <div class="hub-tile-icon">⚡</div>
-                <h2 class="hub-tile-title">Products</h2>
-                <p class="hub-tile-description">Winx Loader & Tools</p>
+                <div class="hub-tile-icon">⚡</div><h2 class="hub-tile-title">Products</h2><p class="hub-tile-description">Winx Loader & Tools</p>
             </a>
-            
             <a href="marketplace.html" class="hub-tile" data-type="marketplace" onmouseenter="setBgGlow('marketplace')" onmouseleave="removeBgGlow()">
-                <div class="hub-tile-icon">🛒</div>
-                <h2 class="hub-tile-title">Marketplace</h2>
-                <p class="hub-tile-description">Community Content</p>
+                <div class="hub-tile-icon">🛒</div><h2 class="hub-tile-title">Marketplace</h2><p class="hub-tile-description">Community Content</p>
             </a>
         </div>
-
-        <!-- Quick Links -->
         <div class="hub-quick-links">
-            <a href="forum.html" class="hub-quick-link">Форум</a>
-            <a href="documentation.html" class="hub-quick-link">Документация</a>
+            <a href="forum.html" class="hub-quick-link">Форум</a><span class="text-secondary">•</span>
+            <a href="documentation.html" class="hub-quick-link">Документация</a><span class="text-secondary">•</span>
             <a href="support.html" class="hub-quick-link">Поддержка</a>
         </div>
     </main>
 
-    <!-- Theme Dropdown -->
-    <div class="dropdown" style="position: fixed; top: 80px; right: 20px; z-index: 1000;">
-        <div class="dropdown-menu" style="min-width: 180px;">
-            <div class="dropdown-header"><h4>Тема</h4></div>
-            <div class="dropdown-item" onclick="setTheme('gothic')"><div class="dropdown-item-icon" style="background: #C8A76A;">🏰</div><div class="dropdown-item-content"><div class="dropdown-item-title">Obsidian Violet</div></div></div>
-            <div class="dropdown-item" onclick="setTheme('vampire')"><div class="dropdown-item-icon" style="background: #C0392B;">🩸</div><div class="dropdown-item-content"><div class="dropdown-item-title">Vampire Red</div></div></div>
-            <div class="dropdown-item" onclick="setTheme('witch')"><div class="dropdown-item-icon" style="background: #10B981;">🧪</div><div class="dropdown-item-content"><div class="dropdown-item-title">Witch Hex</div></div></div>
-            <div class="dropdown-item" onclick="setTheme('ash')"><div class="dropdown-item-icon" style="background: #4a4a4a;">🌫️</div><div class="dropdown-item-content"><div class="dropdown-item-title">Monochrome Ash</div></div></div>
+    <footer class="footer" style="padding:var(--spacing-2xl) 0;border-top:1px solid var(--border-color);margin-top:var(--spacing-3xl)">
+        <div class="container text-center">
+            <div class="flex justify-center gap-lg mb-md" style="margin-bottom:var(--spacing-md)">
+                <a href="#" class="navbar-icon-btn" title="Discord"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg></a>
+                <a href="#" class="navbar-icon-btn" title="GitHub"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+                <a href="#" class="navbar-icon-btn" title="Twitter"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            </div>
+            <p class="text-secondary" style="font-size:0.875rem">&copy; 2024 WINX Platform. Все права защищены. Не связано с Mojang Studios.</p>
         </div>
-    </div>
-        <div class="navbar-container">
-            <a href="index.html" class="navbar-brand">
-                <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="20" cy="20" r="18" stroke="#C8A76A" stroke-width="2" fill="none"/>
-                    <text x="20" y="26" text-anchor="middle" fill="#C8A76A" font-size="20" font-family="Cinzel, serif" font-weight="700">W</text>
-                </svg>
-                WINX
-            </a>
-            
-            <ul class="navbar-menu">
-                <li><a href="index.html" class="navbar-link active">Главная</a></li>
-                <li><a href="marketplace.html" class="navbar-link">Маркетплейс</a></li>
-                <li><a href="products.html" class="navbar-link">Продукты</a></li>
-                <li><a href="forum.html" class="navbar-link">Форум</a></li>
-                <li><a href="documentation.html" class="navbar-link">Документация</a></li>
-                <li><a href="support.html" class="navbar-link">Поддержка</a></li>
-            </ul>
-            
-            <div class="navbar-actions">
-                <button class="navbar-icon-btn search-btn" title="Поиск">
-                    🔍
-                </button>
-                
-                <!-- Search Dropdown -->
-                <div class="dropdown-menu search-dropdown">
-                    <div class="dropdown-header">
-                        <input type="text" class="form-input search-input" placeholder="Поиск продуктов, маркетплейс, форум...">
-                    </div>
-                    <div class="search-results">
-                        <div class="search-category">Начните вводить для поиска</div>
-                    </div>
-                </div>
-                
-                <!-- Theme Selector -->
-                <div class="dropdown theme-selector">
-                    <button class="navbar-icon-btn" id="themeBtn" title="Тема">
-                        🎨
-                    </button>
-                    <div class="dropdown-menu" style="min-width: 180px;">
-                        <div class="dropdown-header">
-                            <h4>Тема</h4>
-                        </div>
-                        <div class="dropdown-item" onclick="setTheme('gothic')">
-                            <div class="dropdown-item-icon" style="background: #C8A76A;">🏰</div>
-                            <div class="dropdown-item-content">
-                                <div class="dropdown-item-title">Gothic Dark</div>
-                            </div>
-                        </div>
-                        <div class="dropdown-item" onclick="setTheme('vampire')">
-                            <div class="dropdown-item-icon" style="background: #C0392B;">🩸</div>
-                            <div class="dropdown-item-content">
-                                <div class="dropdown-item-title">Vampire Red</div>
-                            </div>
-                        </div>
-                        <div class="dropdown-item" onclick="setTheme('witch')">
-                            <div class="dropdown-item-icon" style="background: #10B981;">🧪</div>
-                            <div class="dropdown-item-content">
-                                <div class="dropdown-item-title">Witch Hex</div>
-                            </div>
-                        </div>
-                        <div class="dropdown-item" onclick="setTheme('void')">
-                            <div class="dropdown-item-icon" style="background: #8B5CF6;">🌌</div>
-                            <div class="dropdown-item-content">
-                                <div class="dropdown-item-title">Purple Void</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <button class="navbar-icon-btn notifications-btn" title="Уведомления">
-                    🔔
-                    <span class="badge" style="display: none;"></span>
-                </button>
-                
-                <!-- Notifications Dropdown -->
-                <div class="dropdown-menu notifications-dropdown">
-                    <div class="notifications-list">
-                        <div class="dropdown-header">
-                            <h4>Уведомления</h4>
-                        </div>
-                        <div class="dropdown-item">
-                            <div class="dropdown-item-content text-center">
-                                <p class="text-secondary">Войдите для просмотра уведомлений</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Auth / Profile -->
-                <div class="navbar-auth">
-                    <a href="login.html" class="btn btn-secondary btn-sm">Войти</a>
-                    <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
-                </div>
-                
-                <div class="mobile-menu-toggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
-        </div>
-    </nav>
+    </footer>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <div class="container">
-                <div class="hero-content text-center animate-on-load">
-                    <div class="hero-logo mb-xl">
-                        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
-                            <defs>
-                                <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#C8A76A"/>
-                                    <stop offset="50%" style="stop-color:#D4B87A"/>
-                                    <stop offset="100%" style="stop-color:#C8A76A"/>
-                                </linearGradient>
-                            </defs>
-                            <circle cx="60" cy="60" r="55" stroke="url(#goldGradient)" stroke-width="2" fill="none" opacity="0.5"/>
-                            <circle cx="60" cy="60" r="45" stroke="url(#goldGradient)" stroke-width="1.5" fill="none"/>
-                            <path d="M40 45 L60 35 L80 45 L80 75 L60 85 L40 75 Z" stroke="url(#goldGradient)" stroke-width="2" fill="none"/>
-                            <text x="60" y="70" text-anchor="middle" fill="url(#goldGradient)" font-size="32" font-family="Cinzel, serif" font-weight="700">W</text>
-                        </svg>
-                    </div>
-                    
-                    <h1 class="hero-title text-gradient mb-md">WINX</h1>
-                    <p class="hero-subtitle text-secondary mb-xl">
-                        Премиум готическая платформа и сообщество
-                    </p>
-                    
-                    <div class="hero-cta flex justify-center gap-md">
-                        <a href="products.html" class="btn btn-primary btn-lg">
-                            Продукты
-                        </a>
-                        <a href="marketplace.html" class="btn btn-secondary btn-lg">
-                            Маркетплейс
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Animated Background -->
-            <div class="hero-background">
-                <div class="gothic-arches"></div>
-                <div class="particles-container" id="hero-particles"></div>
-            </div>
-        </section>
-
-        <!-- Category Cards -->
-        <section class="categories-section py-3xl">
-            <div class="container">
-                <div class="grid-cards">
-                    <!-- Marketplace Card -->
-                    <a href="marketplace.html" class="card category-card animate-on-load hover-lift">
-                        <div class="card-icon text-gold mb-md" style="font-size: 3rem;">🛒</div>
-                        <h3 class="mb-sm">Маркетплейс</h3>
-                        <p class="text-secondary mb-md">Контент от сообщества: темы, конфигурации и многое другое.</p>
-                        <span class="btn btn-outline btn-sm">Обзор →</span>
-                    </a>
-                    
-                    <!-- Products Card -->
-                    <a href="products.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.1s;">
-                        <div class="card-icon text-gold mb-md" style="font-size: 3rem;">⚡</div>
-                        <h3 class="mb-sm">Продукты</h3>
-                        <p class="text-secondary mb-md">Премиум утилиты для Minecraft: Winx Loader и Standalone Clicker.</p>
-                        <span class="btn btn-outline btn-sm">Изучить →</span>
-                    </a>
-                    
-                    <!-- Forum Card -->
-                    <a href="forum.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.2s;">
-                        <div class="card-icon text-gold mb-md" style="font-size: 3rem;">💬</div>
-                        <h3 class="mb-sm">Форум</h3>
-                        <p class="text-secondary mb-md">Обсуждения, помощь и общение с сообществом WINX.</p>
-                        <span class="btn btn-outline btn-sm">Присоединиться →</span>
-                    </a>
-                    
-                    <!-- Documentation Card -->
-                    <a href="documentation.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.3s;">
-                        <div class="card-icon text-gold mb-md" style="font-size: 3rem;">📚</div>
-                        <h3 class="mb-sm">Документация</h3>
-                        <p class="text-secondary mb-md">Подробные руководства и документация для разработчиков.</p>
-                        <span class="btn btn-outline btn-sm">Читать →</span>
-                    </a>
-                    
-                    <!-- Support Card -->
-                    <a href="support.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.4s;">
-                        <div class="card-icon text-gold mb-md" style="font-size: 3rem;">🛟</div>
-                        <h3 class="mb-sm">Поддержка</h3>
-                        <p class="text-secondary mb-md">Помощь от нашей команды и ответы на популярные вопросы.</p>
-                        <span class="btn btn-outline btn-sm">Помощь →</span>
-                    </a>
-                    
-                    <!-- About Card -->
-                    <a href="about.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.5s;">
-                        <div class="card-icon text-gold mb-md" style="font-size: 3rem;">ℹ️</div>
-                        <h3 class="mb-sm">О проекте</h3>
-                        <p class="text-secondary mb-md">Узнайте о WINX, нашей миссии и команде платформы.</p>
-                        <span class="btn btn-outline btn-sm">Подробнее →</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Featured Products -->
-        <section class="featured-section py-3xl">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">Избранные продукты</h2>
-                    <p class="section-subtitle">Премиум инструменты для лучшего Minecraft опыта</p>
-                </div>
-                
-                <div class="grid-cards">
-                    <div class="card product-card animate-on-load">
-                        <div class="card-badge card-badge-free">Free</div>
-                        <div class="card-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); display: flex; align-items: center; justify-content: center;">
-                            <span style="font-size: 4rem;">⚡</span>
-                        </div>
-                        <h3 class="mb-sm">Winx Loader</h3>
-                        <p class="text-secondary mb-md" style="font-size: 0.9rem;">Премиум платформа для Minecraft с продвинутыми функциями</p>
-                        <div class="flex justify-between items-center mb-md">
-                            <div class="rating">
-                                <span class="rating-star">★</span>
-                                <span class="rating-star">★</span>
-                                <span class="rating-star">★</span>
-                                <span class="rating-star">★</span>
-                                <span class="rating-star">★</span>
-                                <span class="rating-value">(2,341)</span>
-                            </div>
-                            <span class="text-gold" style="font-weight: 600;">125K+</span>
-                        </div>
-                        <a href="product-winxloader.html" class="btn btn-primary" style="width: 100%;">Подробнее</a>
-                    </div>
-                    
-                    <div class="card product-card animate-on-load" style="animation-delay: 0.1s;">
-                        <div class="card-badge card-badge-free">Free</div>
-                        <div class="card-image" style="background: linear-gradient(135deg, #2d1b4e 0%, #1a1a2e 100%); display: flex; align-items: center; justify-content: center;">
-                            <span style="font-size: 4rem;">🖱️</span>
-                        </div>
-                        <h3 class="mb-sm">Standalone Clicker</h3>
-                        <p class="text-secondary mb-md" style="font-size: 0.9rem;">Продвинутый автокликер с настраиваемыми паттернами</p>
-                        <div class="flex justify-between items-center mb-md">
-                            <div class="rating">
-                                <span class="rating-star">★</span>
-                                <span class="rating-star">★</span>
-                                <span class="rating-star">★</span>
-                                <span class="rating-star">★</span>
-                                <span class="rating-star empty">☆</span>
-                                <span class="rating-value">(892)</span>
-                            </div>
-                            <span class="text-gold" style="font-weight: 600;">45K+</span>
-                        </div>
-                        <a href="product-clicker.html" class="btn btn-primary" style="width: 100%;">Подробнее</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Stats Section -->
-        <section class="stats-section py-3xl" style="background: var(--bg-secondary);">
-            <div class="container">
-                <div class="grid grid-cols-4 text-center">
-                    <div class="stat-item animate-on-load">
-                        <div class="stat-value text-gradient" style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 700;">170K+</div>
-                        <div class="stat-label text-secondary">Всего загрузок</div>
-                    </div>
-                    <div class="stat-item animate-on-load" style="animation-delay: 0.1s;">
-                        <div class="stat-value text-gradient" style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 700;">50K+</div>
-                        <div class="stat-label text-secondary">Активных пользователей</div>
-                    </div>
-                    <div class="stat-item animate-on-load" style="animation-delay: 0.2s;">
-                        <div class="stat-value text-gradient" style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 700;">1,000+</div>
-                        <div class="stat-label text-secondary">Товаров в маркетплейсе</div>
-                    </div>
-                    <div class="stat-item animate-on-load" style="animation-delay: 0.3s;">
-                        <div class="stat-value text-gradient" style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 700;">4.8</div>
-                        <div class="stat-label text-secondary">Средний рейтинг</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Scripts -->
     <script src="js/db/database.js"></script>
     <script src="js/main.js"></script>
     <script>
-        // Background Glow Effect
-        function setBgGlow(type) {
-            const glow = document.getElementById('bgGlow');
-            glow.className = 'hub-bg-glow ' + type;
+        function setBgGlow(type) { const glow = document.getElementById('bgGlow'); glow.className = 'hub-bg-glow ' + type; }
+        function removeBgGlow() { document.getElementById('bgGlow').className = 'hub-bg-glow'; }
+        function toggleThemeDropdown() { const d = document.getElementById('themeDropdown'); d.style.display = d.style.display === 'none' ? 'block' : 'none'; document.getElementById('notifDropdown').style.display = 'none'; }
+        function toggleNotifications() {
+            const d = document.getElementById('notifDropdown');
+            const list = document.getElementById('notifList');
+            if (d.style.display === 'block') { d.style.display = 'none'; return; }
+            const user = db.getCurrentUser();
+            const notifications = user ? [
+                {type:'mention',text:'@Admin упомянул вас в теме',time:'5 мин назад'},
+                {type:'reply',text:'Ответ в вашей теме "Winx Loader v2"',time:'1 час назад'},
+                {type:'system',text:'Новый вход в аккаунт',time:'2 часа назад'}
+            ] : [];
+            list.innerHTML = notifications.length ? notifications.map(n => `<div class="dropdown-item" style="padding:var(--spacing-md)"><div class="dropdown-item-content"><div class="dropdown-item-title">${n.text}</div><div class="dropdown-item-subtitle">${n.time}</div></div></div>`).join('') : '<div class="dropdown-item"><div class="dropdown-item-content text-center text-secondary">Войдите для просмотра</div></div>';
+            d.style.display = 'block';
+            document.getElementById('themeDropdown').style.display = 'none';
+            document.getElementById('notifBadge').style.display = 'none';
         }
-        
-        function removeBgGlow() {
-            const glow = document.getElementById('bgGlow');
-            glow.className = 'hub-bg-glow';
-        }
-        
-        // Particle Animation with Canvas
         const canvas = document.getElementById('particlesCanvas');
         if (canvas) {
             const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
             const particles = [];
-            const particleCount = 80;
-            
-            class Particle {
-                constructor() {
-                    this.reset();
-                }
-                
-                reset() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.vx = (Math.random() - 0.5) * 0.3;
-                    this.vy = (Math.random() - 0.5) * 0.3 - 0.2;
-                    this.alpha = Math.random() * 0.5 + 0.1;
-                    this.size = Math.random() * 2 + 1;
-                }
-                
-                update() {
-                    this.x += this.vx;
-                    this.y += this.vy;
-                    
-                    if (this.y < -10 || this.y > canvas.height + 10 || 
-                        this.x < -10 || this.x > canvas.width + 10) {
-                        this.reset();
-                    }
-                }
-                
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(200, 167, 106, ${this.alpha})`;
-                    ctx.fill();
-                }
-            }
-            
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-            
-            function animate() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                particles.forEach(p => {
-                    p.update();
-                    p.draw();
-                });
-                
-                requestAnimationFrame(animate);
-            }
-            
+            for (let i = 0; i < 80; i++) particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-0.5)*0.3,vy:(Math.random()-0.5)*0.3-0.2,alpha:Math.random()*0.5+0.1,size:Math.random()*2+1,update(){this.x+=this.vx;this.y+=this.vy;if(this.y<-10||this.y>canvas.height+10||this.x<-10||this.x>canvas.width+10){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;}},draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle=`rgba(200, 167, 106, ${this.alpha})`;ctx.fill()}});
+            function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw()}); requestAnimationFrame(animate); }
             animate();
-            
-            window.addEventListener('resize', () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            });
+            window.addEventListener('resize', ()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
         }
+        function updateAuthUI() { const user = db.getCurrentUser(); const auth = document.getElementById('navAuth'); if (user) auth.innerHTML = `<a href="profile.html" class="btn btn-primary btn-sm">Профиль</a>`; }
+        updateAuthUI();
+        document.addEventListener('click', (e) => { if (!e.target.closest('#themeDropdown') && !e.target.closest('#themeBtn')) document.getElementById('themeDropdown').style.display = 'none'; if (!e.target.closest('#notifDropdown') && !e.target.closest('.notifications-btn')) document.getElementById('notifDropdown').style.display = 'none'; });
     </script>
 </body>
 </html>

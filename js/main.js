@@ -521,43 +521,15 @@ document.addEventListener('keydown', (e) => {
 function initializeTheme() {
     const savedTheme = localStorage.getItem('winx_theme') || 'gothic';
     setTheme(savedTheme);
-    
-    const themeBtn = document.getElementById('themeBtn');
-    if (themeBtn) {
-        const dropdown = themeBtn.parentElement;
-        if (!dropdown.classList.contains('dropdown')) {
-            dropdown.classList.add('dropdown');
-        }
-    }
 }
-
+    
 function setTheme(themeName) {
     document.documentElement.setAttribute('data-theme', themeName);
     document.body.setAttribute('data-theme', themeName);
     localStorage.setItem('winx_theme', themeName);
-    
-    // Update active state in dropdown
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-        item.style.background = '';
-    });
-    
-    // Find and highlight current theme
-    const themeIcons = {
-        'gothic': '🏰',
-        'vampire': '🩸',
-        'witch': '🧪',
-        'void': '🌌',
-        'ash': '🌫️'
-    };
-    
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-        const icon = item.querySelector('.dropdown-item-icon');
-        if (icon && icon.textContent === themeIcons[themeName]) {
-            item.style.background = 'var(--bg-hover)';
-        }
-    });
+    console.log('Theme set to:', themeName);
 }
-
+    
 // ==================== Animated Stats ====================
 
 function initializeAnimatedStats() {
