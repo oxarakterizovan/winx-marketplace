@@ -1,14 +1,25 @@
-# WINX — Premium Gothic Marketplace & Community Platform
+# WINX — Премиум готическая платформа для Minecraft
 
-Premium dark gothic website for Minecraft utilities, modifications, and community.
+Премиум тёмный готический веб-сайт для утилит, модификаций и сообщества Minecraft.
 
-## 🎨 Design Style
+## 🎨 Стиль дизайна
 
-- **Dark Gothic** aesthetic with medieval architecture inspiration
-- **Premium SaaS** design with luxury software feel
-- **Color Palette**: Black marble, matte black metal, obsidian textures, gold engravings
+- **Тёмная готика** с вдохновением от средневековой архитектуры
+- **Премиум SaaS** дизайн с ощущением люксового ПО
+- **Цветовая палитра**: Чёрный мрамор, матовый металл, обсидиан, золотые гравировки
 
-## 📁 Project Structure
+## 🎨 Цветовые темы
+
+Доступны 4 цветовые темы (переключатель в навигации):
+
+| Тема | Описание | Акцент |
+|------|----------|--------|
+| 🏰 Gothic Dark | Классическая тёмная тема | Золото |
+| 🩸 Vampire Red | Кроваво-красная тема | Красный |
+| 🧪 Witch Hex | Изумрудно-зелёная тема | Зелёный |
+| 🌌 Purple Void | Фиолетовая тема | Фиолетовый |
+
+## 📁 Структура проекта
 
 ```
 winx/
@@ -37,75 +48,79 @@ winx/
 └── fonts/                  # Custom fonts (future)
 ```
 
-## 🚀 Getting Started
+## 🚀 Быстрый старт
 
-1. Open `index.html` in a modern web browser
-2. No build process required - pure HTML/CSS/JS
+1. Откройте `index.html` в современном браузере
+2. Сборка не требуется — чистый HTML/CSS/JS
 
-## 🎮 Demo Credentials
+## 🎮 Демо-аккаунты
 
-**Admin Account:**
+**Админ:**
 - Email: `admin@winx.com`
-- Password: `admin123`
+- Пароль: `admin123`
 
-**Creator Account:**
+**Создатель:**
 - Email: `creator@winx.com`
-- Password: `creator123`
+- Пароль: `creator123`
 
-## ✨ Features
+## ✨ Реализованные функции
 
-### Implemented
-- ✅ Loading screen with animations
-- ✅ Responsive navigation
-- ✅ User authentication (mock)
-- ✅ User profiles
-- ✅ Products showcase
-- ✅ Marketplace with filters
-- ✅ Forum with categories
-- ✅ Documentation
-- ✅ Support center with FAQ
-- ✅ About page
-- ✅ Dark gothic design
-- ✅ Smooth animations
-- ✅ Mock database (localStorage)
+### Основные
+- ✅ Загрузочный экран с плавной анимацией
+- ✅ Адаптивная навигация
+- ✅ Регистрация/вход (mock)
+- ✅ Профили пользователей
+- ✅ Витрина продуктов
+- ✅ Маркетплейс с фильтрами
+- ✅ Форум с категориями
+- ✅ Документация
+- ✅ Центр поддержки с FAQ
+- ✅ Страница "О проекте"
 
-### Coming Soon
-- 🔄 Product detail pages
-- 🔄 Marketplace item pages
-- 🔄 Forum topic pages
-- 🔄 Admin dashboard
-- 🔄 Seller dashboard
-- 🔄 Notifications system
-- 🔄 Search functionality
+### UI/UX
+- ✅ Модальное окно поиска (Spotlight-стиль)
+- ✅ Переключатель цветовых тем (4 темы)
+- ✅ Анимированные счётчики статистики
+- ✅ Плавные переходы между страницами
+- ✅ Тёмная готическая стилистика
+- ✅ SVG иконки вместо эмодзи
+- ✅ Кастомная фавиконка
+- ✅ SEO и Open Graph разметка
 
-## 🎨 Color Palette
+### Технические
+- ✅ Mock база данных (localStorage)
+- ✅ Локализация (русский язык)
+- ✅ Адаптивная вёрстка
+- ✅ CSS переменные для тем
 
-| Color | Value | Usage |
-|-------|-------|-------|
-| Background | `#040404` | Primary background |
-| Secondary BG | `#0D0D0D` | Secondary backgrounds |
-| Cards | `#131313` | Card backgrounds |
-| Borders | `#232323` | Borders and dividers |
-| Gold Accent | `#C8A76A` | Primary accent |
-| Purple Accent | `#8B5CF6` | Secondary accent |
-| Danger | `#C0392B` | Error states |
-| Text | `#F4F4F4` | Primary text |
-| Secondary Text | `#8C8C8C` | Secondary text |
+## 🎨 Цветовая палитра
 
-## 📝 Notes
+| Цвет | Значение | Использование |
+|------|----------|---------------|
+| Background | `#040404` | Основной фон |
+| Secondary BG | `#0D0D0D` | Вторичные фоны |
+| Cards | `#131313` | Фон карточек |
+| Borders | `#232323` | Границы и разделители |
+| Gold Accent | `#C8A76A` | Основной акцент |
+| Purple Accent | `#8B5CF6` | Вторичный акцент |
+| Danger | `#C0392B` | Ошибки |
+| Text | `#F4F4F4` | Основной текст |
+| Secondary Text | `#8C8C8C` | Вторичный текст |
 
-- This is a **frontend-only demo** with mock data
-- Database is simulated using `localStorage`
-- No actual file downloads
-- Not affiliated with Mojang Studios
+## 📝 Примечания
 
-## 🌐 Browser Support
+- Это **frontend-демо** с mock-данными
+- База данных симулирована через `localStorage`
+- Нет реальных загрузок файлов
+- Не связано с Mojang Studios
 
-- Chrome (recommended)
+## 🌐 Поддержка браузеров
+
+- Chrome (рекомендуется)
 - Firefox
 - Safari
 - Edge
 
-## 📄 License
+## 📄 Лицензия
 
-This is a demo project for educational purposes.
+Это демо-проект для образовательных целей.

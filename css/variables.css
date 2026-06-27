@@ -2,6 +2,9 @@
    Color Palette & Variables */
 
 :root {
+    /* Theme: Gothic Dark (default) */
+    --theme-name: 'gothic';
+    
     /* Background Colors */
     --bg-primary: #040404;
     --bg-secondary: #0D0D0D;
@@ -16,10 +19,6 @@
     --accent-primary: #C8A76A;
     --accent-secondary: #8B5CF6;
     --accent-danger: #C0392B;
-    
-    /* Text Colors */
-    --text-primary: #F4F4F4;
-    --text-secondary: #8C8C8C;
     
     /* Gradients */
     --gradient-gold: linear-gradient(135deg, #C8A76A 0%, #D4B87A 50%, #C8A76A 100%);
@@ -62,4 +61,34 @@
     --z-dropdown: 100;
     --z-modal: 200;
     --z-loading: 300;
+}
+
+/* Vampire Red Theme */
+[data-theme="vampire"] {
+    --theme-name: 'vampire';
+    --accent-primary: #C0392B;
+    --accent-secondary: #8B0000;
+    --gradient-gold: linear-gradient(135deg, #C0392B 0%, #E74C3C 50%, #C0392B 100%);
+    --shadow-gold: 0 4px 20px rgba(192, 57, 43, 0.15);
+    --shadow-glow: 0 0 30px rgba(192, 57, 43, 0.1);
+}
+
+/* Witch Hex Theme */
+[data-theme="witch"] {
+    --theme-name: 'witch';
+    --accent-primary: #10B981;
+    --accent-secondary: #059669;
+    --gradient-gold: linear-gradient(135deg, #10B981 0%, #34D399 50%, #10B981 100%);
+    --shadow-gold: 0 4px 20px rgba(16, 185, 129, 0.15);
+    --shadow-glow: 0 0 30px rgba(16, 185, 129, 0.1);
+}
+
+/* Purple Void Theme */
+[data-theme="void"] {
+    --theme-name: 'void';
+    --accent-primary: #8B5CF6;
+    --accent-secondary: #7C3AED;
+    --gradient-gold: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 50%, #8B5CF6 100%);
+    --shadow-gold: 0 4px 20px rgba(139, 92, 246, 0.15);
+    --shadow-glow: 0 0 30px rgba(139, 92, 246, 0.1);
 }

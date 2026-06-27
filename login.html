@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/search-modal.css">
     <style>
         .auth-page {
             min-height: 100vh;
@@ -129,7 +130,24 @@
         </div>
     </div>
 
+    <!-- Search Modal -->
+    <div class="search-modal-overlay" id="searchModal">
+        <div class="search-modal">
+            <div class="search-modal-input-wrapper">
+                <span class="search-modal-icon">🔍</span>
+                <input type="text" class="search-modal-input" placeholder="Поиск..." id="searchModalInput">
+                <button class="search-modal-close" onclick="closeSearchModal()">Esc</button>
+            </div>
+            <div class="search-modal-hint">
+                <span class="text-secondary" style="font-size: 0.8rem;">Быстрый поиск:</span>
+                <kbd>Ctrl</kbd> + <kbd>K</kbd>
+            </div>
+            <div class="search-modal-results" id="searchModalResults"></div>
+        </div>
+    </div>
+
     <script src="js/db/database.js"></script>
+    <script src="js/main.js"></script>
     <script>
         // Check if already logged in
         if (db.getCurrentUser()) {

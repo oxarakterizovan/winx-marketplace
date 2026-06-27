@@ -168,12 +168,15 @@
     align-items: center;
     justify-content: center;
     z-index: var(--z-loading);
-    transition: opacity var(--transition-slow), visibility var(--transition-slow);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
 }
 
 .loading-screen.hidden {
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
 }
 
 .loading-logo {

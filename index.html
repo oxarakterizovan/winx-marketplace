@@ -3,16 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WINX — Premium Gothic Marketplace & Community Platform</title>
-    <meta name="description" content="Premium Minecraft utilities, modifications, and community platform">
+    <title>WINX — Премиум готическая платформа для Minecraft</title>
+    <meta name="description" content="WINX — премиум платформа для Minecraft утилит, модификаций и сообщества. Winx Loader, маркетплейс, форум и поддержка.">
+    <meta name="keywords" content="Minecraft, Winx Loader, утилиты, модификации, маркетплейс, готический дизайн">
+    <meta name="author" content="WINX Team">
+    <meta name="theme-color" content="#040404">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://winx.platform/">
+    <meta property="og:title" content="WINX — Premium Gothic Marketplace & Community">
+    <meta property="og:description" content="Премиум платформа для Minecraft утилит с готическим дизайном. Winx Loader, маркетплейс, форум.">
+    <meta property="og:image" content="img/og-banner.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="WINX — Premium Gothic Platform">
+    <meta name="twitter:description" content="Премиум платформа для Minecraft утилит с готическим дизайном.">
+    <meta name="twitter:image" content="img/og-banner.jpg">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
     
     <!-- Styles -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/search-modal.css">
 </head>
 <body class="loading">
     <!-- Loading Screen -->
@@ -27,8 +45,35 @@
         <div class="loading-bar-container">
             <div class="loading-bar"></div>
         </div>
-        <div class="loading-text">Loading WINX</div>
+        <div class="loading-text">Загрузка WINX</div>
         <div class="particles-container" id="particles"></div>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="search-modal-overlay" id="searchModal">
+        <div class="search-modal">
+            <div class="search-modal-input-wrapper">
+                <span class="search-modal-icon">🔍</span>
+                <input type="text" class="search-modal-input" placeholder="Поиск продуктов, товаров, тем форума..." id="searchModalInput">
+                <button class="search-modal-close" onclick="closeSearchModal()">Esc</button>
+            </div>
+            <div class="search-modal-hint">
+                <span class="text-secondary" style="font-size: 0.8rem;">Быстрый поиск:</span>
+                <kbd>Ctrl</kbd> + <kbd>K</kbd>
+            </div>
+            <div class="search-modal-quick-links">
+                <span class="search-modal-quick-link" onclick="window.location.href='marketplace.html'">🛒 Маркетплейс</span>
+                <span class="search-modal-quick-link" onclick="window.location.href='products.html'">⚡ Продукты</span>
+                <span class="search-modal-quick-link" onclick="window.location.href='forum.html'">💬 Форум</span>
+                <span class="search-modal-quick-link" onclick="window.location.href='documentation.html'">📚 Документация</span>
+            </div>
+            <div class="search-modal-results" id="searchModalResults">
+                <div class="search-modal-empty">
+                    <div class="search-modal-empty-icon">🔍</div>
+                    <p>Начните вводить для поиска</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Navigation -->
@@ -43,30 +88,66 @@
             </a>
             
             <ul class="navbar-menu">
-                <li><a href="index.html" class="navbar-link active">Home</a></li>
-                <li><a href="marketplace.html" class="navbar-link">Marketplace</a></li>
-                <li><a href="products.html" class="navbar-link">Products</a></li>
-                <li><a href="forum.html" class="navbar-link">Forum</a></li>
-                <li><a href="documentation.html" class="navbar-link">Documentation</a></li>
-                <li><a href="support.html" class="navbar-link">Support</a></li>
+                <li><a href="index.html" class="navbar-link active">Главная</a></li>
+                <li><a href="marketplace.html" class="navbar-link">Маркетплейс</a></li>
+                <li><a href="products.html" class="navbar-link">Продукты</a></li>
+                <li><a href="forum.html" class="navbar-link">Форум</a></li>
+                <li><a href="documentation.html" class="navbar-link">Документация</a></li>
+                <li><a href="support.html" class="navbar-link">Поддержка</a></li>
             </ul>
             
             <div class="navbar-actions">
-                <button class="navbar-icon-btn search-btn" title="Search">
+                <button class="navbar-icon-btn search-btn" title="Поиск">
                     🔍
                 </button>
                 
                 <!-- Search Dropdown -->
                 <div class="dropdown-menu search-dropdown">
                     <div class="dropdown-header">
-                        <input type="text" class="form-input search-input" placeholder="Search products, marketplace, forum...">
+                        <input type="text" class="form-input search-input" placeholder="Поиск продуктов, маркетплейс, форум...">
                     </div>
                     <div class="search-results">
                         <div class="search-category">Начните вводить для поиска</div>
                     </div>
                 </div>
                 
-                <button class="navbar-icon-btn notifications-btn" title="Notifications">
+                <!-- Theme Selector -->
+                <div class="dropdown theme-selector">
+                    <button class="navbar-icon-btn" id="themeBtn" title="Тема">
+                        🎨
+                    </button>
+                    <div class="dropdown-menu" style="min-width: 180px;">
+                        <div class="dropdown-header">
+                            <h4>Тема</h4>
+                        </div>
+                        <div class="dropdown-item" onclick="setTheme('gothic')">
+                            <div class="dropdown-item-icon" style="background: #C8A76A;">🏰</div>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">Gothic Dark</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item" onclick="setTheme('vampire')">
+                            <div class="dropdown-item-icon" style="background: #C0392B;">🩸</div>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">Vampire Red</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item" onclick="setTheme('witch')">
+                            <div class="dropdown-item-icon" style="background: #10B981;">🧪</div>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">Witch Hex</div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item" onclick="setTheme('void')">
+                            <div class="dropdown-item-icon" style="background: #8B5CF6;">🌌</div>
+                            <div class="dropdown-item-content">
+                                <div class="dropdown-item-title">Purple Void</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="navbar-icon-btn notifications-btn" title="Уведомления">
                     🔔
                     <span class="badge" style="display: none;"></span>
                 </button>
@@ -124,15 +205,15 @@
                     
                     <h1 class="hero-title text-gradient mb-md">WINX</h1>
                     <p class="hero-subtitle text-secondary mb-xl">
-                        Premium Gothic Marketplace & Community Platform
+                        Премиум готическая платформа и сообщество
                     </p>
                     
                     <div class="hero-cta flex justify-center gap-md">
                         <a href="products.html" class="btn btn-primary btn-lg">
-                            Explore Products
+                            Продукты
                         </a>
                         <a href="marketplace.html" class="btn btn-secondary btn-lg">
-                            Browse Marketplace
+                            Маркетплейс
                         </a>
                     </div>
                 </div>
@@ -152,49 +233,49 @@
                     <!-- Marketplace Card -->
                     <a href="marketplace.html" class="card category-card animate-on-load hover-lift">
                         <div class="card-icon text-gold mb-md" style="font-size: 3rem;">🛒</div>
-                        <h3 class="mb-sm">Marketplace</h3>
-                        <p class="text-secondary mb-md">Discover community-created content, themes, configurations, and more.</p>
-                        <span class="btn btn-outline btn-sm">Browse →</span>
+                        <h3 class="mb-sm">Маркетплейс</h3>
+                        <p class="text-secondary mb-md">Контент от сообщества: темы, конфигурации и многое другое.</p>
+                        <span class="btn btn-outline btn-sm">Обзор →</span>
                     </a>
                     
                     <!-- Products Card -->
                     <a href="products.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.1s;">
                         <div class="card-icon text-gold mb-md" style="font-size: 3rem;">⚡</div>
-                        <h3 class="mb-sm">Products</h3>
-                        <p class="text-secondary mb-md">Premium Minecraft utilities including Winx Loader and Standalone Clicker.</p>
-                        <span class="btn btn-outline btn-sm">Explore →</span>
+                        <h3 class="mb-sm">Продукты</h3>
+                        <p class="text-secondary mb-md">Премиум утилиты для Minecraft: Winx Loader и Standalone Clicker.</p>
+                        <span class="btn btn-outline btn-sm">Изучить →</span>
                     </a>
                     
                     <!-- Forum Card -->
                     <a href="forum.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.2s;">
                         <div class="card-icon text-gold mb-md" style="font-size: 3rem;">💬</div>
-                        <h3 class="mb-sm">Forum</h3>
-                        <p class="text-secondary mb-md">Join discussions, get help, and connect with the WINX community.</p>
-                        <span class="btn btn-outline btn-sm">Join Discussion →</span>
+                        <h3 class="mb-sm">Форум</h3>
+                        <p class="text-secondary mb-md">Обсуждения, помощь и общение с сообществом WINX.</p>
+                        <span class="btn btn-outline btn-sm">Присоединиться →</span>
                     </a>
                     
                     <!-- Documentation Card -->
                     <a href="documentation.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.3s;">
                         <div class="card-icon text-gold mb-md" style="font-size: 3rem;">📚</div>
-                        <h3 class="mb-sm">Documentation</h3>
-                        <p class="text-secondary mb-md">Comprehensive guides and API documentation for developers.</p>
-                        <span class="btn btn-outline btn-sm">Read Docs →</span>
+                        <h3 class="mb-sm">Документация</h3>
+                        <p class="text-secondary mb-md">Подробные руководства и документация для разработчиков.</p>
+                        <span class="btn btn-outline btn-sm">Читать →</span>
                     </a>
                     
                     <!-- Support Card -->
                     <a href="support.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.4s;">
                         <div class="card-icon text-gold mb-md" style="font-size: 3rem;">🛟</div>
-                        <h3 class="mb-sm">Support</h3>
-                        <p class="text-secondary mb-md">Get help from our support team and find answers to common questions.</p>
-                        <span class="btn btn-outline btn-sm">Get Help →</span>
+                        <h3 class="mb-sm">Поддержка</h3>
+                        <p class="text-secondary mb-md">Помощь от нашей команды и ответы на популярные вопросы.</p>
+                        <span class="btn btn-outline btn-sm">Помощь →</span>
                     </a>
                     
                     <!-- About Card -->
                     <a href="about.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.5s;">
                         <div class="card-icon text-gold mb-md" style="font-size: 3rem;">ℹ️</div>
-                        <h3 class="mb-sm">About</h3>
-                        <p class="text-secondary mb-md">Learn about WINX, our mission, and the team behind the platform.</p>
-                        <span class="btn btn-outline btn-sm">Learn More →</span>
+                        <h3 class="mb-sm">О проекте</h3>
+                        <p class="text-secondary mb-md">Узнайте о WINX, нашей миссии и команде платформы.</p>
+                        <span class="btn btn-outline btn-sm">Подробнее →</span>
                     </a>
                 </div>
             </div>
@@ -204,8 +285,8 @@
         <section class="featured-section py-3xl">
             <div class="container">
                 <div class="section-header">
-                    <h2 class="section-title">Featured Products</h2>
-                    <p class="section-subtitle">Premium tools crafted for the ultimate Minecraft experience</p>
+                    <h2 class="section-title">Избранные продукты</h2>
+                    <p class="section-subtitle">Премиум инструменты для лучшего Minecraft опыта</p>
                 </div>
                 
                 <div class="grid-cards">
@@ -215,7 +296,7 @@
                             <span style="font-size: 4rem;">⚡</span>
                         </div>
                         <h3 class="mb-sm">Winx Loader</h3>
-                        <p class="text-secondary mb-md" style="font-size: 0.9rem;">Premium Minecraft utility platform with advanced features</p>
+                        <p class="text-secondary mb-md" style="font-size: 0.9rem;">Премиум платформа для Minecraft с продвинутыми функциями</p>
                         <div class="flex justify-between items-center mb-md">
                             <div class="rating">
                                 <span class="rating-star">★</span>
@@ -227,7 +308,7 @@
                             </div>
                             <span class="text-gold" style="font-weight: 600;">125K+</span>
                         </div>
-                        <a href="product-winxloader.html" class="btn btn-primary" style="width: 100%;">Learn More</a>
+                        <a href="product-winxloader.html" class="btn btn-primary" style="width: 100%;">Подробнее</a>
                     </div>
                     
                     <div class="card product-card animate-on-load" style="animation-delay: 0.1s;">
@@ -236,7 +317,7 @@
                             <span style="font-size: 4rem;">🖱️</span>
                         </div>
                         <h3 class="mb-sm">Standalone Clicker</h3>
-                        <p class="text-secondary mb-md" style="font-size: 0.9rem;">Advanced autoclicker with customizable patterns</p>
+                        <p class="text-secondary mb-md" style="font-size: 0.9rem;">Продвинутый автокликер с настраиваемыми паттернами</p>
                         <div class="flex justify-between items-center mb-md">
                             <div class="rating">
                                 <span class="rating-star">★</span>
@@ -248,7 +329,7 @@
                             </div>
                             <span class="text-gold" style="font-weight: 600;">45K+</span>
                         </div>
-                        <a href="product-clicker.html" class="btn btn-primary" style="width: 100%;">Learn More</a>
+                        <a href="product-clicker.html" class="btn btn-primary" style="width: 100%;">Подробнее</a>
                     </div>
                 </div>
             </div>
@@ -260,19 +341,19 @@
                 <div class="grid grid-cols-4 text-center">
                     <div class="stat-item animate-on-load">
                         <div class="stat-value text-gradient" style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 700;">170K+</div>
-                        <div class="stat-label text-secondary">Total Downloads</div>
+                        <div class="stat-label text-secondary">Всего загрузок</div>
                     </div>
                     <div class="stat-item animate-on-load" style="animation-delay: 0.1s;">
                         <div class="stat-value text-gradient" style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 700;">50K+</div>
-                        <div class="stat-label text-secondary">Active Users</div>
+                        <div class="stat-label text-secondary">Активных пользователей</div>
                     </div>
                     <div class="stat-item animate-on-load" style="animation-delay: 0.2s;">
                         <div class="stat-value text-gradient" style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 700;">1,000+</div>
-                        <div class="stat-label text-secondary">Marketplace Items</div>
+                        <div class="stat-label text-secondary">Товаров в маркетплейсе</div>
                     </div>
                     <div class="stat-item animate-on-load" style="animation-delay: 0.3s;">
                         <div class="stat-value text-gradient" style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 700;">4.8</div>
-                        <div class="stat-label text-secondary">Average Rating</div>
+                        <div class="stat-label text-secondary">Средний рейтинг</div>
                     </div>
                 </div>
             </div>
@@ -289,41 +370,47 @@
                 <div>
                     <h4 class="mb-md text-gold">WINX</h4>
                     <p class="text-secondary mb-md" style="font-size: 0.9rem;">
-                        Premium Gothic Marketplace & Community Platform for Minecraft enthusiasts.
+                        Премиум готическая платформа и сообщество для любителей Minecraft.
                     </p>
                     <div class="flex gap-sm">
-                        <a href="#" class="navbar-icon-btn" title="Discord">💬</a>
-                        <a href="#" class="navbar-icon-btn" title="GitHub">🐙</a>
-                        <a href="#" class="navbar-icon-btn" title="Twitter">🐦</a>
+                        <a href="#" class="navbar-icon-btn" title="Discord">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+                        </a>
+                        <a href="#" class="navbar-icon-btn" title="GitHub">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        </a>
+                        <a href="#" class="navbar-icon-btn" title="Twitter">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
                     </div>
                 </div>
                 
                 <div>
-                    <h4 class="mb-md">Links</h4>
+                    <h4 class="mb-md">Навигация</h4>
                     <ul style="line-height: 2;">
-                        <li><a href="marketplace.html" class="text-secondary">Marketplace</a></li>
-                        <li><a href="products.html" class="text-secondary">Products</a></li>
-                        <li><a href="forum.html" class="text-secondary">Forum</a></li>
-                        <li><a href="documentation.html" class="text-secondary">Documentation</a></li>
+                        <li><a href="marketplace.html" class="text-secondary">Маркетплейс</a></li>
+                        <li><a href="products.html" class="text-secondary">Продукты</a></li>
+                        <li><a href="forum.html" class="text-secondary">Форум</a></li>
+                        <li><a href="documentation.html" class="text-secondary">Документация</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="mb-md">Support</h4>
+                    <h4 class="mb-md">Поддержка</h4>
                     <ul style="line-height: 2;">
-                        <li><a href="support.html" class="text-secondary">Help Center</a></li>
-                        <li><a href="#" class="text-secondary">Contact Us</a></li>
-                        <li><a href="#" class="text-secondary">Bug Report</a></li>
-                        <li><a href="#" class="text-secondary">Feature Request</a></li>
+                        <li><a href="support.html" class="text-secondary">Помощь</a></li>
+                        <li><a href="#" class="text-secondary">Контакты</a></li>
+                        <li><a href="#" class="text-secondary">Сообщить об ошибке</a></li>
+                        <li><a href="#" class="text-secondary">Запрос функции</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="mb-md">Legal</h4>
+                    <h4 class="mb-md">Информация</h4>
                     <ul style="line-height: 2;">
-                        <li><a href="#" class="text-secondary">Privacy Policy</a></li>
-                        <li><a href="#" class="text-secondary">Terms of Service</a></li>
-                        <li><a href="#" class="text-secondary">Cookie Policy</a></li>
+                        <li><a href="#" class="text-secondary">Политика конфиденциальности</a></li>
+                        <li><a href="#" class="text-secondary">Условия использования</a></li>
+                        <li><a href="#" class="text-secondary">Cookie</a></li>
                         <li><a href="#" class="text-secondary">DMCA</a></li>
                     </ul>
                 </div>
@@ -331,7 +418,7 @@
             
             <div class="text-center mt-xl" style="padding-top: var(--spacing-xl); border-top: 1px solid var(--border-color);">
                 <p class="text-secondary" style="font-size: 0.875rem;">
-                    &copy; 2024 WINX Platform. All rights reserved. Not affiliated with Mojang Studios.
+                    &copy; 2024 WINX Platform. Все права защищены. Не связано с Mojang Studios.
                 </p>
             </div>
         </div>

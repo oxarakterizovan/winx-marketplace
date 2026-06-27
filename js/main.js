@@ -10,7 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeDropdowns();
     initializeMobileMenu();
     initializeSearch();
+    initializeTheme();
     updateUserInterface();
+    initializeAnimatedStats();
 });
 
 // ==================== Loading Screen ====================
@@ -119,44 +121,75 @@ function initializeMobileMenu() {
 
 // ==================== Search ====================
 
+let searchModal = null;
+let searchModalInput = null;
+
 function initializeSearch() {
+    searchModal = document.getElementById('searchModal');
+    searchModalInput = document.getElementById('searchModalInput');
+    
     const searchBtn = document.querySelector('.search-btn');
-    const searchDropdown = document.querySelector('.search-dropdown');
-    const searchInput = document.querySelector('.search-input');
     
-    if (!searchBtn || !searchDropdown) return;
-    
-    searchBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        searchDropdown.classList.toggle('open');
-        if (searchInput) {
-            searchInput.focus();
-        }
-    });
-    
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            handleSearch(e.target.value);
-        });
-        
-        searchInput.addEventListener('click', (e) => {
+    if (searchBtn && searchModal) {
+        searchBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            openSearchModal();
         });
     }
     
+    if (searchModal) {
+        searchModal.addEventListener('click', (e) => {
+            if (e.target === searchModal) {
+                closeSearchModal();
+            }
+        });
+    }
+    
+    if (searchModalInput) {
+        searchModalInput.addEventListener('input', (e) => {
+            handleModalSearch(e.target.value);
+        });
+    }
+    
+    // Keyboard shortcut
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && searchDropdown) {
-            searchDropdown.classList.remove('open');
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            openSearchModal();
+        }
+        if (e.key === 'Escape' && searchModal) {
+            closeSearchModal();
         }
     });
 }
 
-function handleSearch(query) {
-    const resultsContainer = document.querySelector('.search-results');
+function openSearchModal() {
+    if (searchModal) {
+        searchModal.classList.add('open');
+        setTimeout(() => {
+            if (searchModalInput) searchModalInput.focus();
+        }, 100);
+    }
+}
+
+function closeSearchModal() {
+    if (searchModal) {
+        searchModal.classList.remove('open');
+        if (searchModalInput) searchModalInput.value = '';
+    }
+}
+
+function handleModalSearch(query) {
+    const resultsContainer = document.getElementById('searchModalResults');
     if (!resultsContainer) return;
     
     if (query.length < 2) {
-        resultsContainer.innerHTML = '<div class="search-category">Введите минимум 2 символа</div>';
+        resultsContainer.innerHTML = `
+            <div class="search-modal-empty">
+                <div class="search-modal-empty-icon">🔍</div>
+                <p>Начните вводить для поиска</p>
+            </div>
+        `;
         return;
     }
     
@@ -184,13 +217,14 @@ function handleSearch(query) {
     let html = '';
     
     if (matchedProducts.length > 0) {
-        html += '<div class="search-category">Продукты</div>';
-        matchedProducts.slice(0, 3).forEach(product => {
+        html += '<div class="search-modal-category">Продукты</div>';
+        matchedProducts.slice(0, 5).forEach(product => {
             html += `
-                <a href="products.html?id=${product.id}" class="dropdown-item">
-                    <div class="dropdown-item-content">
-                        <div class="dropdown-item-title">${escapeHtml(product.name)}</div>
-                        <div class="dropdown-item-subtitle">${product.type === 'product' ? 'Продукт' : 'Товар'}</div>
+                <a href="product-${product.slug}.html" class="search-modal-item">
+                    <div class="search-modal-item-icon">⚡</div>
+                    <div class="search-modal-item-content">
+                        <div class="search-modal-item-title">${escapeHtml(product.name)}</div>
+                        <div class="search-modal-item-subtitle">${product.type === 'product' ? 'Продукт' : 'Товар'}</div>
                     </div>
                 </a>
             `;
@@ -198,13 +232,14 @@ function handleSearch(query) {
     }
     
     if (matchedMarketplace.length > 0) {
-        html += '<div class="search-category">Маркетплейс</div>';
-        matchedMarketplace.slice(0, 3).forEach(item => {
+        html += '<div class="search-modal-category">Маркетплейс</div>';
+        matchedMarketplace.slice(0, 5).forEach(item => {
             html += `
-                <a href="marketplace-item.html?id=${item.id}" class="dropdown-item">
-                    <div class="dropdown-item-content">
-                        <div class="dropdown-item-title">${escapeHtml(item.name)}</div>
-                        <div class="dropdown-item-subtitle">${item.authorName}</div>
+                <a href="marketplace-item.html?id=${item.id}" class="search-modal-item">
+                    <div class="search-modal-item-icon">🛒</div>
+                    <div class="search-modal-item-content">
+                        <div class="search-modal-item-title">${escapeHtml(item.name)}</div>
+                        <div class="search-modal-item-subtitle">${item.authorName}</div>
                     </div>
                 </a>
             `;
@@ -212,13 +247,14 @@ function handleSearch(query) {
     }
     
     if (matchedTopics.length > 0) {
-        html += '<div class="search-category">Форум</div>';
-        matchedTopics.slice(0, 3).forEach(topic => {
+        html += '<div class="search-modal-category">Форум</div>';
+        matchedTopics.slice(0, 5).forEach(topic => {
             html += `
-                <a href="forum-topic.html?id=${topic.id}" class="dropdown-item">
-                    <div class="dropdown-item-content">
-                        <div class="dropdown-item-title">${escapeHtml(topic.title)}</div>
-                        <div class="dropdown-item-subtitle">${topic.replies} ответов</div>
+                <a href="forum-topic.html?id=${topic.id}" class="search-modal-item">
+                    <div class="search-modal-item-icon">💬</div>
+                    <div class="search-modal-item-content">
+                        <div class="search-modal-item-title">${escapeHtml(topic.title)}</div>
+                        <div class="search-modal-item-subtitle">${topic.replies} ответов</div>
                     </div>
                 </a>
             `;
@@ -226,11 +262,20 @@ function handleSearch(query) {
     }
     
     if (!html) {
-        html = '<div class="search-category">Ничего не найдено</div>';
+        html = `
+            <div class="search-modal-empty">
+                <div class="search-modal-empty-icon">🔍</div>
+                <p>Ничего не найдено</p>
+            </div>
+        `;
     }
     
     resultsContainer.innerHTML = html;
 }
+
+// Export search functions
+window.openSearchModal = openSearchModal;
+window.closeSearchModal = closeSearchModal;
 
 // ==================== User Interface ====================
 
@@ -471,6 +516,77 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// ==================== Theme Switcher ====================
+
+function initializeTheme() {
+    const savedTheme = localStorage.getItem('winx_theme') || 'gothic';
+    setTheme(savedTheme);
+    
+    const themeBtn = document.getElementById('themeBtn');
+    if (themeBtn) {
+        themeBtn.parentElement.classList.add('dropdown');
+    }
+}
+
+function setTheme(themeName) {
+    document.documentElement.setAttribute('data-theme', themeName);
+    localStorage.setItem('winx_theme', themeName);
+    
+    // Update active state in dropdown
+    document.querySelectorAll('.theme-selector .dropdown-item').forEach(item => {
+        item.style.background = '';
+    });
+    event.target.closest('.dropdown-item').style.background = 'var(--bg-hover)';
+}
+
+// ==================== Animated Stats ====================
+
+function initializeAnimatedStats() {
+    const statsSection = document.querySelector('.stats-section');
+    if (!statsSection) return;
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateStats();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    
+    observer.observe(statsSection);
+}
+
+function animateStats() {
+    const statValues = document.querySelectorAll('.stat-value');
+    
+    statValues.forEach(stat => {
+        const text = stat.textContent;
+        const match = text.match(/([\d.]+)([KMB\+]?)/);
+        if (!match) return;
+        
+        const target = parseFloat(match[1]);
+        const suffix = match[2];
+        const isDecimal = target % 1 !== 0;
+        
+        let current = 0;
+        const increment = target / 50;
+        const duration = 2000;
+        const stepTime = duration / 50;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            
+            const displayValue = isDecimal ? current.toFixed(1) : Math.floor(current);
+            stat.textContent = displayValue + suffix;
+        }, stepTime);
+    });
+}
+
 // Export functions for global use
 window.handleLogout = handleLogout;
 window.openModal = openModal;
@@ -479,3 +595,4 @@ window.escapeHtml = escapeHtml;
 window.timeAgo = timeAgo;
 window.formatNumber = formatNumber;
 window.formatDate = formatDate;
+window.setTheme = setTheme;

@@ -143,12 +143,12 @@
                 WINX
             </a>
             <ul class="navbar-menu">
-                <li><a href="index.html" class="navbar-link">Home</a></li>
-                <li><a href="marketplace.html" class="navbar-link active">Marketplace</a></li>
-                <li><a href="products.html" class="navbar-link">Products</a></li>
-                <li><a href="forum.html" class="navbar-link">Forum</a></li>
-                <li><a href="documentation.html" class="navbar-link">Documentation</a></li>
-                <li><a href="support.html" class="navbar-link">Support</a></li>
+                <li><a href="index.html" class="navbar-link">Главная</a></li>
+                <li><a href="marketplace.html" class="navbar-link active">Маркетплейс</a></li>
+                <li><a href="products.html" class="navbar-link">Продукты</a></li>
+                <li><a href="forum.html" class="navbar-link">Форум</a></li>
+                <li><a href="documentation.html" class="navbar-link">Документация</a></li>
+                <li><a href="support.html" class="navbar-link">Поддержка</a></li>
             </ul>
             <div class="navbar-actions">
                 <button class="navbar-icon-btn search-btn">🔍</button>
@@ -167,9 +167,9 @@
         <!-- Hero -->
         <section class="marketplace-hero">
             <div class="container">
-                <h1 class="mb-md">Marketplace</h1>
+                <h1 class="mb-md">Маркетплейс</h1>
                 <p class="text-secondary" style="max-width: 600px; margin: 0 auto;">
-                    Discover community-created content for Winx Loader. Themes, configurations, modules, and more.
+                    Контент от сообщества для Winx Loader: темы, конфигурации, модули и многое другое.
                 </p>
             </div>
         </section>
@@ -182,18 +182,18 @@
                     <aside class="filters-sidebar">
                         <div class="card">
                             <div class="filter-section">
-                                <div class="filter-title">Categories</div>
+                                <div class="filter-title">Категории</div>
                                 <label class="filter-option">
                                     <input type="radio" name="category" value="all" checked>
-                                    All Categories
+                                    Все категории
                                 </label>
                                 <label class="filter-option">
                                     <input type="radio" name="category" value="themes">
-                                    Themes
+                                    Темы
                                 </label>
                                 <label class="filter-option">
                                     <input type="radio" name="category" value="configurations">
-                                    Configurations
+                                    Конфигурации
                                 </label>
                                 <label class="filter-option">
                                     <input type="radio" name="category" value="hud-layouts">
@@ -201,43 +201,43 @@
                                 </label>
                                 <label class="filter-option">
                                     <input type="radio" name="category" value="animations">
-                                    Animations
+                                    Анимации
                                 </label>
                                 <label class="filter-option">
                                     <input type="radio" name="category" value="modules">
-                                    Modules
+                                    Модули
                                 </label>
                             </div>
                             
                             <div class="filter-section">
-                                <div class="filter-title">Price</div>
+                                <div class="filter-title">Цена</div>
                                 <label class="filter-option">
                                     <input type="radio" name="price" value="all" checked>
-                                    Any Price
+                                    Любая
                                 </label>
                                 <label class="filter-option">
                                     <input type="radio" name="price" value="free">
-                                    Free
+                                    Бесплатно
                                 </label>
                                 <label class="filter-option">
                                     <input type="radio" name="price" value="paid">
-                                    Paid
+                                    Платно
                                 </label>
                             </div>
                             
                             <div class="filter-section">
-                                <div class="filter-title">Rating</div>
+                                <div class="filter-title">Рейтинг</div>
                                 <label class="filter-option">
                                     <input type="radio" name="rating" value="all" checked>
-                                    Any Rating
+                                    Любой
                                 </label>
                                 <label class="filter-option">
                                     <input type="radio" name="rating" value="4">
-                                    4+ Stars
+                                    4+ звезды
                                 </label>
                                 <label class="filter-option">
                                     <input type="radio" name="rating" value="3">
-                                    3+ Stars
+                                    3+ звезды
                                 </label>
                             </div>
                         </div>
@@ -250,12 +250,12 @@
                             <span class="results-count" id="resultsCount">Loading...</span>
                             <div class="sort-options">
                                 <select class="form-select" id="sortSelect" style="width: auto;">
-                                    <option value="newest">Newest</option>
-                                    <option value="popular">Most Popular</option>
-                                    <option value="rating">Top Rated</option>
-                                    <option value="downloads">Most Downloaded</option>
-                                    <option value="price-low">Price: Low to High</option>
-                                    <option value="price-high">Price: High to Low</option>
+                                    <option value="newest">Новые</option>
+                                    <option value="popular">Популярные</option>
+                                    <option value="rating">По рейтингу</option>
+                                    <option value="downloads">По загрузкам</option>
+                                    <option value="price-low">Цена: по возрастанию</option>
+                                    <option value="price-high">Цена: по убыванию</option>
                                 </select>
                             </div>
                         </div>
@@ -300,7 +300,7 @@
             const countEl = document.getElementById('resultsCount');
             const user = db.getCurrentUser();
             
-            countEl.textContent = `${items.length} items found`;
+            countEl.textContent = `Найдено: ${items.length}`;
             
             // Show upload button for logged in users
             const uploadBtn = document.getElementById('uploadBtn');
@@ -312,8 +312,8 @@
                 grid.innerHTML = `
                     <div class="text-center" style="grid-column: 1/-1; padding: var(--spacing-3xl);">
                         <div style="font-size: 4rem; margin-bottom: var(--spacing-md);">🛒</div>
-                        <h3 class="mb-sm">No items found</h3>
-                        <p class="text-secondary">Try adjusting your filters</p>
+                        <h3 class="mb-sm">Товары не найдены</h3>
+                        <p class="text-secondary">Попробуйте изменить фильтры</p>
                     </div>
                 `;
                 return;

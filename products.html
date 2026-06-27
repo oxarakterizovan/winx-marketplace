@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/search-modal.css">
     <style>
         .products-hero {
             padding: var(--spacing-3xl) 0;
@@ -79,12 +80,12 @@
             </a>
             
             <ul class="navbar-menu">
-                <li><a href="index.html" class="navbar-link">Home</a></li>
-                <li><a href="marketplace.html" class="navbar-link">Marketplace</a></li>
-                <li><a href="products.html" class="navbar-link active">Products</a></li>
-                <li><a href="forum.html" class="navbar-link">Forum</a></li>
-                <li><a href="documentation.html" class="navbar-link">Documentation</a></li>
-                <li><a href="support.html" class="navbar-link">Support</a></li>
+                <li><a href="index.html" class="navbar-link">Главная</a></li>
+                <li><a href="marketplace.html" class="navbar-link">Маркетплейс</a></li>
+                <li><a href="products.html" class="navbar-link active">Продукты</a></li>
+                <li><a href="forum.html" class="navbar-link">Форум</a></li>
+                <li><a href="documentation.html" class="navbar-link">Документация</a></li>
+                <li><a href="support.html" class="navbar-link">Поддержка</a></li>
             </ul>
             
             <div class="navbar-actions">
@@ -99,15 +100,37 @@
         </div>
     </nav>
 
+    <!-- Search Modal -->
+    <div class="search-modal-overlay" id="searchModal">
+        <div class="search-modal">
+            <div class="search-modal-input-wrapper">
+                <span class="search-modal-icon">🔍</span>
+                <input type="text" class="search-modal-input" placeholder="Поиск продуктов, товаров, тем форума..." id="searchModalInput">
+                <button class="search-modal-close" onclick="closeSearchModal()">Esc</button>
+            </div>
+            <div class="search-modal-hint">
+                <span class="text-secondary" style="font-size: 0.8rem;">Быстрый поиск:</span>
+                <kbd>Ctrl</kbd> + <kbd>K</kbd>
+            </div>
+            <div class="search-modal-quick-links">
+                <span class="search-modal-quick-link" onclick="window.location.href='marketplace.html'">🛒 Маркетплейс</span>
+                <span class="search-modal-quick-link" onclick="window.location.href='products.html'">⚡ Продукты</span>
+                <span class="search-modal-quick-link" onclick="window.location.href='forum.html'">💬 Форум</span>
+                <span class="search-modal-quick-link" onclick="window.location.href='documentation.html'">📚 Документация</span>
+            </div>
+            <div class="search-modal-results" id="searchModalResults"></div>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <main class="main-content">
         <!-- Products Hero -->
         <section class="products-hero">
             <div class="container">
-                <h1 class="mb-md">Our Products</h1>
+                <h1 class="mb-md">Наши продукты</h1>
                 <p class="text-secondary" style="max-width: 600px; margin: 0 auto;">
-                    Premium Minecraft utilities crafted with precision and care. 
-                    Each product is designed to enhance your gaming experience.
+                    Премиум утилиты для Minecraft, созданные с точностью и заботой. 
+                    Каждый продукт разработан для улучшения вашего игрового опыта.
                 </p>
             </div>
         </section>
@@ -143,7 +166,7 @@
             const grid = document.getElementById('productsGrid');
             
             if (!products || products.length === 0) {
-                grid.innerHTML = '<p class="text-center text-secondary">No products available</p>';
+                grid.innerHTML = '<p class="text-center text-secondary">Продукты не найдены</p>';
                 return;
             }
             
@@ -171,7 +194,7 @@
                     </div>
                     
                     <div class="mt-lg">
-                        <a href="product-${product.slug}.html" class="btn btn-primary" style="width: 100%;">View Details</a>
+                        <a href="product-${product.slug}.html" class="btn btn-primary" style="width: 100%;">Подробнее</a>
                     </div>
                 </div>
             `).join('');
