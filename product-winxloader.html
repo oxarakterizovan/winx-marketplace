@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winx Loader — WINX</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .product-detail-hero {
+            padding: var(--spacing-3xl) 0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .product-detail-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C8A76A' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        .product-icon-large {
+            width: 120px;
+            height: 120px;
+            background: var(--gradient-gold);
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-gold);
+        }
+        .product-meta {
+            display: flex;
+            gap: var(--spacing-lg);
+            flex-wrap: wrap;
+            margin: var(--spacing-lg) 0;
+        }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            color: var(--text-secondary);
+        }
+        .meta-item strong {
+            color: var(--text-primary);
+        }
+        .section-title-gold {
+            color: var(--accent-primary);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(200, 167, 106, 0.1);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        .version-history {
+            margin: var(--spacing-lg) 0;
+        }
+        .version-item {
+            padding: var(--spacing-md);
+            border-left: 2px solid var(--border-color);
+            padding-left: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            position: relative;
+        }
+        .version-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: var(--spacing-md);
+            width: 10px;
+            height: 10px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+        }
+        .version-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+        .version-number {
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+        .version-date {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        .reviews-section {
+            margin: var(--spacing-2xl) 0;
+        }
+        .review-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+        .download-section {
+            position: sticky;
+            top: 100px;
+            background: var(--bg-cards);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+        }
+    </style>
+</head>
+<body class="loading">
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-logo">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="logo-path"/><text x="50" y="58" text-anchor="middle" fill="#C8A76A" font-size="24" font-family="Cinzel, serif" font-weight="700">W</text></svg>
+        </div>
+        <div class="loading-bar-container"><div class="loading-bar"></div></div>
+        <div class="loading-text">Loading WINX</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" stroke="#C8A76A" stroke-width="2" fill="none"/><text x="20" y="26" text-anchor="middle" fill="#C8A76A" font-size="20" font-family="Cinzel, serif" font-weight="700">W</text></svg>
+                WINX
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="index.html" class="navbar-link">Home</a></li>
+                <li><a href="marketplace.html" class="navbar-link">Marketplace</a></li>
+                <li><a href="products.html" class="navbar-link active">Products</a></li>
+                <li><a href="forum.html" class="navbar-link">Forum</a></li>
+                <li><a href="documentation.html" class="navbar-link">Documentation</a></li>
+                <li><a href="support.html" class="navbar-link">Support</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <button class="navbar-icon-btn search-btn">🔍</button>
+                <button class="navbar-icon-btn notifications-btn">🔔<span class="badge" style="display: none;"></span></button>
+                <div class="navbar-auth">
+                    <a href="login.html" class="btn btn-secondary btn-sm">Войти</a>
+                    <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
+                </div>
+                <div class="mobile-menu-toggle"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Product Hero -->
+        <section class="product-detail-hero">
+            <div class="container">
+                <div class="grid" style="grid-template-columns: 1fr 350px; gap: var(--spacing-xl);">
+                    <div>
+                        <div class="product-icon-large">⚡</div>
+                        <h1 class="mb-sm">Winx Loader</h1>
+                        <p class="text-secondary mb-md" style="font-size: 1.125rem;">Premium Minecraft utility platform with advanced features for enhanced gameplay experience.</p>
+                        
+                        <div class="product-meta">
+                            <div class="meta-item">
+                                <span>⭐</span>
+                                <strong id="productRating">4.9</strong>
+                                <span class="text-secondary" id="productReviews">(2,341 reviews)</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>📥</span>
+                                <strong id="productDownloads">125,847</strong>
+                                <span class="text-secondary">downloads</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>📦</span>
+                                <strong id="productVersion">2.5.1</strong>
+                                <span class="text-secondary">latest version</span>
+                            </div>
+                            <div class="meta-item">
+                                <span>🏷️</span>
+                                <span class="badge badge-green">Free</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="download-section">
+                            <h3 class="mb-md">Get Winx Loader</h3>
+                            <p class="text-secondary mb-md" style="font-size: 0.9rem;">Free download with all features included</p>
+                            
+                            <button class="btn btn-primary btn-lg" style="width: 100%; margin-bottom: var(--spacing-sm);" onclick="handleDownload()">
+                                📥 Download Now
+                            </button>
+                            <button class="btn btn-secondary btn-lg" style="width: 100%;" onclick="openModal('installModal')">
+                                📖 Installation Guide
+                            </button>
+                            
+                            <div class="mt-md" style="padding-top: var(--spacing-md); border-top: 1px solid var(--border-color);">
+                                <p class="text-secondary" style="font-size: 0.75rem;">
+                                    ✓ Virus-free &nbsp; ✓ Auto-updates &nbsp; ✓ Windows 10/11
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Details -->
+        <section class="product-details-section" style="padding: var(--spacing-3xl) 0;">
+            <div class="container">
+                <div class="grid" style="grid-template-columns: 2fr 1fr; gap: var(--spacing-2xl);">
+                    <div>
+                        <!-- Features -->
+                        <h2 class="section-title-gold">Features</h2>
+                        <div class="feature-list" id="featuresList">
+                            <!-- Features loaded via JS -->
+                        </div>
+                        
+                        <!-- Description -->
+                        <h2 class="section-title-gold mt-xl">Description</h2>
+                        <div class="card mb-xl" id="productDescription">
+                            <!-- Description loaded via JS -->
+                        </div>
+                        
+                        <!-- Version History -->
+                        <h2 class="section-title-gold mt-xl">Version History</h2>
+                        <div class="version-history">
+                            <div class="version-item">
+                                <div class="version-header">
+                                    <span class="version-number">v2.5.1</span>
+                                    <span class="version-date">June 20, 2024</span>
+                                </div>
+                                <p class="text-secondary">Bug fixes and performance improvements. Enhanced compatibility with Minecraft 1.20.x</p>
+                            </div>
+                            <div class="version-item">
+                                <div class="version-header">
+                                    <span class="version-number">v2.5.0</span>
+                                    <span class="version-date">May 15, 2024</span>
+                                </div>
+                                <p class="text-secondary">Major update with new UI improvements and autoclicker enhancements</p>
+                            </div>
+                            <div class="version-item">
+                                <div class="version-header">
+                                    <span class="version-number">v2.4.0</span>
+                                    <span class="version-date">April 1, 2024</span>
+                                </div>
+                                <p class="text-secondary">Added profile management and configuration syncing features</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Reviews -->
+                        <h2 class="section-title-gold mt-xl">Reviews</h2>
+                        <div id="reviewsList" class="reviews-section">
+                            <!-- Reviews loaded via JS -->
+                        </div>
+                    </div>
+                    
+                    <!-- Sidebar -->
+                    <div>
+                        <div class="card mb-lg">
+                            <h4 class="mb-md">Supported Versions</h4>
+                            <div id="supportedVersions" class="flex flex-col gap-sm">
+                                <!-- Loaded via JS -->
+                            </div>
+                        </div>
+                        
+                        <div class="card mb-lg">
+                            <h4 class="mb-md">System Requirements</h4>
+                            <ul class="text-secondary" style="line-height: 2; font-size: 0.9rem;">
+                                <li>• Windows 10/11</li>
+                                <li>• Java 17 or higher</li>
+                                <li>• 4GB RAM minimum</li>
+                                <li>• 500MB free disk space</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="card">
+                            <h4 class="mb-md">Share</h4>
+                            <div class="flex gap-sm">
+                                <button class="btn btn-secondary btn-sm">📋 Copy Link</button>
+                                <button class="btn btn-secondary btn-sm">🐦 Tweet</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Installation Modal -->
+    <div id="installModal" class="modal-overlay">
+        <div class="modal" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Installation Guide</h3>
+                <button class="modal-close" onclick="closeModal('installModal')">✕</button>
+            </div>
+            <div class="modal-body">
+                <ol style="line-height: 2; color: var(--text-secondary);">
+                    <li class="mb-md"><strong class="text-primary">Download</strong> the installer from the button above</li>
+                    <li class="mb-md"><strong class="text-primary">Run</strong> the installer as administrator</li>
+                    <li class="mb-md"><strong class="text-primary">Choose</strong> your installation directory</li>
+                    <li class="mb-md"><strong class="text-primary">Launch</strong> Winx Loader from the desktop shortcut</li>
+                    <li class="mb-md"><strong class="text-primary">Configure</strong> your settings in the application</li>
+                    <li class="mb-md"><strong class="text-primary">Enjoy</strong> enhanced Minecraft experience!</li>
+                </ol>
+                <div class="alert alert-info mt-md">
+                    <strong>Note:</strong> Make sure you have Java 17 or higher installed before running Winx Loader.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('installModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" style="background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: var(--spacing-3xl) 0; margin-top: var(--spacing-3xl);">
+        <div class="container">
+            <div class="divider divider-gothic mb-xl"></div>
+            <div class="text-center">
+                <p class="text-secondary" style="font-size: 0.875rem;">&copy; 2024 WINX Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/db/database.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Load product data
+        const product = db.getProduct('prod-winxloader');
+        
+        if (product) {
+            document.getElementById('productRating').textContent = product.rating;
+            document.getElementById('productReviews').textContent = `(${formatNumber(product.reviewsCount)} reviews)`;
+            document.getElementById('productDownloads').textContent = formatNumber(product.downloads);
+            document.getElementById('productVersion').textContent = product.version;
+            
+            // Load features
+            document.getElementById('featuresList').innerHTML = product.features.map(feature => `
+                <div class="feature-item">
+                    <div class="feature-icon">✓</div>
+                    <span>${escapeHtml(feature)}</span>
+                </div>
+            `).join('');
+            
+            // Load description
+            document.getElementById('productDescription').innerHTML = `
+                <p class="text-secondary" style="line-height: 1.8;">${escapeHtml(product.longDescription)}</p>
+            `;
+            
+            // Load supported versions
+            document.getElementById('supportedVersions').innerHTML = product.supportedVersions.map(v => `
+                <span class="badge badge-gold">${escapeHtml(v)}</span>
+            `).join('');
+        }
+        
+        function handleDownload() {
+            const user = db.getCurrentUser();
+            if (!user) {
+                alert('Please login to download');
+                window.location.href = 'login.html';
+                return;
+            }
+            alert('Download started! (This is a demo - no actual file)');
+        }
+    </script>
+</body>
+</html>

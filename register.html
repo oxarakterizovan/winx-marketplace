@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register — WINX</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            padding: var(--spacing-xl);
+        }
+        .auth-card {
+            width: 100%;
+            max-width: 450px;
+            padding: var(--spacing-2xl);
+        }
+        .auth-logo {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        .auth-logo svg {
+            width: 80px;
+            height: 80px;
+        }
+        .auth-title {
+            text-align: center;
+            margin-bottom: var(--spacing-md);
+        }
+        .auth-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-xl);
+        }
+        .form-footer {
+            text-align: center;
+            margin-top: var(--spacing-lg);
+            color: var(--text-secondary);
+        }
+        .form-footer a {
+            color: var(--accent-primary);
+        }
+        .password-strength {
+            height: 3px;
+            background: var(--border-color);
+            border-radius: var(--radius-full);
+            margin-top: var(--spacing-xs);
+            overflow: hidden;
+        }
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all var(--transition-base);
+        }
+        .password-strength-weak { background: var(--accent-danger); width: 33%; }
+        .password-strength-medium { background: #f39c12; width: 66%; }
+        .password-strength-strong { background: #2ecc71; width: 100%; }
+    </style>
+</head>
+<body>
+    <div class="auth-page">
+        <div class="card auth-card animate-fade-in-up">
+            <div class="auth-logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" stroke="#C8A76A" stroke-width="2" fill="none"/>
+                    <circle cx="50" cy="50" r="35" stroke="#C8A76A" stroke-width="1.5" fill="none"/>
+                    <text x="50" y="60" text-anchor="middle" fill="#C8A76A" font-size="32" font-family="Cinzel, serif" font-weight="700">W</text>
+                </svg>
+            </div>
+            
+            <h1 class="auth-title">Create Account</h1>
+            <p class="auth-subtitle">Join the WINX community today</p>
+            
+            <div id="registerError"></div>
+            <div id="registerSuccess" class="hidden"></div>
+            
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" class="form-input" placeholder="Choose a username" required minlength="3" maxlength="20">
+                    <p class="form-hint">3-20 characters, letters and numbers only</p>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="your@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Create a password" required minlength="6">
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="strengthBar"></div>
+                    </div>
+                    <p class="form-hint">Minimum 6 characters</p>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm your password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label style="display: flex; align-items: flex-start; gap: var(--spacing-sm); color: var(--text-secondary); font-size: 0.875rem; cursor: pointer;">
+                        <input type="checkbox" id="terms" required>
+                        <span>I agree to the <a href="#" class="text-gold">Terms of Service</a> and <a href="#" class="text-gold">Privacy Policy</a></span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                    Create Account
+                </button>
+            </form>
+            
+            <div class="form-footer">
+                <p>Already have an account? <a href="login.html">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/db/database.js"></script>
+    <script>
+        // Check if already logged in
+        if (db.getCurrentUser()) {
+            window.location.href = 'index.html';
+        }
+        
+        // Password strength indicator
+        document.getElementById('password').addEventListener('input', function(e) {
+            const password = e.target.value;
+            const strengthBar = document.getElementById('strengthBar');
+            
+            if (!password) {
+                strengthBar.className = 'password-strength-bar';
+                return;
+            }
+            
+            let strength = 0;
+            if (password.length >= 6) strength++;
+            if (password.length >= 10) strength++;
+            if (/[A-Z]/.test(password) && /[a-z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^A-Za-z0-9]/.test(password)) strength++;
+            
+            if (strength <= 2) {
+                strengthBar.className = 'password-strength-bar password-strength-weak';
+            } else if (strength <= 3) {
+                strengthBar.className = 'password-strength-bar password-strength-medium';
+            } else {
+                strengthBar.className = 'password-strength-bar password-strength-strong';
+            }
+        });
+        
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const terms = document.getElementById('terms').checked;
+            
+            const errorDiv = document.getElementById('registerError');
+            const successDiv = document.getElementById('registerSuccess');
+            
+            // Validation
+            if (!terms) {
+                errorDiv.innerHTML = '<div class="alert alert-danger">You must accept the Terms of Service</div>';
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                errorDiv.innerHTML = '<div class="alert alert-danger">Passwords do not match</div>';
+                return;
+            }
+            
+            if (password.length < 6) {
+                errorDiv.innerHTML = '<div class="alert alert-danger">Password must be at least 6 characters</div>';
+                return;
+            }
+            
+            const result = db.register({ username, email, password });
+            
+            if (result.success) {
+                successDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        Account created successfully! Redirecting...
+                    </div>
+                `;
+                successDiv.classList.remove('hidden');
+                errorDiv.innerHTML = '';
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            } else {
+                errorDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        ${escapeHtml(result.error)}
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

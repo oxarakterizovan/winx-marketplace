@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support — WINX</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .support-hero {
+            padding: var(--spacing-3xl) 0;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            padding: var(--spacing-2xl) 0;
+        }
+        .support-card {
+            text-align: center;
+            padding: var(--spacing-2xl);
+            cursor: pointer;
+        }
+        .support-card-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+        }
+        .support-card:hover {
+            border-color: var(--accent-primary);
+        }
+        .faq-section {
+            padding: var(--spacing-2xl) 0;
+        }
+        .faq-item {
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-sm);
+            overflow: hidden;
+        }
+        .faq-question {
+            width: 100%;
+            padding: var(--spacing-lg);
+            background: var(--bg-cards);
+            border: none;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-base);
+        }
+        .faq-question:hover {
+            background: var(--bg-hover);
+        }
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            transition: transform var(--transition-base);
+        }
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-base);
+        }
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+        .faq-answer-content {
+            padding: var(--spacing-lg);
+            color: var(--text-secondary);
+            line-height: 1.8;
+            border-top: 1px solid var(--border-color);
+        }
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .contact-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-2xl);
+        }
+        .contact-method {
+            text-align: center;
+            padding: var(--spacing-lg);
+            background: var(--bg-cards);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+        }
+        .contact-method-icon {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+        }
+    </style>
+</head>
+<body class="loading">
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-logo">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="logo-path"/><text x="50" y="58" text-anchor="middle" fill="#C8A76A" font-size="24" font-family="Cinzel, serif" font-weight="700">W</text></svg>
+        </div>
+        <div class="loading-bar-container"><div class="loading-bar"></div></div>
+        <div class="loading-text">Loading WINX</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" stroke="#C8A76A" stroke-width="2" fill="none"/><text x="20" y="26" text-anchor="middle" fill="#C8A76A" font-size="20" font-family="Cinzel, serif" font-weight="700">W</text></svg>
+                WINX
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="index.html" class="navbar-link">Home</a></li>
+                <li><a href="marketplace.html" class="navbar-link">Marketplace</a></li>
+                <li><a href="products.html" class="navbar-link">Products</a></li>
+                <li><a href="forum.html" class="navbar-link">Forum</a></li>
+                <li><a href="documentation.html" class="navbar-link">Documentation</a></li>
+                <li><a href="support.html" class="navbar-link active">Support</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <button class="navbar-icon-btn search-btn">🔍</button>
+                <button class="navbar-icon-btn notifications-btn">🔔<span class="badge" style="display: none;"></span></button>
+                <div class="navbar-auth">
+                    <a href="login.html" class="btn btn-secondary btn-sm">Войти</a>
+                    <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
+                </div>
+                <div class="mobile-menu-toggle"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero -->
+        <section class="support-hero">
+            <div class="container">
+                <h1 class="mb-md">Support Center</h1>
+                <p class="text-secondary" style="max-width: 600px; margin: 0 auto;">
+                    Find answers to common questions or contact our support team
+                </p>
+            </div>
+        </section>
+
+        <!-- Support Options -->
+        <section class="container">
+            <div class="support-grid">
+                <div class="card support-card" onclick="window.location.href='documentation.html'">
+                    <div class="support-card-icon">📚</div>
+                    <h3 class="mb-sm">Documentation</h3>
+                    <p class="text-secondary">Browse our comprehensive documentation and guides</p>
+                </div>
+                
+                <div class="card support-card" onclick="scrollToFaq()">
+                    <div class="support-card-icon">❓</div>
+                    <h3 class="mb-sm">FAQ</h3>
+                    <p class="text-secondary">Find answers to frequently asked questions</p>
+                </div>
+                
+                <div class="card support-card" onclick="window.location.href='forum.html'">
+                    <div class="support-card-icon">💬</div>
+                    <h3 class="mb-sm">Community Forum</h3>
+                    <p class="text-secondary">Get help from other WINX users</p>
+                </div>
+                
+                <div class="card support-card" onclick="scrollToContact()">
+                    <div class="support-card-icon">📧</div>
+                    <h3 class="mb-sm">Contact Us</h3>
+                    <p class="text-secondary">Send us a message directly</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" id="faqSection">
+            <div class="container" style="max-width: 800px;">
+                <h2 class="text-center mb-xl">Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <button class="faq-question">How do I install Winx Loader?</button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Download the installer from the Products page, run it as Administrator, and follow the installation wizard. Make sure you have Java 17 or higher installed.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">Is Winx Loader safe to use?</button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes, Winx Loader is completely safe. It's scanned regularly for malware and viruses. However, always download from official sources only.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">Can I use Winx Loader on multiplayer servers?</button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Winx Loader is designed for single-player use. Using it on multiplayer servers may violate server rules. Always check with server administrators first.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">How do I update Winx Loader?</button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Winx Loader has automatic updates enabled by default. When a new version is available, you'll be prompted to update on launch.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">Can I get a refund for paid marketplace items?</button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Refunds are evaluated on a case-by-case basis. Contact support within 7 days of purchase with your reason for the refund request.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question">How do I become a marketplace creator?</button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Create high-quality content, upload it to the marketplace, and build a reputation. Consistent quality uploads may lead to verified creator status.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form -->
+        <section class="container" id="contactSection" style="padding: var(--spacing-2xl) 0;">
+            <h2 class="text-center mb-xl">Contact Support</h2>
+            
+            <form class="contact-form card" onsubmit="handleContact(event)">
+                <div class="form-group">
+                    <label class="form-label" for="name">Name</label>
+                    <input type="text" id="name" class="form-input" placeholder="Your name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="your@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="subject">Subject</label>
+                    <select id="subject" class="form-select" required>
+                        <option value="">Select a subject</option>
+                        <option value="technical">Technical Issue</option>
+                        <option value="billing">Billing Question</option>
+                        <option value="account">Account Issue</option>
+                        <option value="marketplace">Marketplace Issue</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="message">Message</label>
+                    <textarea id="message" class="form-textarea" placeholder="Describe your issue in detail..." required style="min-height: 150px;"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+                    Send Message
+                </button>
+            </form>
+            
+            <div class="contact-methods">
+                <div class="contact-method">
+                    <div class="contact-method-icon">📧</div>
+                    <h4 class="mb-sm">Email</h4>
+                    <p class="text-secondary">support@winx.com</p>
+                </div>
+                
+                <div class="contact-method">
+                    <div class="contact-method-icon">💬</div>
+                    <h4 class="mb-sm">Discord</h4>
+                    <p class="text-secondary">Join our server</p>
+                </div>
+                
+                <div class="contact-method">
+                    <div class="contact-method-icon">🕐</div>
+                    <h4 class="mb-sm">Response Time</h4>
+                    <p class="text-secondary">24-48 hours</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: var(--spacing-3xl) 0; margin-top: var(--spacing-3xl);">
+        <div class="container">
+            <div class="divider divider-gothic mb-xl"></div>
+            <div class="text-center">
+                <p class="text-secondary" style="font-size: 0.875rem;">&copy; 2024 WINX Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/db/database.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // FAQ toggle
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const item = button.parentElement;
+                const wasActive = item.classList.contains('active');
+                
+                // Close all items
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                
+                // Open clicked item if it wasn't active
+                if (!wasActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        function scrollToFaq() {
+            document.getElementById('faqSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToContact() {
+            document.getElementById('contactSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function handleContact(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // In a real app, this would send to a server
+            alert('Thank you for contacting us! We will respond to ' + email + ' within 24-48 hours.');
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>

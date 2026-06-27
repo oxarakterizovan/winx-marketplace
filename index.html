@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WINX — Premium Gothic Marketplace & Community Platform</title>
+    <meta name="description" content="Premium Minecraft utilities, modifications, and community platform">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body class="loading">
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-logo">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" class="logo-path" style="stroke-dasharray: 283; stroke-dashoffset: 283;"/>
+                <path d="M30 35 L50 25 L70 35 L70 65 L50 75 L30 65 Z" class="logo-path" style="stroke-dasharray: 200; stroke-dashoffset: 200;"/>
+                <text x="50" y="58" text-anchor="middle" fill="#C8A76A" font-size="24" font-family="Cinzel, serif" font-weight="700">W</text>
+            </svg>
+        </div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+        <div class="loading-text">Loading WINX</div>
+        <div class="particles-container" id="particles"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="20" r="18" stroke="#C8A76A" stroke-width="2" fill="none"/>
+                    <text x="20" y="26" text-anchor="middle" fill="#C8A76A" font-size="20" font-family="Cinzel, serif" font-weight="700">W</text>
+                </svg>
+                WINX
+            </a>
+            
+            <ul class="navbar-menu">
+                <li><a href="index.html" class="navbar-link active">Home</a></li>
+                <li><a href="marketplace.html" class="navbar-link">Marketplace</a></li>
+                <li><a href="products.html" class="navbar-link">Products</a></li>
+                <li><a href="forum.html" class="navbar-link">Forum</a></li>
+                <li><a href="documentation.html" class="navbar-link">Documentation</a></li>
+                <li><a href="support.html" class="navbar-link">Support</a></li>
+            </ul>
+            
+            <div class="navbar-actions">
+                <button class="navbar-icon-btn search-btn" title="Search">
+                    🔍
+                </button>
+                
+                <!-- Search Dropdown -->
+                <div class="dropdown-menu search-dropdown">
+                    <div class="dropdown-header">
+                        <input type="text" class="form-input search-input" placeholder="Search products, marketplace, forum...">
+                    </div>
+                    <div class="search-results">
+                        <div class="search-category">Начните вводить для поиска</div>
+                    </div>
+                </div>
+                
+                <button class="navbar-icon-btn notifications-btn" title="Notifications">
+                    🔔
+                    <span class="badge" style="display: none;"></span>
+                </button>
+                
+                <!-- Notifications Dropdown -->
+                <div class="dropdown-menu notifications-dropdown">
+                    <div class="notifications-list">
+                        <div class="dropdown-header">
+                            <h4>Уведомления</h4>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="dropdown-item-content text-center">
+                                <p class="text-secondary">Войдите для просмотра уведомлений</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Auth / Profile -->
+                <div class="navbar-auth">
+                    <a href="login.html" class="btn btn-secondary btn-sm">Войти</a>
+                    <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
+                </div>
+                
+                <div class="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-content text-center animate-on-load">
+                    <div class="hero-logo mb-xl">
+                        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" width="120" height="120">
+                            <defs>
+                                <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#C8A76A"/>
+                                    <stop offset="50%" style="stop-color:#D4B87A"/>
+                                    <stop offset="100%" style="stop-color:#C8A76A"/>
+                                </linearGradient>
+                            </defs>
+                            <circle cx="60" cy="60" r="55" stroke="url(#goldGradient)" stroke-width="2" fill="none" opacity="0.5"/>
+                            <circle cx="60" cy="60" r="45" stroke="url(#goldGradient)" stroke-width="1.5" fill="none"/>
+                            <path d="M40 45 L60 35 L80 45 L80 75 L60 85 L40 75 Z" stroke="url(#goldGradient)" stroke-width="2" fill="none"/>
+                            <text x="60" y="70" text-anchor="middle" fill="url(#goldGradient)" font-size="32" font-family="Cinzel, serif" font-weight="700">W</text>
+                        </svg>
+                    </div>
+                    
+                    <h1 class="hero-title text-gradient mb-md">WINX</h1>
+                    <p class="hero-subtitle text-secondary mb-xl">
+                        Premium Gothic Marketplace & Community Platform
+                    </p>
+                    
+                    <div class="hero-cta flex justify-center gap-md">
+                        <a href="products.html" class="btn btn-primary btn-lg">
+                            Explore Products
+                        </a>
+                        <a href="marketplace.html" class="btn btn-secondary btn-lg">
+                            Browse Marketplace
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Animated Background -->
+            <div class="hero-background">
+                <div class="gothic-arches"></div>
+                <div class="particles-container" id="hero-particles"></div>
+            </div>
+        </section>
+
+        <!-- Category Cards -->
+        <section class="categories-section py-3xl">
+            <div class="container">
+                <div class="grid-cards">
+                    <!-- Marketplace Card -->
+                    <a href="marketplace.html" class="card category-card animate-on-load hover-lift">
+                        <div class="card-icon text-gold mb-md" style="font-size: 3rem;">🛒</div>
+                        <h3 class="mb-sm">Marketplace</h3>
+                        <p class="text-secondary mb-md">Discover community-created content, themes, configurations, and more.</p>
+                        <span class="btn btn-outline btn-sm">Browse →</span>
+                    </a>
+                    
+                    <!-- Products Card -->
+                    <a href="products.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.1s;">
+                        <div class="card-icon text-gold mb-md" style="font-size: 3rem;">⚡</div>
+                        <h3 class="mb-sm">Products</h3>
+                        <p class="text-secondary mb-md">Premium Minecraft utilities including Winx Loader and Standalone Clicker.</p>
+                        <span class="btn btn-outline btn-sm">Explore →</span>
+                    </a>
+                    
+                    <!-- Forum Card -->
+                    <a href="forum.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.2s;">
+                        <div class="card-icon text-gold mb-md" style="font-size: 3rem;">💬</div>
+                        <h3 class="mb-sm">Forum</h3>
+                        <p class="text-secondary mb-md">Join discussions, get help, and connect with the WINX community.</p>
+                        <span class="btn btn-outline btn-sm">Join Discussion →</span>
+                    </a>
+                    
+                    <!-- Documentation Card -->
+                    <a href="documentation.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.3s;">
+                        <div class="card-icon text-gold mb-md" style="font-size: 3rem;">📚</div>
+                        <h3 class="mb-sm">Documentation</h3>
+                        <p class="text-secondary mb-md">Comprehensive guides and API documentation for developers.</p>
+                        <span class="btn btn-outline btn-sm">Read Docs →</span>
+                    </a>
+                    
+                    <!-- Support Card -->
+                    <a href="support.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.4s;">
+                        <div class="card-icon text-gold mb-md" style="font-size: 3rem;">🛟</div>
+                        <h3 class="mb-sm">Support</h3>
+                        <p class="text-secondary mb-md">Get help from our support team and find answers to common questions.</p>
+                        <span class="btn btn-outline btn-sm">Get Help →</span>
+                    </a>
+                    
+                    <!-- About Card -->
+                    <a href="about.html" class="card category-card animate-on-load hover-lift" style="animation-delay: 0.5s;">
+                        <div class="card-icon text-gold mb-md" style="font-size: 3rem;">ℹ️</div>
+                        <h3 class="mb-sm">About</h3>
+                        <p class="text-secondary mb-md">Learn about WINX, our mission, and the team behind the platform.</p>
+                        <span class="btn btn-outline btn-sm">Learn More →</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="featured-section py-3xl">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Featured Products</h2>
+                    <p class="section-subtitle">Premium tools crafted for the ultimate Minecraft experience</p>
+                </div>
+                
+                <div class="grid-cards">
+                    <div class="card product-card animate-on-load">
+                        <div class="card-badge card-badge-free">Free</div>
+                        <div class="card-image" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); display: flex; align-items: center; justify-content: center;">
+                            <span style="font-size: 4rem;">⚡</span>
+                        </div>
+                        <h3 class="mb-sm">Winx Loader</h3>
+                        <p class="text-secondary mb-md" style="font-size: 0.9rem;">Premium Minecraft utility platform with advanced features</p>
+                        <div class="flex justify-between items-center mb-md">
+                            <div class="rating">
+                                <span class="rating-star">★</span>
+                                <span class="rating-star">★</span>
+                                <span class="rating-star">★</span>
+                                <span class="rating-star">★</span>
+                                <span class="rating-star">★</span>
+                                <span class="rating-value">(2,341)</span>
+                            </div>
+                            <span class="text-gold" style="font-weight: 600;">125K+</span>
+                        </div>
+                        <a href="product-winxloader.html" class="btn btn-primary" style="width: 100%;">Learn More</a>
+                    </div>
+                    
+                    <div class="card product-card animate-on-load" style="animation-delay: 0.1s;">
+                        <div class="card-badge card-badge-free">Free</div>
+                        <div class="card-image" style="background: linear-gradient(135deg, #2d1b4e 0%, #1a1a2e 100%); display: flex; align-items: center; justify-content: center;">
+                            <span style="font-size: 4rem;">🖱️</span>
+                        </div>
+                        <h3 class="mb-sm">Standalone Clicker</h3>
+                        <p class="text-secondary mb-md" style="font-size: 0.9rem;">Advanced autoclicker with customizable patterns</p>
+                        <div class="flex justify-between items-center mb-md">
+                            <div class="rating">
+                                <span class="rating-star">★</span>
+                                <span class="rating-star">★</span>
+                                <span class="rating-star">★</span>
+                                <span class="rating-star">★</span>
+                                <span class="rating-star empty">☆</span>
+                                <span class="rating-value">(892)</span>
+                            </div>
+                            <span class="text-gold" style="font-weight: 600;">45K+</span>
+                        </div>
+                        <a href="product-clicker.html" class="btn btn-primary" style="width: 100%;">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section py-3xl" style="background: var(--bg-secondary);">
+            <div class="container">
+                <div class="grid grid-cols-4 text-center">
+                    <div class="stat-item animate-on-load">
+                        <div class="stat-value text-gradient" style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 700;">170K+</div>
+                        <div class="stat-label text-secondary">Total Downloads</div>
+                    </div>
+                    <div class="stat-item animate-on-load" style="animation-delay: 0.1s;">
+                        <div class="stat-value text-gradient" style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 700;">50K+</div>
+                        <div class="stat-label text-secondary">Active Users</div>
+                    </div>
+                    <div class="stat-item animate-on-load" style="animation-delay: 0.2s;">
+                        <div class="stat-value text-gradient" style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 700;">1,000+</div>
+                        <div class="stat-label text-secondary">Marketplace Items</div>
+                    </div>
+                    <div class="stat-item animate-on-load" style="animation-delay: 0.3s;">
+                        <div class="stat-value text-gradient" style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 700;">4.8</div>
+                        <div class="stat-label text-secondary">Average Rating</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: var(--spacing-3xl) 0; margin-top: var(--spacing-3xl);">
+        <div class="container">
+            <!-- Gothic Divider -->
+            <div class="divider divider-gothic mb-xl"></div>
+            
+            <div class="grid grid-cols-4" style="gap: var(--spacing-xl);">
+                <div>
+                    <h4 class="mb-md text-gold">WINX</h4>
+                    <p class="text-secondary mb-md" style="font-size: 0.9rem;">
+                        Premium Gothic Marketplace & Community Platform for Minecraft enthusiasts.
+                    </p>
+                    <div class="flex gap-sm">
+                        <a href="#" class="navbar-icon-btn" title="Discord">💬</a>
+                        <a href="#" class="navbar-icon-btn" title="GitHub">🐙</a>
+                        <a href="#" class="navbar-icon-btn" title="Twitter">🐦</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="mb-md">Links</h4>
+                    <ul style="line-height: 2;">
+                        <li><a href="marketplace.html" class="text-secondary">Marketplace</a></li>
+                        <li><a href="products.html" class="text-secondary">Products</a></li>
+                        <li><a href="forum.html" class="text-secondary">Forum</a></li>
+                        <li><a href="documentation.html" class="text-secondary">Documentation</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="mb-md">Support</h4>
+                    <ul style="line-height: 2;">
+                        <li><a href="support.html" class="text-secondary">Help Center</a></li>
+                        <li><a href="#" class="text-secondary">Contact Us</a></li>
+                        <li><a href="#" class="text-secondary">Bug Report</a></li>
+                        <li><a href="#" class="text-secondary">Feature Request</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="mb-md">Legal</h4>
+                    <ul style="line-height: 2;">
+                        <li><a href="#" class="text-secondary">Privacy Policy</a></li>
+                        <li><a href="#" class="text-secondary">Terms of Service</a></li>
+                        <li><a href="#" class="text-secondary">Cookie Policy</a></li>
+                        <li><a href="#" class="text-secondary">DMCA</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="text-center mt-xl" style="padding-top: var(--spacing-xl); border-top: 1px solid var(--border-color);">
+                <p class="text-secondary" style="font-size: 0.875rem;">
+                    &copy; 2024 WINX Platform. All rights reserved. Not affiliated with Mojang Studios.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/db/database.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Create particles
+        function createParticles(containerId, count = 20) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 4 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                container.appendChild(particle);
+            }
+        }
+        
+        createParticles('particles', 30);
+        createParticles('hero-particles', 20);
+    </script>
+</body>
+</html>

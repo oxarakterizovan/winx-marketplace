@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation — WINX</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .docs-hero {
+            padding: var(--spacing-3xl) 0;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+        .docs-search {
+            max-width: 600px;
+            margin: var(--spacing-xl) auto 0;
+        }
+        .docs-search input {
+            width: 100%;
+            padding: var(--spacing-md) var(--spacing-lg);
+            font-size: 1.1rem;
+            background: var(--bg-cards);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            color: var(--text-primary);
+        }
+        .docs-search input:focus {
+            border-color: var(--accent-primary);
+        }
+        .docs-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: var(--spacing-xl);
+            padding: var(--spacing-2xl) 0;
+        }
+        .docs-sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+        .docs-nav {
+            padding: var(--spacing-md);
+            background: var(--bg-cards);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+        }
+        .docs-nav-section {
+            margin-bottom: var(--spacing-lg);
+        }
+        .docs-nav-section:last-child {
+            margin-bottom: 0;
+        }
+        .docs-nav-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-sm);
+            padding-left: var(--spacing-sm);
+        }
+        .docs-nav-link {
+            display: block;
+            padding: var(--spacing-sm) var(--spacing-md);
+            color: var(--text-secondary);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-base);
+            cursor: pointer;
+        }
+        .docs-nav-link:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+        .docs-nav-link.active {
+            background: rgba(200, 167, 106, 0.1);
+            color: var(--accent-primary);
+        }
+        .docs-content {
+            max-width: 900px;
+        }
+        .docs-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--spacing-md);
+        }
+        .docs-content h2 {
+            font-size: 1.75rem;
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-md);
+            padding-bottom: var(--spacing-sm);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .docs-content h3 {
+            font-size: 1.25rem;
+            margin-top: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+        }
+        .docs-content p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: var(--spacing-md);
+        }
+        .docs-content code {
+            background: var(--bg-secondary);
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+            font-family: 'Consolas', monospace;
+            font-size: 0.9em;
+            color: var(--accent-primary);
+        }
+        .docs-content pre {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            overflow-x: auto;
+            margin: var(--spacing-md) 0;
+        }
+        .docs-content pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-primary);
+        }
+        .docs-content ul, .docs-content ol {
+            color: var(--text-secondary);
+            line-height: 2;
+            margin-bottom: var(--spacing-md);
+            padding-left: var(--spacing-lg);
+        }
+        .docs-content li {
+            margin-bottom: var(--spacing-xs);
+        }
+        .docs-content .alert {
+            margin: var(--spacing-lg) 0;
+        }
+        .docs-content table {
+            width: 100%;
+            margin: var(--spacing-lg) 0;
+        }
+        .docs-breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: var(--spacing-lg);
+        }
+        .docs-breadcrumb a {
+            color: var(--text-secondary);
+        }
+        .docs-breadcrumb a:hover {
+            color: var(--accent-primary);
+        }
+    </style>
+</head>
+<body class="loading">
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-logo">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="logo-path"/><text x="50" y="58" text-anchor="middle" fill="#C8A76A" font-size="24" font-family="Cinzel, serif" font-weight="700">W</text></svg>
+        </div>
+        <div class="loading-bar-container"><div class="loading-bar"></div></div>
+        <div class="loading-text">Loading WINX</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" stroke="#C8A76A" stroke-width="2" fill="none"/><text x="20" y="26" text-anchor="middle" fill="#C8A76A" font-size="20" font-family="Cinzel, serif" font-weight="700">W</text></svg>
+                WINX
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="index.html" class="navbar-link">Home</a></li>
+                <li><a href="marketplace.html" class="navbar-link">Marketplace</a></li>
+                <li><a href="products.html" class="navbar-link">Products</a></li>
+                <li><a href="forum.html" class="navbar-link">Forum</a></li>
+                <li><a href="documentation.html" class="navbar-link active">Documentation</a></li>
+                <li><a href="support.html" class="navbar-link">Support</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <button class="navbar-icon-btn search-btn">🔍</button>
+                <button class="navbar-icon-btn notifications-btn">🔔<span class="badge" style="display: none;"></span></button>
+                <div class="navbar-auth">
+                    <a href="login.html" class="btn btn-secondary btn-sm">Войти</a>
+                    <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
+                </div>
+                <div class="mobile-menu-toggle"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero -->
+        <section class="docs-hero">
+            <div class="container">
+                <h1 class="mb-md">Documentation</h1>
+                <p class="text-secondary" style="max-width: 600px; margin: 0 auto;">
+                    Everything you need to know about WINX products and platform
+                </p>
+                <div class="docs-search">
+                    <input type="text" placeholder="Search documentation..." id="docsSearch">
+                </div>
+            </div>
+        </section>
+
+        <!-- Docs Content -->
+        <section class="container">
+            <div class="docs-layout">
+                <!-- Sidebar -->
+                <aside class="docs-sidebar">
+                    <nav class="docs-nav">
+                        <div class="docs-nav-section">
+                            <div class="docs-nav-title">Getting Started</div>
+                            <a class="docs-nav-link active" onclick="loadDoc('welcome')">Welcome</a>
+                            <a class="docs-nav-link" onclick="loadDoc('installation')">Installation</a>
+                            <a class="docs-nav-link" onclick="loadDoc('quickstart')">Quick Start Guide</a>
+                        </div>
+                        
+                        <div class="docs-nav-section">
+                            <div class="docs-nav-title">Winx Loader</div>
+                            <a class="docs-nav-link" onclick="loadDoc('loader-features')">Features</a>
+                            <a class="docs-nav-link" onclick="loadDoc('loader-config')">Configuration</a>
+                            <a class="docs-nav-link" onclick="loadDoc('loader-modules')">Modules</a>
+                            <a class="docs-nav-link" onclick="loadDoc('loader-updates')">Updates</a>
+                        </div>
+                        
+                        <div class="docs-nav-section">
+                            <div class="docs-nav-title">Standalone Clicker</div>
+                            <a class="docs-nav-link" onclick="loadDoc('clicker-guide')">User Guide</a>
+                            <a class="docs-nav-link" onclick="loadDoc('clicker-patterns')">Click Patterns</a>
+                            <a class="docs-nav-link" onclick="loadDoc('clicker-hotkeys')">Hotkeys</a>
+                        </div>
+                        
+                        <div class="docs-nav-section">
+                            <div class="docs-nav-title">Marketplace</div>
+                            <a class="docs-nav-link" onclick="loadDoc('marketplace-intro')">Introduction</a>
+                            <a class="docs-nav-link" onclick="loadDoc('marketplace-upload')">Uploading Items</a>
+                            <a class="docs-nav-link" onclick="loadDoc('marketplace-guidelines')">Guidelines</a>
+                        </div>
+                        
+                        <div class="docs-nav-section">
+                            <div class="docs-nav-title">API Reference</div>
+                            <a class="docs-nav-link" onclick="loadDoc('api-overview')">Overview</a>
+                            <a class="docs-nav-link" onclick="loadDoc('api-auth')">Authentication</a>
+                            <a class="docs-nav-link" onclick="loadDoc('api-endpoints')">Endpoints</a>
+                        </div>
+                    </nav>
+                </aside>
+
+                <!-- Content -->
+                <div class="docs-content" id="docsContent">
+                    <!-- Content loaded via JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: var(--spacing-3xl) 0; margin-top: var(--spacing-3xl);">
+        <div class="container">
+            <div class="divider divider-gothic mb-xl"></div>
+            <div class="text-center">
+                <p class="text-secondary" style="font-size: 0.875rem;">&copy; 2024 WINX Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/db/database.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        const docs = {
+            'welcome': {
+                title: 'Welcome to WINX Documentation',
+                content: `
+                    <div class="docs-breadcrumb">
+                        <a href="documentation.html">Docs</a>
+                        <span>/</span>
+                        <span>Welcome</span>
+                    </div>
+                    <h1>Welcome to WINX Documentation</h1>
+                    <p>This documentation will help you get the most out of WINX products and platform.</p>
+                    
+                    <div class="alert alert-info">
+                        <strong>Tip:</strong> Use the search bar above to quickly find what you're looking for.
+                    </div>
+                    
+                    <h2>What is WINX?</h2>
+                    <p>WINX is a premium platform for Minecraft utilities, modifications, and community content. Our flagship products include:</p>
+                    <ul>
+                        <li><strong>Winx Loader</strong> - Premium Minecraft utility platform</li>
+                        <li><strong>Standalone Clicker</strong> - Advanced autoclicker tool</li>
+                        <li><strong>Marketplace</strong> - Community-created content platform</li>
+                    </ul>
+                    
+                    <h2>Getting Started</h2>
+                    <p>New to WINX? Start with these guides:</p>
+                    <ul>
+                        <li><a href="#" onclick="loadDoc('installation'); return false;">Installation Guide</a> - Learn how to install WINX products</li>
+                        <li><a href="#" onclick="loadDoc('quickstart'); return false;">Quick Start Guide</a> - Get up and running in minutes</li>
+                    </ul>
+                    
+                    <h2>Need Help?</h2>
+                    <p>If you can't find what you're looking for, check out our:</p>
+                    <ul>
+                        <li><a href="forum.html">Community Forum</a> - Get help from other users</li>
+                        <li><a href="support.html">Support Center</a> - Contact our support team</li>
+                    </ul>
+                `
+            },
+            'installation': {
+                title: 'Installation Guide',
+                content: `
+                    <div class="docs-breadcrumb">
+                        <a href="documentation.html">Docs</a>
+                        <span>/</span>
+                        <span>Installation</span>
+                    </div>
+                    <h1>Installation Guide</h1>
+                    <p>Follow these steps to install WINX products on your system.</p>
+                    
+                    <h2>System Requirements</h2>
+                    <table class="table">
+                        <tr>
+                            <th>Product</th>
+                            <th>OS</th>
+                            <th>RAM</th>
+                            <th>Storage</th>
+                            <th>Other</th>
+                        </tr>
+                        <tr>
+                            <td>Winx Loader</td>
+                            <td>Windows 10/11</td>
+                            <td>4GB</td>
+                            <td>500MB</td>
+                            <td>Java 17+</td>
+                        </tr>
+                        <tr>
+                            <td>Standalone Clicker</td>
+                            <td>Windows 10/11</td>
+                            <td>1GB</td>
+                            <td>50MB</td>
+                            <td>.NET 6+</td>
+                        </tr>
+                    </table>
+                    
+                    <h2>Installing Winx Loader</h2>
+                    <ol>
+                        <li>Download the installer from the <a href="products.html">Products</a> page</li>
+                        <li>Run the installer as Administrator</li>
+                        <li>Choose your installation directory</li>
+                        <li>Click "Install" and wait for completion</li>
+                        <li>Launch Winx Loader from the desktop shortcut</li>
+                    </ol>
+                    
+                    <div class="alert alert-warning">
+                        <strong>Important:</strong> Make sure you have Java 17 or higher installed before running Winx Loader.
+                    </div>
+                    
+                    <h2>Installing Standalone Clicker</h2>
+                    <ol>
+                        <li>Download the portable or installer version</li>
+                        <li>For portable: Extract to any folder</li>
+                        <li>For installer: Run and follow the wizard</li>
+                        <li>Launch the application</li>
+                    </ol>
+                `
+            },
+            'quickstart': {
+                title: 'Quick Start Guide',
+                content: `
+                    <h1>Quick Start Guide</h1>
+                    <p>Get started with Winx Loader in just a few minutes.</p>
+                    
+                    <h2>First Launch</h2>
+                    <ol>
+                        <li>Open Winx Loader</li>
+                        <li>Sign in with your WINX account</li>
+                        <li>Allow the application to detect your Minecraft installation</li>
+                        <li>Choose your preferred settings</li>
+                    </ol>
+                    
+                    <h2>Basic Configuration</h2>
+                    <p>The settings menu allows you to customize:</p>
+                    <ul>
+                        <li>Visual themes and appearance</li>
+                        <li>Module preferences</li>
+                        <li>Hotkey bindings</li>
+                        <li>Update settings</li>
+                    </ul>
+                    
+                    <h2>Installing Modules</h2>
+                    <p>Visit the <a href="marketplace.html">Marketplace</a> to discover community-created modules and configurations.</p>
+                `
+            },
+            'loader-features': {
+                title: 'Winx Loader Features',
+                content: `
+                    <h1>Winx Loader Features</h1>
+                    <p>Comprehensive overview of all Winx Loader features.</p>
+                    
+                    <h2>Core Features</h2>
+                    <ul>
+                        <li><strong>Visual Enhancements</strong> - Improved graphics and rendering</li>
+                        <li><strong>UI Improvements</strong> - Custom interface elements</li>
+                        <li><strong>Autoclicker</strong> - Advanced clicking automation</li>
+                        <li><strong>Performance Optimization</strong> - FPS boosts and lag reduction</li>
+                        <li><strong>Profile Management</strong> - Save and switch configurations</li>
+                        <li><strong>Auto Updates</strong> - Always stay on the latest version</li>
+                    </ul>
+                    
+                    <h2>Advanced Features</h2>
+                    <ul>
+                        <li>Custom scripting support</li>
+                        <li>Module API for developers</li>
+                        <li>Cloud sync for configurations</li>
+                        <li>Detailed statistics and analytics</li>
+                    </ul>
+                `
+            },
+            'loader-config': { title: 'Configuration', content: '<h1>Configuration Guide</h1><p>Learn how to configure Winx Loader for your needs.</p><p>Content coming soon...</p>' },
+            'loader-modules': { title: 'Modules', content: '<h1>Modules</h1><p>Discover and manage Winx Loader modules.</p><p>Content coming soon...</p>' },
+            'loader-updates': { title: 'Updates', content: '<h1>Update System</h1><p>Understanding the Winx Loader update system.</p><p>Content coming soon...</p>' },
+            'clicker-guide': { title: 'Clicker User Guide', content: '<h1>Standalone Clicker Guide</h1><p>Complete guide to using Standalone Clicker.</p><p>Content coming soon...</p>' },
+            'clicker-patterns': { title: 'Click Patterns', content: '<h1>Click Patterns</h1><p>Understanding different click patterns.</p><p>Content coming soon...</p>' },
+            'clicker-hotkeys': { title: 'Hotkeys', content: '<h1>Hotkeys Configuration</h1><p>Setting up custom hotkeys.</p><p>Content coming soon...</p>' },
+            'marketplace-intro': { title: 'Marketplace Introduction', content: '<h1>Marketplace Introduction</h1><p>Discover the WINX Marketplace.</p><p>Content coming soon...</p>' },
+            'marketplace-upload': { title: 'Uploading Items', content: '<h1>Uploading to Marketplace</h1><p>Guide for creators.</p><p>Content coming soon...</p>' },
+            'marketplace-guidelines': { title: 'Marketplace Guidelines', content: '<h1>Marketplace Guidelines</h1><p>Rules and best practices.</p><p>Content coming soon...</p>' },
+            'api-overview': { title: 'API Overview', content: '<h1>API Overview</h1><p>WINX API documentation.</p><p>Content coming soon...</p>' },
+            'api-auth': { title: 'API Authentication', content: '<h1>API Authentication</h1><p>How to authenticate with the API.</p><p>Content coming soon...</p>' },
+            'api-endpoints': { title: 'API Endpoints', content: '<h1>API Endpoints</h1><p>Available API endpoints.</p><p>Content coming soon...</p>' }
+        };
+
+        function loadDoc(docId) {
+            const doc = docs[docId];
+            const container = document.getElementById('docsContent');
+            
+            if (!doc) {
+                container.innerHTML = '<h1>Page Not Found</h1><p class="text-secondary">The requested documentation page does not exist.</p>';
+                return;
+            }
+            
+            container.innerHTML = doc.content;
+            
+            // Update active nav link
+            document.querySelectorAll('.docs-nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Load welcome page by default
+        loadDoc('welcome');
+
+        // Search functionality
+        document.getElementById('docsSearch').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            if (query.length < 2) return;
+            
+            // Simple search implementation
+            const matchedDocs = Object.entries(docs).filter(([id, doc]) => 
+                doc.title.toLowerCase().includes(query) || doc.content.toLowerCase().includes(query)
+            );
+            
+            if (matchedDocs.length > 0) {
+                console.log('Found docs:', matchedDocs.map(([id]) => id));
+            }
+        });
+    </script>
+</body>
+</html>

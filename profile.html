@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile — WINX</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .profile-hero {
+            position: relative;
+            margin-top: 80px;
+        }
+        .profile-banner {
+            height: 250px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #2d1b4e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .profile-banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to top, var(--bg-primary), transparent);
+        }
+        .profile-info {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            margin-top: -80px;
+        }
+        .profile-header {
+            display: flex;
+            align-items: flex-end;
+            gap: var(--spacing-lg);
+            padding-bottom: var(--spacing-lg);
+        }
+        .profile-avatar-container {
+            position: relative;
+            flex-shrink: 0;
+        }
+        .profile-avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 4px solid var(--bg-primary);
+            background: var(--gradient-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--bg-primary);
+            font-weight: 700;
+        }
+        .profile-details {
+            flex: 1;
+            padding-bottom: var(--spacing-sm);
+        }
+        .profile-name {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-xs);
+        }
+        .profile-username {
+            font-size: 2rem;
+            font-family: var(--font-heading);
+        }
+        .profile-userid {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: var(--spacing-md);
+        }
+        .profile-badges {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+        .profile-bio {
+            color: var(--text-secondary);
+            max-width: 600px;
+        }
+        .profile-stats {
+            display: flex;
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-md);
+        }
+        .profile-stat {
+            text-align: center;
+        }
+        .profile-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            font-family: var(--font-heading);
+        }
+        .profile-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .profile-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-2xl) var(--spacing-lg);
+        }
+        .profile-tabs {
+            display: flex;
+            gap: var(--spacing-xs);
+            margin-bottom: var(--spacing-lg);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .profile-tab {
+            padding: var(--spacing-md) var(--spacing-lg);
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: all var(--transition-base);
+        }
+        .profile-tab:hover {
+            color: var(--text-primary);
+        }
+        .profile-tab.active {
+            color: var(--accent-primary);
+            border-bottom-color: var(--accent-primary);
+        }
+        .profile-section {
+            display: none;
+        }
+        .profile-section.active {
+            display: block;
+        }
+        .empty-state {
+            text-align: center;
+            padding: var(--spacing-3xl);
+            color: var(--text-secondary);
+        }
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: var(--spacing-md);
+        }
+    </style>
+</head>
+<body class="loading">
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-logo">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="logo-path"/><text x="50" y="58" text-anchor="middle" fill="#C8A76A" font-size="24" font-family="Cinzel, serif" font-weight="700">W</text></svg>
+        </div>
+        <div class="loading-bar-container"><div class="loading-bar"></div></div>
+        <div class="loading-text">Loading WINX</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" stroke="#C8A76A" stroke-width="2" fill="none"/><text x="20" y="26" text-anchor="middle" fill="#C8A76A" font-size="20" font-family="Cinzel, serif" font-weight="700">W</text></svg>
+                WINX
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="index.html" class="navbar-link">Home</a></li>
+                <li><a href="marketplace.html" class="navbar-link">Marketplace</a></li>
+                <li><a href="products.html" class="navbar-link">Products</a></li>
+                <li><a href="forum.html" class="navbar-link">Forum</a></li>
+                <li><a href="documentation.html" class="navbar-link">Documentation</a></li>
+                <li><a href="support.html" class="navbar-link">Support</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <button class="navbar-icon-btn search-btn">🔍</button>
+                <button class="navbar-icon-btn notifications-btn">🔔<span class="badge" style="display: none;"></span></button>
+                <div class="navbar-auth">
+                    <a href="login.html" class="btn btn-secondary btn-sm">Войти</a>
+                    <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
+                </div>
+                <div class="mobile-menu-toggle"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" style="padding-top: 0;">
+        <!-- Profile Hero -->
+        <section class="profile-hero">
+            <div class="profile-banner"></div>
+            <div class="profile-info">
+                <div class="profile-header" id="profileHeader">
+                    <!-- Loaded via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Content -->
+        <section class="profile-content">
+            <!-- Tabs -->
+            <div class="profile-tabs">
+                <div class="profile-tab active" onclick="switchTab('overview')">Overview</div>
+                <div class="profile-tab" onclick="switchTab('products')">Products</div>
+                <div class="profile-tab" onclick="switchTab('marketplace')">Marketplace</div>
+                <div class="profile-tab" onclick="switchTab('activity')">Activity</div>
+            </div>
+
+            <!-- Overview Section -->
+            <div class="profile-section active" id="overviewSection">
+                <div class="grid" style="grid-template-columns: 2fr 1fr; gap: var(--spacing-xl);">
+                    <div>
+                        <div class="card mb-lg">
+                            <h3 class="mb-md">About</h3>
+                            <p class="text-secondary" id="profileBio">No bio yet.</p>
+                        </div>
+                        
+                        <div class="card">
+                            <h3 class="mb-md">Recent Activity</h3>
+                            <div id="recentActivity">
+                                <div class="empty-state">
+                                    <div class="empty-state-icon">📊</div>
+                                    <p>No recent activity</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="card mb-lg">
+                            <h3 class="mb-md">Information</h3>
+                            <ul style="line-height: 2.5; color: var(--text-secondary);">
+                                <li><strong class="text-primary">User ID:</strong> <span id="infoUserId">-</span></li>
+                                <li><strong class="text-primary">Member since:</strong> <span id="infoJoined">-</span></li>
+                                <li><strong class="text-primary">Last online:</strong> <span id="infoLastOnline">-</span></li>
+                                <li><strong class="text-primary">Country:</strong> <span id="infoCountry">-</span></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="card">
+                            <h3 class="mb-md">Badges</h3>
+                            <div id="profileBadges" class="flex flex-col gap-sm">
+                                <!-- Loaded via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div class="profile-section" id="productsSection">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📦</div>
+                    <h3 class="mb-sm">No Products</h3>
+                    <p>You haven't purchased any products yet.</p>
+                </div>
+            </div>
+
+            <!-- Marketplace Section -->
+            <div class="profile-section" id="marketplaceSection">
+                <div class="empty-state">
+                    <div class="empty-state-icon">🛒</div>
+                    <h3 class="mb-sm">No Marketplace Items</h3>
+                    <p>You haven't uploaded any marketplace items yet.</p>
+                </div>
+            </div>
+
+            <!-- Activity Section -->
+            <div class="profile-section" id="activitySection">
+                <div class="empty-state">
+                    <div class="empty-state-icon">📝</div>
+                    <h3 class="mb-sm">No Activity</h3>
+                    <p>No recent forum activity.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: var(--spacing-3xl) 0; margin-top: var(--spacing-3xl);">
+        <div class="container">
+            <div class="divider divider-gothic mb-xl"></div>
+            <div class="text-center">
+                <p class="text-secondary" style="font-size: 0.875rem;">&copy; 2024 WINX Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/db/database.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Check if logged in
+        const user = db.getCurrentUser();
+        if (!user) {
+            window.location.href = 'login.html';
+        } else {
+            loadProfile();
+        }
+
+        function loadProfile() {
+            // Profile header
+            document.getElementById('profileHeader').innerHTML = `
+                <div class="profile-avatar-container">
+                    <div class="profile-avatar">${user.username.charAt(0).toUpperCase()}</div>
+                </div>
+                <div class="profile-details">
+                    <div class="profile-name">
+                        <h1 class="profile-username">${escapeHtml(user.username)}</h1>
+                        ${user.role === 'admin' ? '<span class="badge badge-red">Admin</span>' : ''}
+                        ${user.role === 'creator' ? '<span class="badge badge-gold">Creator</span>' : ''}
+                    </div>
+                    <p class="profile-userid">${user.id}</p>
+                    <div class="profile-badges">
+                        ${user.badges.map(b => `<span class="badge badge-gold">${escapeHtml(b)}</span>`).join('')}
+                    </div>
+                    <p class="profile-bio">${user.bio || 'No bio yet.'}</p>
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <div class="profile-stat-value">${user.forumPosts}</div>
+                            <div class="profile-stat-label">Posts</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-value">${user.likesReceived}</div>
+                            <div class="profile-stat-label">Likes</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-value">${user.followers.length}</div>
+                            <div class="profile-stat-label">Followers</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-value">${user.following.length}</div>
+                            <div class="profile-stat-label">Following</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Info
+            document.getElementById('infoUserId').textContent = user.id;
+            document.getElementById('infoJoined').textContent = formatDate(user.createdAt);
+            document.getElementById('infoLastOnline').textContent = timeAgo(new Date(user.lastOnline));
+            document.getElementById('infoCountry').textContent = user.country || 'Not specified';
+            document.getElementById('profileBio').textContent = user.bio || 'No bio yet.';
+            
+            // Badges
+            const badgeNames = {
+                'admin': '🛡️ Administrator',
+                'creator': '✏️ Creator',
+                'verified': '✓ Verified',
+                'founder': '👑 Founder',
+                'early-adopter': '🎖️ Early Adopter'
+            };
+            
+            document.getElementById('profileBadges').innerHTML = user.badges.length > 0 
+                ? user.badges.map(b => `<span class="badge badge-gold">${badgeNames[b] || escapeHtml(b)}</span>`).join('')
+                : '<p class="text-secondary">No badges yet</p>';
+        }
+
+        function switchTab(tabName) {
+            // Update tabs
+            document.querySelectorAll('.profile-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update sections
+            document.querySelectorAll('.profile-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(tabName + 'Section').classList.add('active');
+        }
+    </script>
+</body>
+</html>

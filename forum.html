@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum — WINX</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .forum-hero {
+            padding: var(--spacing-3xl) 0;
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+        }
+        .forum-layout {
+            padding: var(--spacing-2xl) 0;
+        }
+        .category-card {
+            margin-bottom: var(--spacing-lg);
+            transition: all var(--transition-base);
+        }
+        .category-card:hover {
+            border-color: var(--accent-primary);
+        }
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(200, 167, 106, 0.1);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        .category-info {
+            flex: 1;
+        }
+        .category-stats {
+            display: flex;
+            gap: var(--spacing-lg);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+        .forum-topics {
+            margin-top: var(--spacing-2xl);
+        }
+        .topic-card {
+            display: flex;
+            gap: var(--spacing-md);
+            padding: var(--spacing-lg);
+            background: var(--bg-cards);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-sm);
+            transition: all var(--transition-base);
+            cursor: pointer;
+        }
+        .topic-card:hover {
+            border-color: var(--accent-primary);
+            background: var(--bg-hover);
+        }
+        .topic-avatar {
+            flex-shrink: 0;
+        }
+        .topic-content {
+            flex: 1;
+            min-width: 0;
+        }
+        .topic-title {
+            font-size: 1.1rem;
+            margin-bottom: var(--spacing-xs);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+        .topic-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        .topic-stats {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            min-width: 80px;
+        }
+        .topic-stat-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .topic-stat-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+        .badge-pinned {
+            background: rgba(200, 167, 106, 0.2);
+            color: var(--accent-primary);
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+        }
+        .badge-solved {
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+        }
+        .new-topic-btn {
+            position: fixed;
+            bottom: var(--spacing-xl);
+            right: var(--spacing-xl);
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: var(--gradient-gold);
+            color: var(--bg-primary);
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            box-shadow: var(--shadow-gold);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            z-index: 100;
+        }
+        .new-topic-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 30px rgba(200, 167, 106, 0.3);
+        }
+    </style>
+</head>
+<body class="loading">
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loading-logo">
+            <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" class="logo-path"/><text x="50" y="58" text-anchor="middle" fill="#C8A76A" font-size="24" font-family="Cinzel, serif" font-weight="700">W</text></svg>
+        </div>
+        <div class="loading-bar-container"><div class="loading-bar"></div></div>
+        <div class="loading-text">Loading WINX</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="navbar-brand">
+                <svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" stroke="#C8A76A" stroke-width="2" fill="none"/><text x="20" y="26" text-anchor="middle" fill="#C8A76A" font-size="20" font-family="Cinzel, serif" font-weight="700">W</text></svg>
+                WINX
+            </a>
+            <ul class="navbar-menu">
+                <li><a href="index.html" class="navbar-link">Home</a></li>
+                <li><a href="marketplace.html" class="navbar-link">Marketplace</a></li>
+                <li><a href="products.html" class="navbar-link">Products</a></li>
+                <li><a href="forum.html" class="navbar-link active">Forum</a></li>
+                <li><a href="documentation.html" class="navbar-link">Documentation</a></li>
+                <li><a href="support.html" class="navbar-link">Support</a></li>
+            </ul>
+            <div class="navbar-actions">
+                <button class="navbar-icon-btn search-btn">🔍</button>
+                <button class="navbar-icon-btn notifications-btn">🔔<span class="badge" style="display: none;"></span></button>
+                <div class="navbar-auth">
+                    <a href="login.html" class="btn btn-secondary btn-sm">Войти</a>
+                    <a href="register.html" class="btn btn-primary btn-sm">Регистрация</a>
+                </div>
+                <div class="mobile-menu-toggle"><span></span><span></span><span></span></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero -->
+        <section class="forum-hero">
+            <div class="container">
+                <h1 class="mb-md">Community Forum</h1>
+                <p class="text-secondary" style="max-width: 600px; margin: 0 auto;">
+                    Join discussions, get help, and connect with the WINX community
+                </p>
+            </div>
+        </section>
+
+        <!-- Forum Content -->
+        <section class="forum-layout">
+            <div class="container">
+                <!-- Categories -->
+                <div id="categoriesList">
+                    <!-- Categories loaded via JS -->
+                </div>
+
+                <!-- Recent Topics -->
+                <div class="forum-topics">
+                    <h2 class="mb-lg" style="font-size: 1.5rem;">Recent Discussions</h2>
+                    <div id="topicsList">
+                        <!-- Topics loaded via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- New Topic Button -->
+        <button class="new-topic-btn hidden" id="newTopicBtn" onclick="handleNewTopic()">
+            <span>+</span> New Topic
+        </button>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: var(--spacing-3xl) 0; margin-top: var(--spacing-3xl);">
+        <div class="container">
+            <div class="divider divider-gothic mb-xl"></div>
+            <div class="text-center">
+                <p class="text-secondary" style="font-size: 0.875rem;">&copy; 2024 WINX Platform. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/db/database.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        function loadCategories() {
+            const categories = db.getForumCategories();
+            const topics = db.getForumTopics();
+            
+            const container = document.getElementById('categoriesList');
+            
+            container.innerHTML = categories.map(cat => {
+                const catTopics = topics.filter(t => t.categoryId === cat.id);
+                const totalReplies = catTopics.reduce((sum, t) => sum + t.replies, 0);
+                const totalViews = catTopics.reduce((sum, t) => sum + t.views, 0);
+                
+                return `
+                    <div class="card category-card" onclick="window.location.href='forum-category.html?id=${cat.id}'" style="cursor: pointer;">
+                        <div class="category-header">
+                            <div class="category-icon">${cat.icon}</div>
+                            <div class="category-info">
+                                <h4 class="mb-xs">${escapeHtml(cat.name)}</h4>
+                                <p class="text-secondary" style="font-size: 0.9rem;">${escapeHtml(cat.description)}</p>
+                            </div>
+                            <div class="category-stats">
+                                <div class="stat">
+                                    <span>💬</span>
+                                    <span>${catTopics.length} topics</span>
+                                </div>
+                                <div class="stat">
+                                    <span>📝</span>
+                                    <span>${totalReplies} replies</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function loadTopics() {
+            const topics = db.getForumTopics(null, { sort: 'newest' }).slice(0, 10);
+            const container = document.getElementById('topicsList');
+            const user = db.getCurrentUser();
+            
+            // Show new topic button for logged in users
+            const newTopicBtn = document.getElementById('newTopicBtn');
+            if (user) {
+                newTopicBtn.classList.remove('hidden');
+            }
+            
+            if (topics.length === 0) {
+                container.innerHTML = '<p class="text-secondary text-center">No topics yet</p>';
+                return;
+            }
+            
+            container.innerHTML = topics.map(topic => `
+                <div class="topic-card" onclick="window.location.href='forum-topic.html?id=${topic.id}'">
+                    <div class="topic-avatar">
+                        ${topic.authorAvatar ? `<img src="${topic.authorAvatar}" alt="${topic.authorName}" class="avatar">` : 
+                        `<div class="avatar-placeholder">${topic.authorName.charAt(0).toUpperCase()}</div>`}
+                    </div>
+                    <div class="topic-content">
+                        <div class="topic-title">
+                            ${topic.pinned ? '<span class="badge-pinned">📌 Pinned</span>' : ''}
+                            ${topic.solved ? '<span class="badge-solved">✓ Solved</span>' : ''}
+                            <span>${escapeHtml(topic.title)}</span>
+                        </div>
+                        <div class="topic-meta">
+                            <span>by <strong class="text-primary">${escapeHtml(topic.authorName)}</strong></span>
+                            <span>•</span>
+                            <span>${timeAgo(new Date(topic.createdAt))}</span>
+                        </div>
+                    </div>
+                    <div class="topic-stats">
+                        <div class="topic-stat-value">${topic.replies}</div>
+                        <div class="topic-stat-label">Replies</div>
+                    </div>
+                    <div class="topic-stats">
+                        <div class="topic-stat-value">${formatNumber(topic.views)}</div>
+                        <div class="topic-stat-label">Views</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function handleNewTopic() {
+            const user = db.getCurrentUser();
+            if (!user) {
+                alert('Please login to create a topic');
+                window.location.href = 'login.html';
+                return;
+            }
+            alert('Create topic feature coming soon!');
+        }
+
+        loadCategories();
+        loadTopics();
+    </script>
+</body>
+</html>
